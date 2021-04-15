@@ -250,6 +250,10 @@ def argparse_to_query(cli_args):
 
 @terraform_external_data
 def main(query):
+    """
+    When called as a data source within terraform, passes the given arguments into this function as query.
+    See https://pypi.org/project/terraform-external-data/
+    """
     r = {}
 
     query = parse_args(query)
