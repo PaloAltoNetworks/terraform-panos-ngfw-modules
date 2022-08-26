@@ -1,0 +1,75 @@
+---
+- name: service1
+  protocol: tcp
+  destination_port: '8080'
+  override_half_closed_timeout: 595324
+  override_timeout: 344667
+  tags:
+    - trust
+  source_port: '596'
+  override_session_timeout: false
+  override_time_wait_timeout: 590
+- name: service2
+  protocol: udp
+  destination_port: '80'
+- name: service3
+  protocol: udp
+  destination_port: '400'
+  override_time_wait_timeout: 197
+  override_half_closed_timeout: 271371
+  override_timeout: 33530
+  override_session_timeout: false
+- name: service4
+  protocol: udp
+  destination_port: '8080'
+  override_timeout: 177435
+  source_port: '80'
+  override_half_closed_timeout: 169115
+- name: service5
+  device_group: AZURE
+  protocol: tcp
+  description: service object in azure
+  source_port: 2000-2049,2051-2099
+  destination_port: '32123'
+  tags:
+    - internal
+    - dmz
+- name: service6
+  protocol: tcp
+  destination_port: '93'
+- name: service7
+  protocol: udp
+  destination_port: 60-62
+  source_port: '80'
+  override_session_timeout: true
+  description: service7 service
+  override_time_wait_timeout: 516
+  override_timeout: 277512
+  tags:
+    - untrust
+    - external
+  override_half_closed_timeout: 535214
+- name: service8
+  protocol: tcp
+  destination_port: '32123'
+  source_port: '8080'
+  override_timeout: 16423
+  override_session_timeout: true
+  tags:
+    - internal
+  override_time_wait_timeout: 294
+  device_group: shared
+  override_half_closed_timeout: 12384
+- name: service9
+  protocol: udp
+  destination_port: '697'
+  source_port: '453,3636'
+  device_group: AZURE
+  override_timeout: 358535
+  override_session_timeout: true
+  time_wait_timeout: 375
+- name: service10
+  protocol: tcp
+  destination_port: '80,8080'
+  source_port: '400'
+  override_session_timeout: true

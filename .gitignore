@@ -1,0 +1,55 @@
+# Crash log files
+crash.log
+# mac specific
+.DS_Store
+.ansible
+.azure/
+.bash_history
+# don't check storage creds into GH
+.boto
+.cache
+*.code-workspace
+#  may contain gcloud examples
+.config
+.gitconfig
+.local
+# .netrc contains secrets for service_ex tokens
+.netrc
+*.plan
+.sentinel
+# .ssh dir may contain private keys
+.ssh
+.terrascan
+.vscode
+.idea
+# Palo auth codes
+authcodes
+# Crash log examples
+credentials.json
+# Palo specific
+init-cfg.txt
+temp
+terraform.rc
+tmp
+# Auto variables
+examples/csv_examples/csv_basic_example/terraform.tfvars
+terraform.tfvars.json
+*.auto.tfvars
+*.auto.tfvars.json
+#provider
+examples/provider.tf
+# Terraform dot examples
+.terraform
+.terraform.lock.hcl
+.terraformrc
+.terraform.d
+# Local .terraform directories
+**/.terraform/*
+# .tfstate files
+*.tfstate
+*.tfstate.*
+# example.tfvars
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json

@@ -1,0 +1,170 @@
+---
+- device_group: AWS
+  rules:
+    - name: rule1
+      target:
+        - serial: '1234567890'
+      original_packet:
+        source_zones:
+          - trust
+        destination_zone: untrust
+        destination_interface: any
+        source_addresses:
+          - google_dns1
+        destination_addresses:
+          - any
+      translated_packet:
+        source: dynamic_ip
+        translated_addresses:
+          - google_dns1
+          - google_dns2
+        destination: static_translation
+        static_translation:
+          address: 10.2.3.1
+          port: 5678
+    - name: rule2
+      original_packet:
+        source_zones:
+          - untrust
+        destination_zone: trust
+        destination_interface: any
+        source_addresses:
+          - any
+        destination_addresses:
+          - any
+      translated_packet:
+        source: static_ip
+        static_ip:
+          translated_address: 192.168.1.5
+          bi_directional: true
+        destination: none
+    - name: rule3
+      original_packet:
+        source_zones:
+          - dmz
+        destination_zone: dmz
+        destination_interface: any
+        source_addresses:
+          - any
+        destination_addresses:
+          - any
+      translated_packet:
+        source: dynamic_ip_and_port
+        interface_address:
+          interface: ethernet1/5
+        destination: dynamic_translation
+        dynamic_translation:
+          address: cloudflare
+          port: 1234
+    - name: rule10
+      type: nptv6
+      description: rule10
+      original_packet:
+        source_zones:
+          - trust
+        destination_zone: dmz
+        service: service8
+        source_addresses:
+          - ntp1
+        destination_addresses:
+          - ntp2
+      translated_packet:
+        source: none
+        destination: none
+    - name: rule4
+      original_packet:
+        source_zones:
+          - trust
+        destination_zone: untrust
+        destination_interface: any
+        source_addresses:
+          - any
+        destination_addresses:
+          - any
+      translated_packet:
+        source: none
+        destination: static_translation
+        static_translation:
+          address: 10.2.3.1
+          port: 5678
+    - name: rule5
+      original_packet:
+        source_zones:
+          - untrust
+        destination_zone: trust
+        destination_interface: any
+        source_addresses:
+          - any
+        destination_addresses:
+          - any
+      translated_packet:
+        source: none
+        destination: none
+    - name: rule6
+      original_packet:
+        source_zones:
+          - dmz
+        destination_zone: dmz
+        destination_interface: any
+        source_addresses:
+          - any
+        destination_addresses:
+          - trust and internal grp
+      translated_packet:
+        source: dynamic_ip
+        translated_addresses:
+          - localnet
+        fallback:
+          translated_addresses:
+            - open
+        destination: dynamic_translation
+        dynamic_translation:
+          address: localnet
+          port: 1234
+- device_group: AZURE
+  rules:
+    - name: rule7
+      original_packet:
+        source_zones:
+          - trust
+        destination_zone: untrust
+        source_addresses:
+          - any
+        destination_addresses:
+          - any
+      translated_packet:
+        source: dynamic_ip_and_port
+        translated_addresses:
+          - static ntp grp
+          - cloudflare
+        destination: static_translation
+        static_translation:
+          address: 10.2.3.1
+          port: 5678
+    - name: rule8
+      original_packet:
+        source_zones:
+          - dmz
+        destination_zone: trust
+        source_addresses:
+          - any
+        destination_addresses:
+          - any
+      translated_packet:
+        source: none
+        destination: none
+    - name: rule9
+      original_packet:
+        source_zones:
+          - dmz
+        destination_zone: dmz
+        destination_interface: any
+        source_addresses:
+          - any
+        destination_addresses:
+          - any
+      translated_packet:
+        source: dynamic_ip_and_port
+        interface_address:
+          interface: ethernet1/5
+        destination: none

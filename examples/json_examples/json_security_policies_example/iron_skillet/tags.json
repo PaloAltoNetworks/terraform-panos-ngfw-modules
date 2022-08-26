@@ -1,0 +1,18 @@
+[
+  {
+    "name": "Outbound",
+    "comment": "Outbound to the Internet"
+  },
+  {
+    "name": "Inbound",
+    "comment": "Inbound from the Internet"
+  },
+  {
+    "name": "Internal",
+    "comment": "Internal to Internal"
+  },
+  {
+    "name": "iron-skillet-version",
+    "comment": "version 0.0.2 for 10.1 - version of this IronSkillet template file"
+  }
+]

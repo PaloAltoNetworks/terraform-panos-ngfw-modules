@@ -1,0 +1,60 @@
+---
+- name: azure_int_lb_priv_ip
+  type: ip-netmask
+  value:
+    ip-netmask: 10.100.4.40/32
+  tags:
+    - trust
+    - internal
+    - AZURE
+  device_group: AZURE
+- name: pa_updates
+  type: fqdn
+  value:
+    fqdn: updates.paloaltonetworks.com
+  tags:
+    - trust
+    - internal
+    - pa_updates
+  description: palo alto updates
+- name: cloudflare
+  type: ip-netmask
+  value:
+    ip-netmask: 1.1.1.1/32
+- name: ntp1
+  type: ip-range
+  value:
+    ip-range: 10.0.0.2-10.0.0.10
+- name: azure_lb_hc_ip
+  type: ip-netmask
+  value:
+    ip-netmask: 168.63.129.16/32
+  tags:
+    - AZURE
+    - untrust
+  device_group: AZURE
+- name: localnet
+  type: ip-netmask
+  value:
+    ip-netmask: 192.168.80.150/24
+  tags:
+    - external
+    - untrust
+- name: everywhere
+  type: ip-netmask
+  value:
+    ip-netmask: 0.0.0.0/8
+  tags:
+    - external
+- name: ntp2
+  type: ip-netmask
+  value:
+    ip-netmask: 192.168.1.1
+- name: google_dns1
+  type: ip-netmask
+  value:
+    ip-netmask: 8.8.8.8/32
+- name: google_dns2
+  type: ip-netmask
+  value:
+    ip-netmask: 8.8.4.4/32
