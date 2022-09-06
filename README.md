@@ -13,9 +13,7 @@ YAML/JSON/CSV to configure modules.
 * All Policy as Code is written as a compatible **Terraform module** using resources for the underlying network
   infrastructure provider.
 
-<-- Picture need to be reupload to github.
-
-![PolicyAsCode](https://i.imgur.com/hSWGYuL.png)
+![PolicyAsCode](https://user-images.githubusercontent.com/2110772/188634641-0f410362-74fe-4414-ac3f-7b9cea9ce9aa.png)
 
 ## Structure
 
