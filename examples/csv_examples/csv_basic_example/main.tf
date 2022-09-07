@@ -169,6 +169,7 @@ module "policy_as_code_policy" {
 
   sec_policy     = try(local.sec_rules, {})
   nat_policy     = try(local.nat_rules, {})
+  panorama_mode  = var.panorama_mode
 
   depends_on = [module.policy_as_code_objects]
 }

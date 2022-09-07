@@ -1,9 +1,3 @@
-#Validation checks:
-#1) if the var is on default (aka not being used)
-#2) a. if the file exists
-#   b. if the file can be decoded by jsondecode or yamldecode (the 2 file input options)
-
-
 #tags
 variable "tags" {
   type        = any
@@ -408,3 +402,8 @@ variable "nat_policy" {
   }
 }
 
+variable "panorama_mode" {
+  description = "If modules have target to Panorama, it enable Panorama specific variables."
+  default = false
+  type = bool
+}

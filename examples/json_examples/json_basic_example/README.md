@@ -1,4 +1,4 @@
-Palo Alto Networks Panorama Modules JSON Example
+Palo Alto Networks PAN-OS based platforms Modules JSON Example
 ---
 This folder shows an example of Terraform code and JSON files that deploy configurations on the Panorama.
 
@@ -30,48 +30,38 @@ Cleanup
 terraform destroy
 ```
 
-Requirements
----
+<!-- BEGIN_TF_DOCS -->
+## Requirements
 
-* Terraform 0.13+
+| Name | Version |
+|------|---------|
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.13 |
+| <a name="requirement_panos"></a> [panos](#requirement\_panos) | 1.10.3 |
 
-Providers
----
+## Providers
 
-Name | Version
------|------
-panos | 1.8.3
+No providers.
 
-Modules
----
+## Modules
 
-Name | Source | Version
----|---|---
-policy | ../../modules/policy | 0.1.0
-security-profiles | ../../modules/security-profiles | 0.1.0
+| Name | Source | Version |
+|------|--------|---------|
+| <a name="module_policy_as_code_objects"></a> [policy\_as\_code\_objects](#module\_policy\_as\_code\_objects) | ../../../modules/objects | n/a |
+| <a name="module_policy_as_code_policy"></a> [policy\_as\_code\_policy](#module\_policy\_as\_code\_policy) | ../../../modules/policy | n/a |
+| <a name="module_policy_as_code_security_profiles"></a> [policy\_as\_code\_security\_profiles](#module\_policy\_as\_code\_security\_profiles) | ../../../modules/security-profiles | n/a |
 
-Inputs
----
+## Resources
 
-Name | Description | Type | Default | Required
------|-----|-----|-----|-----
-hostname | PAN-OS address. | `string` | n/a | yes
-user | Admin username. | `string` | n/a | yes
-password | Admin password. | `string` | n/a | yes
+No resources.
 
-Outputs
----
+## Inputs
 
-Name | Description
----|---
-created_tags | Shows the tags that were created.
-created_services |Shows the services that were created.
-created_addr_obj |Shows the address objects that were created.
-created_addr_group |Shows the address groups that were created.
-created_sec |Shows the security policies that were created.
-created_nat |Shows the NAT policies that were created.
-created_antivirus_prof | Shows the antivirus security profiles that were created.
-created_spyware_prof |Shows the anti-spyware security profiles that were created.
-created_file_blocking_prof |Shows the file blocking security profiles that were created.
-created_vulnerability_prof |Shows the vulnerability security profiles that were created.
-created_wildfire_prof |Shows the wildfire analysis security profiles that were created.
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| <a name="input_pan_creds"></a> [pan\_creds](#input\_pan\_creds) | Path to file with credentials to PAN-OS based platforms | `string` | n/a | yes |
+| <a name="input_panorama_mode"></a> [panorama\_mode](#input\_panorama\_mode) | Enable if PAN-OS target is Panorama | `bool` | `false` | no |
+
+## Outputs
+
+No outputs.
+<!-- END_TF_DOCS -->
