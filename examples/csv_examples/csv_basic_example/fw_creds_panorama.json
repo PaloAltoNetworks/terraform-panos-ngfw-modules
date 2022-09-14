@@ -1,0 +1,6 @@
+{
+    "hostname": "18.144.106.104",
+    "logging": ["action","query", "op", "uid","xpath","send","receive"],
+    "verify_certificate": false,
+    "api_key": "LUFRPT1OQ0M0M3FWRzhpY245R3RQaEozeEE5SGNaU3M9MFNNYTI2OWVNaGpKblB0R1JLUjYxSkR2R3d1MndkMVBCc2crVHBPdUlaTWJnYW1PRE1xV0pRTmJ6TUZ5Ync0eA=="
+}

@@ -1,0 +1,4 @@
+template,virtual_router,route_table,name,destination,interface,type,next_hop,admin_distance,metric
+default,external,unicast,DF_route,0.0.0.0/0,,ip-address,10.1.1.1,,10
+default,internal,unicast,DF_route,0.0.0.0/0,,ip-address,10.1.2.1,,10
+default,internal,unicast,IPsec_route,10.10.10.0/24,tunnel.42,,,,

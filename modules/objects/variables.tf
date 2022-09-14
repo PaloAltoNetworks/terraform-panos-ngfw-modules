@@ -1,3 +1,9 @@
+variable "panorama_mode" {
+  description = "If modules have target to Panorama, it enable Panorama specific variables."
+  default     = false
+  type        = bool
+}
+
 #tags
 variable "tags" {
   description = <<-EOF

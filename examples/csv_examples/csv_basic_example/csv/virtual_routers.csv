@@ -1,0 +1,3 @@
+template,vsys,name,mode
+default,,internal,layer3
+default,,external,layer3
