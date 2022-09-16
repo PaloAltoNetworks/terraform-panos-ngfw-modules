@@ -1,4 +1,4 @@
-Palo Alto Networks Panorama Policy Module for Policy as Code
+Palo Alto Networks PAN-OS based platforms Policy Module for Policy as Code
 ---
 This Terraform module allows users to configure policies (NAT and Security Policies) along with tags, address objects,
 address groups, and services with Palo Alto Networks **PAN-OS** based PA-Series devices.

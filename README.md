@@ -1,11 +1,10 @@
-# Terraform Modules for Palo Alto Networks Panorama Config as Code
+# Terraform Modules for Palo Alto Networks PAN-OS based platforms Config as Code
 
 ## Overview
 
-A set of modules for using **Palo Alto Networks Panorama Config as Code** to configure your Palo Alto Networks Next
-Generation Firewalls with code instead of interacting with the GUI. It configures aspects such as Tags, Address
-Objects/Groups, Security/NAT policies, Security Profiles, and more. You can use multiple config file type like 
-YAML/JSON/CSV to configure modules.
+A set of modules to configure your Palo Alto Networks Next Generation Firewalls with code instead of interacting with 
+the GUI. It configures aspects such as Tags, Address Objects/Groups, Security/NAT policies, Security Profiles, and more.
+You can use multiple config file types like YAML/JSON/CSV to configure modules.
 
 * Policy as Code executes Terraform that will create a variety of resources based on the input.
 * Terraform is the underlying automation tool, therefore it utilizes the Terraform provider ecosystem to drive relevant
@@ -13,9 +12,7 @@ YAML/JSON/CSV to configure modules.
 * All Policy as Code is written as a compatible **Terraform module** using resources for the underlying network
   infrastructure provider.
 
-<-- Picture need to be reupload to github.
-
-![PolicyAsCode](https://i.imgur.com/hSWGYuL.png)
+![PolicyAsCode](https://user-images.githubusercontent.com/2110772/188634641-0f410362-74fe-4414-ac3f-7b9cea9ce9aa.png)
 
 ## Structure
 
@@ -34,7 +31,7 @@ This module is meant for use with PAN-OS >= 10.2.0 and Terraform >= 0.13
 
 The code is configured by config files, you can see how to handle that part in examples.
 
-Mechanism needs to authorize calls to Panorama, it can be done in few ways.
+Mechanism needs to authorize calls to PAN-OS based platforms, it can be done in few ways.
 It can be configured by JSON file with structure:
 
 ```json

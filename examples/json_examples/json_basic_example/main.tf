@@ -12,6 +12,7 @@ module "policy_as_code_policy" {
 
   sec_policy = try(jsondecode(file("./json/sec_policy.json")), {})
   nat_policy = try(jsondecode(file("./json/nat.json")), {})
+  panorama_mode = var.panorama_mode
   depends_on = [module.policy_as_code_objects]
 }
 

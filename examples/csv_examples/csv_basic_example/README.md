@@ -1,6 +1,6 @@
-Palo Alto Networks Panorama Modules CSV Example
+Palo Alto Networks PAN-OS based platforms Modules CSV Example
 ---
-This folder shows an example of Terraform code and CSV files that deploy configurations on the Panorama.
+This folder shows an example of Terraform code and CSV files that deploy configurations on the PAN-OS based platforms.
 
 Usage
 ---
@@ -55,7 +55,8 @@ No providers.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_policy-as-code_policy"></a> [policy-as-code\_policy](#module\_policy-as-code\_policy) | ../../../modules/policy | n/a |
+| <a name="module_policy_as_code_objects"></a> [policy\_as\_code\_objects](#module\_policy\_as\_code\_objects) | ../../../modules/objects | n/a |
+| <a name="module_policy_as_code_policy"></a> [policy\_as\_code\_policy](#module\_policy\_as\_code\_policy) | ../../../modules/policy | n/a |
 
 ## Resources
 
@@ -65,15 +66,15 @@ No resources.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_addr_groups_file"></a> [addr\_groups\_file](#input\_addr\_groups\_file) | Path to file with Address Groups config. | `string` | `"config/addr_groups.csv"` | no |
-| <a name="input_addresses_file"></a> [addresses\_file](#input\_addresses\_file) | Path to file with Addresses objects config. | `string` | `"config/addresses.csv"` | no |
-| <a name="input_nat_file"></a> [nat\_file](#input\_nat\_file) | Path to file with config for NAT Policies. | `string` | `"config/nat.csv"` | no |
-| <a name="input_pan_creds"></a> [pan\_creds](#input\_pan\_creds) | Path to file with credentials to Panorama | `string` | n/a | yes |
-| <a name="input_policy_file"></a> [policy\_file](#input\_policy\_file) | Path to file with config for Security Policies. | `string` | `"config/policy.csv"` | no |
-| <a name="input_region"></a> [region](#input\_region) | n/a | `string` | n/a | yes |
-| <a name="input_service_groups_file"></a> [service\_groups\_file](#input\_service\_groups\_file) | Path to file with Service Groups config. | `string` | `"config/service_groups.csv"` | no |
-| <a name="input_services_file"></a> [services\_file](#input\_services\_file) | Path to file with Services objects config. | `string` | `"config/services.csv"` | no |
-| <a name="input_tags_file"></a> [tags\_file](#input\_tags\_file) | Path to file with Tags objects config. | `string` | `"config/tags.csv"` | no |
+| <a name="input_addr_groups_file"></a> [addr\_groups\_file](#input\_addr\_groups\_file) | Path to file with Address Groups config. | `string` | `"csv/addr_groups.csv"` | no |
+| <a name="input_addresses_file"></a> [addresses\_file](#input\_addresses\_file) | Path to file with Addresses objects config. | `string` | `"csv/addresses.csv"` | no |
+| <a name="input_nat_file"></a> [nat\_file](#input\_nat\_file) | Path to file with config for NAT Policies. | `string` | `"csv/nat.csv"` | no |
+| <a name="input_pan_creds"></a> [pan\_creds](#input\_pan\_creds) | Path to file with credentials to PAN-OS based platforms | `string` | n/a | yes |
+| <a name="input_panorama_mode"></a> [panorama\_mode](#input\_panorama\_mode) | Enable if PAN-OS target is Panorama | `bool` | `false` | no |
+| <a name="input_policy_file"></a> [policy\_file](#input\_policy\_file) | Path to file with config for Security Policies. | `string` | `"csv/policy.csv"` | no |
+| <a name="input_service_groups_file"></a> [service\_groups\_file](#input\_service\_groups\_file) | Path to file with Service Groups config. | `string` | `"csv/service_groups.csv"` | no |
+| <a name="input_services_file"></a> [services\_file](#input\_services\_file) | Path to file with Services objects config. | `string` | `"csv/services.csv"` | no |
+| <a name="input_tags_file"></a> [tags\_file](#input\_tags\_file) | Path to file with Tags objects config. | `string` | `"csv/tags.csv"` | no |
 
 ## Outputs
 
