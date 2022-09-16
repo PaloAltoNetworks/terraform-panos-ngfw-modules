@@ -47,16 +47,48 @@ func TestOutputsForCsvBasicExampleAndForVmSeries(t *testing.T) {
 			"vsys": "vsys1",
 		},
 	}
+	expected_panos_ethernet_interface := map[string]interface{}{
+		"ethernet1/1": map[string]interface{}{
+			"comment":                   "mgmt",
+			"create_dhcp_default_route": false,
+			"enable_dhcp":               false,
+			"mode":                      "layer3",
+			"vsys":                      "vsys1",
+		},
+		"ethernet1/2": map[string]interface{}{
+			"comment":                   "external",
+			"create_dhcp_default_route": false,
+			"enable_dhcp":               false,
+			"mode":                      "layer3",
+			"vsys":                      "vsys1",
+		},
+		"ethernet1/3": map[string]interface{}{
+			"comment":                   "internal",
+			"create_dhcp_default_route": false,
+			"enable_dhcp":               false,
+			"mode":                      "layer3",
+			"vsys":                      "vsys1",
+		},
+		"ethernet1/4": map[string]interface{}{
+			"comment":                   "internal",
+			"create_dhcp_default_route": false,
+			"enable_dhcp":               false,
+			"mode":                      "layer3",
+			"vsys":                      "vsys1",
+		},
+	}
 	// defer terraform.Destroy(t, terraformOptions)
 
 	// when
 	terraform.InitAndApply(t, terraformOptions)
 	actual_zones := terraform.OutputList(t, terraformOptions, "panos_zones")
 	actual_zone_entry := terraform.OutputMapOfObjects(t, terraformOptions, "panos_zone_entry")
+	actual_panos_ethernet_interface := terraform.OutputMapOfObjects(t, terraformOptions, "panos_ethernet_interface")
 
 	// then
 	assert.Equal(t, expected_zone, actual_zones)
 	assert.Equal(t, expected_zone_entry, actual_zone_entry)
+	assert.Equal(t, expected_panos_ethernet_interface, actual_panos_ethernet_interface)
 }
 
 /*
