@@ -54,6 +54,4 @@ override.tf
 override.tf.json
 *_override.tf
 *_override.tf.json
-**/go.mod
-**/go.sum
 **/creds/**

@@ -126,7 +126,7 @@ resource "panos_panorama_service_group" "this" {
 
 
 resource "panos_service_group" "this" {
-  for_each = var.panorama_mode == true && length(var.addr_group) != 0 ? { for obj in var.service_groups : obj.name => obj } : tomap({})
+  for_each = var.panorama_mode == false && length(var.addr_group) != 0 ? { for obj in var.service_groups : obj.name => obj } : tomap({})
 
   vsys = try(each.value.vsys, "vsys1")
 
