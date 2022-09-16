@@ -49,8 +49,8 @@ variable "antivirus" {
   ```
   EOF
 
-  default     = []
-  type        = any
+  default = []
+  type    = any
 }
 
 variable "file_blocking" {
@@ -108,8 +108,8 @@ variable "file_blocking" {
   ```
   EOF
 
-  default     = []
-  type        = any
+  default = []
+  type    = any
 }
 
 variable "spyware" {
@@ -195,8 +195,8 @@ variable "spyware" {
   ```
   EOF
 
-  default     = []
-  type        = any
+  default = []
+  type    = any
 }
 
 variable "vulnerability" {
@@ -262,8 +262,8 @@ variable "vulnerability" {
   ```
   EOF
 
-  default     = []
-  type        = any
+  default = []
+  type    = any
 }
 
 variable "wildfire" {
@@ -298,6 +298,6 @@ variable "wildfire" {
   ```
   EOF
 
-  default     = []
-  type        = any
+  default = []
+  type    = any
 }

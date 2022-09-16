@@ -1,7 +1,7 @@
 module "policy_as_code_objects" {
   source = "../../../modules/objects"
 
-  tags       = try(jsondecode(file("./iron_skillet/tags.json")), {})
+  tags = try(jsondecode(file("./iron_skillet/tags.json")), {})
 }
 
 module "policy_as_code_policy" {

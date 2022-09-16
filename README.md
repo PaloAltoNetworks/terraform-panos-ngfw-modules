@@ -69,6 +69,30 @@ provider "panos" {
 }
 ```
 
+## Testing
+
+In order to executed test, prepare folder ``tests/creds/`` with 2 files:
+* ``panorama.json``
+* ``vmseries.json``
+
+which will contain credentials to access each machine e.g.:
+
+```
+{
+  "hostname": "12.345.678.901",
+  "username": "user",
+  "password": "password"
+}
+```
+
+When credentials files are ready, use below commands to run tests:
+
+```
+cd tests
+go mod init github.com/PaloAltoNetworks/terraform-panos-modules/tests
+go mod tidy
+go test -v -timeout 30m -count=1
+```
 
 ## Versioning
 

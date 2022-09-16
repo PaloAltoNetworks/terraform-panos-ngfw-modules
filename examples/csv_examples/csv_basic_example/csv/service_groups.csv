@@ -1,4 +1,4 @@
-device_group,name,services,tags
-AWS GlobalProtect Firewalls,Custome Group,"SomeWeb,SomeSSH",
-AWS GlobalProtect Firewalls,HTTP-ports,"SomeWeb,Web-8080",
-AWS GlobalProtect Firewalls,PSN Custom Ports,"tcp_4450,tcp_4457-4458",
+device_group,vsys,name,services,tags
+AWS GlobalProtect Firewalls,,Custome Group,"SomeWeb,SomeSSH",
+AWS GlobalProtect Firewalls,,HTTP-ports,"SomeWeb,Web-8080",
+AWS GlobalProtect Firewalls,,PSN Custom Ports,"tcp_4450,tcp_4457-4458",

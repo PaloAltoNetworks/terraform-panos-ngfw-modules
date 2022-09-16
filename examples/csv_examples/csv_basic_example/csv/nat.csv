@@ -1,6 +1,6 @@
-device_group,rulebase,name,tags,disabled,source_zones,destination_zone,destination_interface,original_source_addresses,original_destination_addresses,original_service,translated_source_type,translated_source_address_type,translated_source_interface,bidirectional,translated_source_address,translated_destination_type,translated_destination_address,translated_destination_port
-AWS GlobalProtect Firewalls,pre-rulebase,TestNat2,,FALSE,Untrust-L3,Trust-L3,any,any,any,any,static_ip,,ethernet1/1,false,4.4.4.4,static_ip,2.2.2.2,80
-AWS GlobalProtect Firewalls,pre-rulebase,TestNat5,,false,Untrust-L3,Trust-L3,any,any,any,any,dynamic_ip,,,false,"31.31.31.31,51.51.51.51",none,2.2.2.2,80
-AWS GlobalProtect Firewalls,pre-rulebase,TestNat1,,FALSE,Untrust-L3,Trust-L3,any,any,any,any,dynamic_ip_and_port,interface_address,ethernet1/1,false,3.3.3.3,static_ip,2.2.2.2,80
-AWS GlobalProtect Firewalls,pre-rulebase,TestNat3,,false,Untrust-L3,Trust-L3,any,any,any,any,dynamic_ip_and_port,translated_address,,false,"3.3.3.3,5.5.5.5",static_ip,2.2.2.2,80
-AWS GlobalProtect Firewalls,pre-rulebase,TestNat4,,true,Untrust-L3,Trust-L3,any,any,any,any,dynamic_ip,,,false,"31.31.31.31,51.51.51.51",none,2.2.2.2,80
+device_group,vsys,rulebase,name,tags,disabled,source_zones,destination_zone,destination_interface,original_source_addresses,original_destination_addresses,original_service,translated_source_type,translated_source_address_type,translated_source_interface,bidirectional,translated_source_address,translated_destination_type,translated_destination_address,translated_destination_port
+AWS GlobalProtect Firewalls,,pre-rulebase,TestNat2,,FALSE,Untrust-L3,Trust-L3,any,any,any,any,static_ip,,ethernet1/1,false,4.4.4.4,static_ip,2.2.2.2,80
+AWS GlobalProtect Firewalls,,pre-rulebase,TestNat5,,false,Untrust-L3,Trust-L3,any,any,any,any,dynamic_ip,,,false,"31.31.31.31,51.51.51.51",none,2.2.2.2,80
+AWS GlobalProtect Firewalls,,pre-rulebase,TestNat1,,FALSE,Untrust-L3,Trust-L3,any,any,any,any,dynamic_ip_and_port,interface_address,ethernet1/1,false,,static_ip,2.2.2.2,80
+AWS GlobalProtect Firewalls,,pre-rulebase,TestNat3,,false,Untrust-L3,Trust-L3,any,any,any,any,dynamic_ip_and_port,translated_address,,false,"3.3.3.3,5.5.5.5",static_ip,2.2.2.2,80
+AWS GlobalProtect Firewalls,,pre-rulebase,TestNat4,,true,Untrust-L3,Trust-L3,any,any,any,any,dynamic_ip,,,false,"31.31.31.31,51.51.51.51",none,2.2.2.2,80
