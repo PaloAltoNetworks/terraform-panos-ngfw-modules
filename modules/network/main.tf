@@ -394,8 +394,3 @@ resource "panos_ipsec_tunnel_proxy_id_ipv4" "this" {
   remote       = each.value.remote
   protocol_any = try(each.value.protocol_any, true)
 }
-
-output "module_level_output" {
-  #value = var.virtual_router_static_routes
-  value = var.interfaces
-}
