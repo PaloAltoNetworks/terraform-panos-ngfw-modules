@@ -294,7 +294,8 @@ resource "panos_panorama_ike_gateway" "this" {
   ikev1_crypto_profile = each.value.ikev1_crypto_profile
 
   depends_on = [
-    panos_ike_crypto_profile.this
+    panos_ike_crypto_profile.this,
+    panos_panorama_loopback_interface.this,
   ]
 }
 
