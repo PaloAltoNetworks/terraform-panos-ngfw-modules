@@ -183,9 +183,31 @@ output "panos_panorama_ike_gateway" {
   }
 }
 
+output "panos_ike_gateway" {
+  value = {
+    for name, details in module.policy_as_code_network.panos_ike_gateway : name => {
+      peer_ip_type : details.peer_ip_type,
+      local_id_type : details.local_id_type,
+      local_id_value : details.local_id_value,
+      peer_id_type : details.peer_id_type,
+      peer_id_value : details.peer_id_value
+    }
+  }
+}
+
 output "panos_panorama_ipsec_tunnel" {
   value = {
     for name, details in module.policy_as_code_network.panos_panorama_ipsec_tunnel : name => {
+      tunnel_interface : details.tunnel_interface,
+      ak_ike_gateway : details.ak_ike_gateway,
+      ak_ipsec_crypto_profile : details.ak_ipsec_crypto_profile
+    }
+  }
+}
+
+output "panos_ipsec_tunnel" {
+  value = {
+    for name, details in module.policy_as_code_network.panos_ipsec_tunnel : name => {
       tunnel_interface : details.tunnel_interface,
       ak_ike_gateway : details.ak_ike_gateway,
       ak_ipsec_crypto_profile : details.ak_ipsec_crypto_profile
