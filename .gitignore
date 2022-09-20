@@ -55,3 +55,4 @@ override.tf.json
 *_override.tf
 *_override.tf.json
 **/creds/**
+**/fw_creds_**.json
