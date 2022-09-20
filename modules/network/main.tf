@@ -54,7 +54,7 @@ resource "panos_panorama_ethernet_interface" "this" {
 resource "panos_ethernet_interface" "this" {
   for_each = var.panorama_mode == false && length(var.interfaces) != 0 ? { for intf in var.interfaces : intf.name => intf if intf.type == "ethernet" } : {}
 
-  vsys               = each.value.vsys != "" ? each.value.vsys : "vsys1"
+  vsys               = try(each.value.vsys, "vsys1")
   name               = each.key
   mode               = try(each.value.mode, null)
   management_profile = each.value.management_profile
