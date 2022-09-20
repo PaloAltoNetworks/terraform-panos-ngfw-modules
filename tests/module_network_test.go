@@ -1,8 +1,11 @@
 package test
 
 import (
+<<<<<<< HEAD
 	"fmt"
 	"strings"
+=======
+>>>>>>> develop
 	"testing"
 
 	"github.com/gruntwork-io/terratest/modules/logger"
@@ -26,6 +29,7 @@ func TestOutputsForCsvBasicExampleAndForVmSeries(t *testing.T) {
 
 	// when
 	terraform.InitAndApply(t, terraformOptions)
+<<<<<<< HEAD
 
 	actual_panos_ethernet_interface := terraform.OutputMapOfObjects(t, terraformOptions, "panos_ethernet_interface")
 	actual_panos_ike_gateway := terraform.OutputMapOfObjects(t, terraformOptions, "panos_ike_gateway")
@@ -132,6 +136,13 @@ func TestOutputsForCsvBasicExampleAndForVmSeries(t *testing.T) {
 	assert.Empty(t, actual_panos_panorama_management_profile)
 	assert.Empty(t, actual_panos_panorama_static_route_ipv4)
 	assert.Empty(t, actual_panos_panorama_tunnel_interface)
+=======
+	actual_zones := terraform.OutputList(t, terraformOptions, "panos_zones")
+	expected_zones := ReadCsvFileAndReturnListOfValuesFromColumn("../examples/csv_examples/csv_basic_example/csv/zones.csv", 2)
+
+	// then
+	assert.Equal(t, expected_zones, actual_zones)
+>>>>>>> develop
 }
 
 func TestOutputsForCsvBasicExampleAndForPanorama(t *testing.T) {
@@ -151,6 +162,7 @@ func TestOutputsForCsvBasicExampleAndForPanorama(t *testing.T) {
 	// when
 	terraform.InitAndApply(t, terraformOptions)
 
+<<<<<<< HEAD
 	actual_panos_ethernet_interface := terraform.OutputMapOfObjects(t, terraformOptions, "panos_ethernet_interface")
 	actual_panos_ike_gateway := terraform.OutputMapOfObjects(t, terraformOptions, "panos_ike_gateway")
 	actual_panos_ike_crypto_profile := terraform.Output(t, terraformOptions, "panos_ike_crypto_profile")
@@ -256,4 +268,7 @@ func TestOutputsForCsvBasicExampleAndForPanorama(t *testing.T) {
 			assert.NotEmptyf(t, actual_panos_panorama_tunnel_interface[name], "There is no interface %s", name)
 		}
 	}
+=======
+	// then
+>>>>>>> develop
 }

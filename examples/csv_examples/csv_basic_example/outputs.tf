@@ -183,6 +183,7 @@ output "panos_panorama_ike_gateway" {
   }
 }
 
+<<<<<<< HEAD
 output "panos_ike_gateway" {
   value = {
     for name, details in module.policy_as_code_network.panos_ike_gateway : name => {
@@ -195,6 +196,8 @@ output "panos_ike_gateway" {
   }
 }
 
+=======
+>>>>>>> develop
 output "panos_panorama_ipsec_tunnel" {
   value = {
     for name, details in module.policy_as_code_network.panos_panorama_ipsec_tunnel : name => {
@@ -205,6 +208,7 @@ output "panos_panorama_ipsec_tunnel" {
   }
 }
 
+<<<<<<< HEAD
 output "panos_ipsec_tunnel" {
   value = {
     for name, details in module.policy_as_code_network.panos_ipsec_tunnel : name => {
@@ -215,6 +219,8 @@ output "panos_ipsec_tunnel" {
   }
 }
 
+=======
+>>>>>>> develop
 output "panos_panorama_ipsec_tunnel_proxy_id_ipv4" {
   value = {
     for name, details in module.policy_as_code_network.panos_panorama_ipsec_tunnel_proxy_id_ipv4 : name => {
