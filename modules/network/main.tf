@@ -37,7 +37,7 @@ resource "panos_panorama_ethernet_interface" "this" {
 
   template = try(each.value.template, "default")
 
-  vsys               = each.value.vsys != "" ? each.value.vsys : "vsys1"
+  vsys               = try(each.value.vsys, "vsys1")
   name               = each.key
   mode               = try(each.value.mode, null)
   management_profile = each.value.management_profile
