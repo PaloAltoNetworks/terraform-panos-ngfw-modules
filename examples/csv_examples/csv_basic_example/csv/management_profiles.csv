@@ -1,0 +1,2 @@
+template,name,ping,telnet,ssh,http,https,snmp,userid_service,permitted_ips
+default,mgmt_default,true,false,true,false,true,false,,"1.1.1.1/32,2.2.2.2/32"

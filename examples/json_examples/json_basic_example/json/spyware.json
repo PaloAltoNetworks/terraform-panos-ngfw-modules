@@ -1,0 +1,93 @@
+[
+  {
+    "name": "ex1",
+    "sinkhole_ipv4_address": "72.99.65.255",
+    "white_list": [
+      {
+        "name": "updates.paloaltonetworks.com",
+        "description": "pa updates"
+      },
+      {
+        "name": "www.paloaltonetworks.com"
+      }
+    ],
+    "exception": [
+      {
+        "name": "18302",
+        "block_ip_track_by": "source",
+        "block_ip_duration": 67,
+        "action": "reset-server",
+        "packet_capture": "single-packet",
+        "exempt_ips": [
+          "84.97.4.203"
+        ]
+      },
+      {
+        "name": "18003",
+        "block_ip_track_by": "source-and-destination",
+        "block_ip_duration": 3173,
+        "action": "reset-server",
+        "packet_capture": "disable",
+        "exempt_ips": [
+          "192.168.80.0/32"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "ex2",
+    "packet_capture": "single-packet",
+    "botnet_list": [
+      {
+        "name": "default-paloalto-dns",
+        "action": "allow",
+        "packet_capture": "extended-capture"
+      }
+    ],
+    "sinkhole_ipv6_address": "::1",
+    "dns_category": [
+      {
+        "name": "pan-dns-sec-grayware",
+        "packet_capture": "single-packet"
+      },
+      {
+        "name": "pan-dns-sec-malware",
+        "action": "default"
+      },
+      {
+        "name": "pan-dns-sec-parked",
+        "packet_capture": "disable",
+        "action": "block"
+      }
+    ],
+    "description": "ex2 anti spyware profile"
+  },
+  {
+    "name": "ex3",
+    "device_group": "AWS",
+    "description": "my description",
+    "sinkhole_ipv4_address": "8.8.8.8",
+    "sinkhole_ipv6_address": "::1",
+    "rule": [
+      {
+        "name": "foo",
+        "threat_name": "any",
+        "category": "adware",
+        "action": "alert",
+        "packet_capture": "extended-capture",
+        "severities": [
+          "any"
+        ]
+      },
+      {
+        "name": "bar"
+      }
+    ],
+    "exception": [
+      {
+        "name": "18881",
+        "action": "allow"
+      }
+    ]
+  }
+]

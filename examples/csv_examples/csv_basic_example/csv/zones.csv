@@ -1,0 +1,7 @@
+template,vsys,name,mode,zone_profile,log_setting,enable_user_id,interfaces,include_acls,exclude_acls
+default,,internal,layer3,,,,,,
+default,,external,layer3,,,,,,
+default,,vpn,layer3,,,,,,
+default,,mgmt,layer3,,,,,,
+default,,Trust-L3,layer3,,,,,,
+default,,Untrust-L3,layer3,,,,,,

@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Outbound-WF",
+    "rule": [
+      {
+        "name": "Forward-All",
+        "direction": "both",
+        "analysis": "public-cloud"
+      }
+    ]
+  },
+  {
+    "name": "Inbound-WF",
+    "rule": [
+      {
+        "name": "Forward-All",
+        "direction": "both",
+        "analysis": "public-cloud"
+      }
+    ]
+  },
+  {
+    "name": "Internal-WF",
+    "rule": [
+      {
+        "name": "Forward-All",
+        "direction": "both",
+        "analysis": "public-cloud"
+      }
+    ]
+  },
+  {
+    "name": "Alert-Only-WF",
+    "rule": [
+      {
+        "name": "Forward-All",
+        "direction": "both",
+        "analysis": "public-cloud"
+      }
+    ]
+  }
+]

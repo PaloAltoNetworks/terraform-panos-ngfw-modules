@@ -1,0 +1,108 @@
+[
+  {
+    "name": "Outbound-FB",
+    "rule": [
+      {
+        "name": "Alert-All",
+        "direction": "both",
+        "action": "alert"
+      },
+      {
+        "name": "Block",
+        "file_types": [
+          "7z",
+          "bat",
+          "chm",
+          "class",
+          "cpl",
+          "dll",
+          "hlp",
+          "hta",
+          "jar",
+          "ocx",
+          "pif",
+          "scr",
+          "torrent",
+          "vbe",
+          "wsf"
+        ],
+        "direction": "both",
+        "action": "block"
+      }
+    ]
+  },
+  {
+    "name": "Inbound-FB",
+    "rule": [
+      {
+        "name": "Alert-All",
+        "direction": "both",
+        "action": "alert"
+      },
+      {
+        "name": "Block",
+        "file_types": [
+          "7z",
+          "bat",
+          "chm",
+          "class",
+          "cpl",
+          "dll",
+          "hlp",
+          "hta",
+          "jar",
+          "ocx",
+          "pif",
+          "scr",
+          "torrent",
+          "vbe",
+          "wsf"
+        ],
+        "direction": "both",
+        "action": "block"
+      }
+    ]
+  },
+  {
+    "name": "Internal-FB",
+    "rule": [
+      {
+        "name": "Alert-All",
+        "direction": "both",
+        "action": "alert"
+      },
+      {
+        "name": "Block",
+        "file_types": [
+          "7z",
+          "bat",
+          "chm",
+          "class",
+          "cpl",
+          "dll",
+          "hlp",
+          "hta",
+          "jar",
+          "ocx",
+          "pif",
+          "scr",
+          "torrent",
+          "vbe",
+          "wsf"
+        ],
+        "direction": "both",
+        "action": "block"
+      }
+    ]
+  },
+  {
+    "name": "Alert-Only-FB",
+    "rule": [
+      {
+        "name": "Alert-Only",
+        "direction": "both",
+        "action": "alert"
+      }
+    ]
+  }
+]

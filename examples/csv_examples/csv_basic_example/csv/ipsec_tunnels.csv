@@ -1,0 +1,2 @@
+template,name,virtual_router,tunnel_interface,type,disabled,ak_ike_gateway,ak_ipsec_crypto_profile,anti_replay,copy_flow_label,enable_tunnel_monitor,tunnel_monitor_destination_ip,tunnel_monitor_source_ip,tunnel_monitor_profile,tunnel_monitor_proxy_id,proxy_subnets
+default,some_tunnel,internal,tunnel.42,auto-key,false,IKE-GW-1,AES128_DH14,false,false,false,,,,,"example1,10.10.10.0/24,10.10.20.0/24;example2,10.10.10.0/24,10.10.30.0/24"
