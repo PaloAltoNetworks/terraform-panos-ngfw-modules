@@ -54,9 +54,5 @@ override.tf
 override.tf.json
 *_override.tf
 *_override.tf.json
-<<<<<<< HEAD
 **/creds/**
 **/fw_creds_**.json
-=======
-**/creds/**
->>>>>>> develop
