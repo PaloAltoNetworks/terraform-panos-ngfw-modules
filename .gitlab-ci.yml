@@ -34,7 +34,6 @@ stages:
   - plan
   - apply
   - commit 
-  - destroy
 
 validate:
   stage: validate
@@ -66,16 +65,6 @@ commit:
     - apply
   when: 
     - manual
-  only:
-    - main
-    - demo
-
-destroy:
-  stage: destroy
-  script:
-    - terraform apply -auto-approve -var="pan_creds=./creds/serviceaccount.json" -var="panorama_mode=false" -destroy
-  dependencies:
-    - commit
   only:
     - main
     - demo
