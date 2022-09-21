@@ -24,7 +24,7 @@ before_script:
   - rm -rf .terraform
   - terraform --version
   - mkdir -p ./creds
-  - apk update && apk add go
+  - apk update && apk add go=1.12.0-r0
   - echo $SERVICEACCOUNT > ./creds/serviceaccount.json
   - cat ./creds/serviceaccount.json
   - terraform init -upgrade
