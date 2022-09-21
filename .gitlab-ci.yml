@@ -65,6 +65,7 @@ commit:
     # - go build firewall-commit.go
     # - ./firewall-commit -config ./creds/serviceaccount.json 'Changes committed automatically by pipeline'
     - cd commit
+    - go mod init fw_commit
     - go mod tidy
     - go build fw_commit.go
     - ./fw_commit -config ./creds/serviceaccount.json
