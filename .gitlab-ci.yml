@@ -46,11 +46,11 @@ apply:
 commit:
   stage: commit
   script:
-    - cd && cd utils
+    - cd ../../../utils
     - go mod init commit
     - go mod tidy
     - go build commit.go
-    - ./commit -config examples/csv_examples/csv_basic_example/creds/serviceaccount.json
+    - ./commit -config ../examples/csv_examples/csv_basic_example/creds/serviceaccount.json
   dependencies:
     - apply
   only:
