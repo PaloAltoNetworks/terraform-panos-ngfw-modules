@@ -61,11 +61,11 @@ apply:
 commit:
   stage: commit
   script:
-    - echo "Commiting in progress.."
+    - go get github.com/PaloAltoNetworks/pango
+    - go build firewall-commit.go
+    - ./firewall-commit -config ./creds/serviceaccount.json 'Changes committed automatically by pipeline'
   dependencies:
     - apply
-  when: 
-    - manual
   only:
     - main
     - demo
