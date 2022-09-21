@@ -43,14 +43,14 @@ validate:
 plan:
   stage: plan
   script:
-    - terraform plan -var="pan_creds=./creds/serviceaccount.json" -var="panorama_mode=true"
+    - terraform plan -var="pan_creds=./creds/serviceaccount.json" -var="panorama_mode=true $TERRAFORM_OPTIONS"
   dependencies:
     - validate
 
 apply:
   stage: apply
   script:
-    - terraform apply -auto-approve -var="pan_creds=./creds/serviceaccount.json" -var="panorama_mode=true"
+    - terraform apply -auto-approve -var="pan_creds=./creds/serviceaccount.json" -var="panorama_mode=true $TERRAFORM_OPTIONS"
   dependencies:
     - plan
   only:
