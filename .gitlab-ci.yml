@@ -28,6 +28,7 @@ before_script:
   - echo $SERVICEACCOUNT > ./creds/serviceaccount.json
   - cat ./creds/serviceaccount.json
   - terraform init -upgrade
+  - echo "Running pipeline with additional Terraform options - $TERRAFORM_OPTIONS"
 
 stages:
   - validate
