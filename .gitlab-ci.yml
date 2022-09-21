@@ -8,10 +8,10 @@ before_script:
   - cd examples/csv_examples/csv_basic_example/
   - rm -rf .terraform
   - terraform --version
-  - mkdir -p ./creds
+  - mkdir -p ../../../creds
   - apk update && apk add go
-  - echo $SERVICEACCOUNT > ./creds/serviceaccount.json
-  - cat ./creds/serviceaccount.json
+  - echo $SERVICEACCOUNT > ../../../creds/serviceaccount.json
+  - cat ../../../creds/serviceaccount.json
   - terraform init -upgrade
   - echo "Running pipeline with additional Terraform options - $TERRAFORM_OPTIONS"
 
@@ -50,7 +50,7 @@ commit:
     - go mod init commit
     - go mod tidy
     - go build commit.go
-    - ./commit -config ../examples/csv_examples/csv_basic_example/creds/serviceaccount.json
+    - ./commit -config ../creds/serviceaccount.json
   dependencies:
     - apply
   only:
