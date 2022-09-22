@@ -12,12 +12,12 @@ import (
 
 func main() {
 	var (
-		err                                                      error
-		configFile, hostname, username, password, apiKey, admins string
-		edan, eso, epao, force                                   bool
-		jobId                                                    uint
-		sleep                                                    int64
-		timeout                                                  int
+		err                                                                   error
+		configFile, hostname, username, password, apiKey, admins, deviceGroup string
+		edan, eso, epao, force                                                bool
+		jobId                                                                 uint
+		sleep                                                                 int64
+		timeout                                                               int
 	)
 
 	log.SetFlags(log.Ldate | log.Ltime | log.Lmicroseconds)
@@ -28,6 +28,7 @@ func main() {
 	flag.StringVar(&password, "pass", "", "PAN-OS password")
 	flag.StringVar(&apiKey, "key", "", "PAN-OS API key")
 	flag.StringVar(&admins, "admins", "", "CSV of specific admins for partial config commit")
+	flag.StringVar(&deviceGroup, "deviceGroup", "", "Devices group")
 	flag.BoolVar(&edan, "exclude-device-and-network", false, "Exclude device and network")
 	flag.BoolVar(&eso, "exclude-shared-objects", false, "Exclude shared objects")
 	flag.BoolVar(&epao, "exclude-policy-and-objects", false, "Exclude policy and objects")
@@ -37,7 +38,7 @@ func main() {
 	flag.Parse()
 
 	// Connect to the firewall.
-	fw := &pango.Firewall{Client: pango.Client{
+	panorama := &pango.Panorama{Client: pango.Client{
 		Hostname: hostname,
 		Username: username,
 		Password: password,
@@ -45,32 +46,35 @@ func main() {
 		Logging:  pango.LogOp | pango.LogAction,
 		Timeout:  timeout,
 	}}
-	if err = fw.InitializeUsing(configFile, true); err != nil {
+	if err = panorama.InitializeUsing(configFile, true); err != nil {
 		log.Fatalf("Failed: %s", err)
 	}
 
 	// Build the commit to be performed.
-	cmd := commit.FirewallCommit{
+	cmd := commit.PanoramaCommit{
 		Description:             flag.Arg(0),
 		ExcludeDeviceAndNetwork: edan,
 		ExcludeSharedObjects:    eso,
-		ExcludePolicyAndObjects: epao,
 		Force:                   force,
 	}
 	admins = strings.TrimSpace(admins)
 	if admins != "" {
 		cmd.Admins = strings.Split(admins, ",")
 	}
+	deviceGroup = strings.TrimSpace(deviceGroup)
+	if deviceGroup != "" {
+		cmd.DeviceGroups = strings.Split(deviceGroup, ",")
+	}
 
 	sd := time.Duration(sleep) * time.Second
 
 	// Perform the commit
-	jobId, _, err = fw.Commit(cmd, "", nil)
+	jobId, _, err = panorama.Commit(cmd, "", nil)
 	if err != nil {
 		log.Fatalf("Error in commit: %s", err)
 	} else if jobId == 0 {
 		log.Printf("No commit needed")
-	} else if err = fw.WaitForJob(jobId, sd, nil, nil); err != nil {
+	} else if err = panorama.WaitForJob(jobId, sd, nil, nil); err != nil {
 		log.Printf("Error in commit: %s", err)
 	} else {
 		log.Printf("Committed config successfully")

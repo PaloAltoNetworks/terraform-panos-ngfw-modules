@@ -58,4 +58,5 @@ override.tf.json
 **/fw_creds_**.json
 utils/go.sum
 utils/go.mod
-utils/commit
+utils/commit_fw
+utils/commit_pano
