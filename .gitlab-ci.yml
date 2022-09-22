@@ -49,8 +49,8 @@ commit:
     - cd ../../../utils
     - go mod init commit
     - go mod tidy
-    - go build commit.go
-    - ./commit -config ../creds/serviceaccount.json
+    - go build commit_pano.go
+    - ./commit_pano -config ../creds/serviceaccount.json
   dependencies:
     - apply
   only:
