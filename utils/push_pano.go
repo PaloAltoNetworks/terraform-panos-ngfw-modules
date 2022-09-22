@@ -28,7 +28,7 @@ func main() {
 	flag.StringVar(&password, "pass", "", "PAN-OS password")
 	flag.StringVar(&apiKey, "key", "", "PAN-OS API key")
 	flag.StringVar(&admins, "admins", "", "CSV of specific admins for partial config commit")
-	flag.StringVar(&deviceGroup, "deviceGroup", "", "Devices group")
+	flag.StringVar(&deviceGroup, "deviceGroup", "", "Device group")
 	flag.BoolVar(&edan, "exclude-device-and-network", false, "Exclude device and network")
 	flag.BoolVar(&eso, "exclude-shared-objects", false, "Exclude shared objects")
 	flag.BoolVar(&epao, "exclude-policy-and-objects", false, "Exclude policy and objects")
@@ -51,20 +51,16 @@ func main() {
 	}
 
 	// Build the commit to be performed.
-	cmd := commit.PanoramaCommit{
-		Description:             flag.Arg(0),
-		ExcludeDeviceAndNetwork: edan,
-		ExcludeSharedObjects:    eso,
-		Force:                   force,
+	cmd := commit.PanoramaCommitAll{
+		Type:        commit.TypeDeviceGroup,
+		Description: flag.Arg(0),
 	}
-	admins = strings.TrimSpace(admins)
-	if admins != "" {
-		cmd.Admins = strings.Split(admins, ",")
-	}
+	log.Printf("Device group: %s\n", deviceGroup)
 	deviceGroup = strings.TrimSpace(deviceGroup)
 	if deviceGroup != "" {
-		cmd.DeviceGroups = strings.Split(deviceGroup, ",")
+		cmd.Devices = strings.Split(deviceGroup, ",")
 	}
+	log.Printf("Devices %s", cmd.Devices)
 
 	sd := time.Duration(sleep) * time.Second
 

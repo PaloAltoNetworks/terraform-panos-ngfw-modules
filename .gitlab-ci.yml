@@ -65,7 +65,7 @@ push:
     - go mod init push
     - go mod tidy
     - go build push_pano.go
-    - ./push_pano -config ../creds/serviceaccount.json
+    - ./push_pano -config ../creds/serviceaccount.json -deviceGroup "AWS GlobalProtect Firewalls"
   dependencies:
     - apply
   only:
