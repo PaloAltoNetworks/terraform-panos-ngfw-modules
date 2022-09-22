@@ -62,6 +62,7 @@ push:
   stage: push
   script:
     - cd ../../../utils
+    - go mod init push
     - go mod tidy
     - go build push_pano.go
     - ./push_pano -config ../creds/serviceaccount.json
