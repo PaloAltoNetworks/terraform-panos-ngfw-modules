@@ -60,3 +60,4 @@ utils/go.sum
 utils/go.mod
 utils/commit_fw
 utils/commit_pano
+utils/push_pano

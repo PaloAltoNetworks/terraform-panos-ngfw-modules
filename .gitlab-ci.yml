@@ -19,7 +19,8 @@ stages:
   - validate
   - plan
   - apply
-  - commit 
+  - commit
+  - push
 
 validate:
   stage: validate
@@ -51,6 +52,19 @@ commit:
     - go mod tidy
     - go build commit_pano.go
     - ./commit_pano -config ../creds/serviceaccount.json
+  dependencies:
+    - apply
+  only:
+    - main
+    - demo
+
+push:
+  stage: push
+  script:
+    - cd ../../../utils
+    - go mod tidy
+    - go build push_pano.go
+    - ./push_pano -config ../creds/serviceaccount.json
   dependencies:
     - apply
   only:
