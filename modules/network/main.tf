@@ -43,9 +43,9 @@ resource "panos_panorama_ethernet_interface" "this" {
   management_profile        = each.value.management_profile
   link_state                = each.value.link_state
   static_ips                = try(each.value.static_ips, [])
-  enable_dhcp               = try(each.value.enable_dhcp, false)
-  create_dhcp_default_route = try(each.value.create_dhcp_default_route, false)
-  dhcp_default_route_metric = try(each.value.dhcp_default_route_metric, 10)
+  enable_dhcp               = each.value.enable_dhcp != "" ? each.value.enable_dhcp : false
+  create_dhcp_default_route = each.create_dhcp_default_route != "" ? each.value.create_dhcp_default_route : false
+  dhcp_default_route_metric = each.dhcp_default_route_metric != "" ? each.value.dhcp_default_route_metric : 10
   comment                   = each.value.comment
 
   depends_on = [
@@ -63,9 +63,9 @@ resource "panos_ethernet_interface" "this" {
   management_profile        = each.value.management_profile
   link_state                = each.value.link_state
   static_ips                = try(each.value.static_ips, [])
-  enable_dhcp               = try(each.value.enable_dhcp, false)
-  create_dhcp_default_route = try(each.value.create_dhcp_default_route, false)
-  dhcp_default_route_metric = try(each.value.dhcp_default_route_metric, 10)
+  enable_dhcp               = each.value.enable_dhcp != "" ? each.value.enable_dhcp : false
+  create_dhcp_default_route = each.create_dhcp_default_route != "" ? each.value.create_dhcp_default_route : false
+  dhcp_default_route_metric = each.dhcp_default_route_metric != "" ? each.value.dhcp_default_route_metric : 10
   comment                   = each.value.comment
 
   depends_on = [
