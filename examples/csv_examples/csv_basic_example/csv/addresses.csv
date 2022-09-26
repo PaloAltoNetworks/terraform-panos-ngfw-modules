@@ -1,18 +1,18 @@
 device_group,name,value,tags,type,description
-AWS GlobalProtect Firewalls,DNS1,1.1.1.1/32,,ip-netmask,DNS-SRV-Public-1
-AWS GlobalProtect Firewalls,DNS2,1.0.0.1/32,,ip-netmask,DNS-SRV-Public-2
-AWS GlobalProtect Firewalls,DNS3,8.8.4.4/32,,ip-netmask,DNS-GOOGLE-1
-AWS GlobalProtect Firewalls,DNS4,8.8.8.8/32,,ip-netmask,DNS-GOOGLE-2
-AWS GlobalProtect Firewalls,Server10,10.0.0.10/32,,ip-netmask,Server10
-AWS GlobalProtect Firewalls,Server11,10.0.0.11/32,,ip-netmask,Server11
-AWS GlobalProtect Firewalls,WebServer1,10.0.1.10/32,,ip-netmask,WebServer1
-AWS GlobalProtect Firewalls,WebServer2,10.0.1.20/32,,ip-netmask,WebServer2
-AWS GlobalProtect Firewalls,RFC1918_192.168.0.0_16,192.168.0.0/16,,ip-netmask,
-AWS GlobalProtect Firewalls,RFC1918_172.16.0.0_12,172.16.0.0/12,,ip-netmask,
-AWS GlobalProtect Firewalls,RFC1918_10.0.0.0_8,10.0.0.0/8,,ip-netmask,
-AWS GlobalProtect Firewalls,NTP1,1.0.0.1/32,,ip-netmask,
-AWS GlobalProtect Firewalls,NTP2,2.0.0.2/32,,ip-netmask,
-AWS GlobalProtect Firewalls,AWS-15.177.0.0_16,15.177.0.0/16,,ip-netmask,
-AWS GlobalProtect Firewalls,GlobalProtect Public-A,10.184.0.0/24,,ip-netmask,
-AWS GlobalProtect Firewalls,GlobalProtect Public-B,10.184.1.0/24,,ip-netmask,
-AWS GlobalProtect Firewalls,GlobalProtect Public-C,10.184.2.0/24,,ip-netmask,
+AWSGlobalProtectFirewalls,DNS1,1.1.1.1/32,,ip-netmask,DNS-SRV-Public-1
+AWSGlobalProtectFirewalls,DNS2,1.0.0.1/32,,ip-netmask,DNS-SRV-Public-2
+AWSGlobalProtectFirewalls,DNS3,8.8.4.4/32,,ip-netmask,DNS-GOOGLE-1
+AWSGlobalProtectFirewalls,DNS4,8.8.8.8/32,,ip-netmask,DNS-GOOGLE-2
+AWSGlobalProtectFirewalls,Server10,10.0.0.10/32,,ip-netmask,Server10
+AWSGlobalProtectFirewalls,Server11,10.0.0.11/32,,ip-netmask,Server11
+AWSGlobalProtectFirewalls,WebServer1,10.0.1.10/32,,ip-netmask,WebServer1
+AWSGlobalProtectFirewalls,WebServer2,10.0.1.20/32,,ip-netmask,WebServer2
+AWSGlobalProtectFirewalls,RFC1918_192.168.0.0_16,192.168.0.0/16,,ip-netmask,
+AWSGlobalProtectFirewalls,RFC1918_172.16.0.0_12,172.16.0.0/12,,ip-netmask,
+AWSGlobalProtectFirewalls,RFC1918_10.0.0.0_8,10.0.0.0/8,,ip-netmask,
+AWSGlobalProtectFirewalls,NTP1,1.0.0.1/32,,ip-netmask,
+AWSGlobalProtectFirewalls,NTP2,2.0.0.2/32,,ip-netmask,
+AWSGlobalProtectFirewalls,AWS-15.177.0.0_16,15.177.0.0/16,,ip-netmask,
+AWSGlobalProtectFirewalls,GlobalProtect Public-A,10.184.0.0/24,,ip-netmask,
+AWSGlobalProtectFirewalls,GlobalProtect Public-B,10.184.1.0/24,,ip-netmask,
+AWSGlobalProtectFirewalls,GlobalProtect Public-C,10.184.2.0/24,,ip-netmask,
