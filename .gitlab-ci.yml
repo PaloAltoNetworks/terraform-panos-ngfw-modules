@@ -9,7 +9,6 @@ before_script:
   - rm -rf .terraform
   - terraform --version
   - mkdir -p ../../../creds
-  - apk update && apk add go
   - echo $SERVICEACCOUNT > ../../../creds/serviceaccount.json
   - cat ../../../creds/serviceaccount.json
   - terraform init -upgrade
@@ -47,6 +46,7 @@ apply:
 commit:
   stage: commit
   script:
+    - apk update && apk add go
     - cd ../../../utils
     - go mod init commit
     - go mod tidy
@@ -61,6 +61,7 @@ commit:
 push:
   stage: push
   script:
+    - apk update && apk add go
     - cd ../../../utils
     - go mod init push
     - go mod tidy
