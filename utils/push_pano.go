@@ -12,12 +12,12 @@ import (
 
 func main() {
 	var (
-		err                                                                   error
-		configFile, hostname, username, password, apiKey, admins, deviceGroup string
-		edan, eso, epao, force                                                bool
-		jobId                                                                 uint
-		sleep                                                                 int64
-		timeout                                                               int
+		err                                                               error
+		configFile, hostname, username, password, apiKey, admins, devices string
+		edan, eso, epao, force                                            bool
+		jobId                                                             uint
+		sleep                                                             int64
+		timeout                                                           int
 	)
 
 	log.SetFlags(log.Ldate | log.Ltime | log.Lmicroseconds)
@@ -28,7 +28,7 @@ func main() {
 	flag.StringVar(&password, "pass", "", "PAN-OS password")
 	flag.StringVar(&apiKey, "key", "", "PAN-OS API key")
 	flag.StringVar(&admins, "admins", "", "CSV of specific admins for partial config commit")
-	flag.StringVar(&deviceGroup, "deviceGroup", "", "Device group")
+	flag.StringVar(&devices, "devices", "", "Devices")
 	flag.BoolVar(&edan, "exclude-device-and-network", false, "Exclude device and network")
 	flag.BoolVar(&eso, "exclude-shared-objects", false, "Exclude shared objects")
 	flag.BoolVar(&epao, "exclude-policy-and-objects", false, "Exclude policy and objects")
@@ -55,12 +55,12 @@ func main() {
 		Type:        commit.TypeDeviceGroup,
 		Description: flag.Arg(0),
 	}
-	log.Printf("Device group: %s\n", deviceGroup)
-	deviceGroup = strings.TrimSpace(deviceGroup)
-	if deviceGroup != "" {
-		cmd.Devices = strings.Split(deviceGroup, ",")
+	log.Printf("Devices: %s\n", devices)
+	devices = strings.TrimSpace(devices)
+	if devices != "" {
+		cmd.Devices = strings.Split(devices, ",")
 	}
-	log.Printf("Devices %s", cmd.Devices)
+	log.Printf("Devices list: %s\n", cmd.Devices)
 
 	sd := time.Duration(sleep) * time.Second
 
