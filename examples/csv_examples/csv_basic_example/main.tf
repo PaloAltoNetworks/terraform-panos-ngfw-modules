@@ -184,14 +184,17 @@ locals {
     for x in csvdecode(file(var.network_interfaces_file)) : {
       template = x.template != "" ? x.template : "default"
 
-      type               = x.type
-      name               = x.name
-      vsys               = x.vsys
-      mode               = x.mode
-      management_profile = x.management_profile
-      link_state         = x.link_state
-      static_ips         = length(x.static_ips) != 0 ? split(",", x.static_ips) : []
-      comment            = x.comment
+      type                      = x.type
+      name                      = x.name
+      vsys                      = x.vsys
+      mode                      = x.mode
+      management_profile        = x.management_profile
+      link_state                = x.link_state
+      static_ips                = length(x.static_ips) != 0 ? split(",", x.static_ips) : []
+      enable_dhcp               = x.enable_dhcp
+      create_dhcp_default_route = x.create_dhcp_default_route
+      dhcp_default_route_metric = x.dhcp_default_route_metric
+      comment                   = x.comment
     } #if x.type == "ethernet"
   ]
 

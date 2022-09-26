@@ -1,7 +1,7 @@
-template,vsys,type,name,mode,management_profile,link_state,static_ips,comment,virtual_router,zone
-default,vsys1,ethernet,ethernet1/1,layer3,mgmt_default,up,,mgmt,default,mgmt
-default,vsys1,ethernet,ethernet1/2,layer3,mgmt_default,up,,external,external,external
-default,vsys1,ethernet,ethernet1/3,layer3,,up,,internal,internal,internal
-default,vsys1,ethernet,ethernet1/4,layer3,,up,,internal,internal,internal
-default,vsys1,loopback,loopback.42,layer3,,up,,internal,internal,vpn
-default,vsys1,tunnel,tunnel.42,layer3,,up,,internal,internal,vpn
+template,vsys,type,name,mode,management_profile,link_state,static_ips,enable_dhcp,create_dhcp_default_route,dhcp_default_route_metric,comment,virtual_router,zone
+default,vsys1,ethernet,ethernet1/1,layer3,mgmt_default,up,,true,false,,mgmt,default,mgmt
+default,vsys1,ethernet,ethernet1/2,layer3,mgmt_default,up,,,,,external,external,external
+default,vsys1,ethernet,ethernet1/3,layer3,,up,,,,,internal,internal,internal
+default,vsys1,ethernet,ethernet1/4,layer3,,up,,,,,internal,internal,internal
+default,vsys1,loopback,loopback.42,layer3,,up,,,,,internal,internal,vpn
+default,vsys1,tunnel,tunnel.42,layer3,,up,,,,,internal,internal,vpn
