@@ -1,7 +1,7 @@
 device_group,vsys,name,protocol,source_port,destination_port,tags,description
-AWSGlobalProtectFirewalls,,SomeWeb,tcp,,"80,443",,Some web services
-AWSGlobalProtectFirewalls,,SomeSSH,tcp,,22,,Some SSH services
-AWSGlobalProtectFirewalls,,SSH-8022,tcp,,8022,,SSH not-default port
-AWSGlobalProtectFirewalls,,Web-8080,tcp,,8080,,HTTP not-default port
-AWSGlobalProtectFirewalls,,tcp_4450,tcp,,4450,,Custom ports for PSN Services
-AWSGlobalProtectFirewalls,,tcp_4457-4458,tcp,,4457-4458,,Custom ports for PSN Services
+AWS GlobalProtect Firewalls,,SomeWeb,tcp,,"80,443",,Some web services
+AWS GlobalProtect Firewalls,,SomeSSH,tcp,,22,,Some SSH services
+AWS GlobalProtect Firewalls,,SSH-8022,tcp,,8022,,SSH not-default port
+AWS GlobalProtect Firewalls,,Web-8080,tcp,,8080,,HTTP not-default port
+AWS GlobalProtect Firewalls,,tcp_4450,tcp,,4450,,Custom ports for PSN Services
+AWS GlobalProtect Firewalls,,tcp_4457-4458,tcp,,4457-4458,,Custom ports for PSN Services
