@@ -12,12 +12,12 @@ import (
 
 func main() {
 	var (
-		err                                                               error
-		configFile, hostname, username, password, apiKey, admins, devices string
-		edan, eso, epao, force                                            bool
-		jobId                                                             uint
-		sleep                                                             int64
-		timeout                                                           int
+		err                                                                            error
+		configFile, hostname, username, password, apiKey, admins, devices, deviceGroup string
+		edan, eso, epao, force                                                         bool
+		jobId                                                                          uint
+		sleep                                                                          int64
+		timeout                                                                        int
 	)
 
 	log.SetFlags(log.Ldate | log.Ltime | log.Lmicroseconds)
@@ -28,6 +28,7 @@ func main() {
 	flag.StringVar(&password, "pass", "", "PAN-OS password")
 	flag.StringVar(&apiKey, "key", "", "PAN-OS API key")
 	flag.StringVar(&admins, "admins", "", "CSV of specific admins for partial config commit")
+	flag.StringVar(&deviceGroup, "deviceGroup", "", "Device group")
 	flag.StringVar(&devices, "devices", "", "Devices")
 	flag.BoolVar(&edan, "exclude-device-and-network", false, "Exclude device and network")
 	flag.BoolVar(&eso, "exclude-shared-objects", false, "Exclude shared objects")
@@ -52,8 +53,10 @@ func main() {
 
 	// Build the commit to be performed.
 	cmd := commit.PanoramaCommitAll{
-		Type:        commit.TypeDeviceGroup,
-		Description: flag.Arg(0),
+		Type:            commit.TypeDeviceGroup,
+		Name:            deviceGroup,
+		Description:     flag.Arg(0),
+		IncludeTemplate: true,
 	}
 	log.Printf("Devices: %s\n", devices)
 	devices = strings.TrimSpace(devices)
