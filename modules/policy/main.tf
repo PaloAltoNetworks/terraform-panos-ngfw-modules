@@ -5,9 +5,9 @@ resource "panos_security_rule_group" "this" {
     => item
   } : {}
 
-  device_group       = var.panorama_mode == true ? try(each.value.device_group, "shared") : null
-  rulebase           = var.panorama_mode == true ? try(each.value.rulebase, "pre-rulebase") : null
-  vsys               = var.panorama_mode == false ? try(each.value.vsys, "vsys1") : null
+  device_group = var.panorama_mode == true ? try(each.value.device_group, "shared") : null
+  rulebase     = var.panorama_mode == true ? try(each.value.rulebase, "pre-rulebase") : null
+  vsys         = var.panorama_mode == false ? try(each.value.vsys, "vsys1") : null
 
   position_keyword   = try(each.value.position_keyword, "")
   position_reference = try(each.value.position_reference, null)
@@ -61,13 +61,13 @@ resource "panos_security_rule_group" "this" {
 
 resource "panos_panorama_nat_rule_group" "panorama_mode" {
   for_each = length(var.nat_policy) != 0 && var.panorama_mode == true ? {
-  for item in var.nat_policy :
-  "${try(item.device_group, "shared")}_${replace(try(item.rulebase, "pre-rulebase"), "-","_")}_${replace(try(item.position_keyword, "")," ","_")}"
-  => item
+    for item in var.nat_policy :
+    "${try(item.device_group, "shared")}_${replace(try(item.rulebase, "pre-rulebase"), "-", "_")}_${replace(try(item.position_keyword, ""), " ", "_")}"
+    => item
   } : tomap({})
 
-  device_group       = var.panorama_mode == true ? try(each.value.device_group, "shared") : null
-  rulebase           = var.panorama_mode == true ? try(each.value.rulebase, "pre-rulebase") : null
+  device_group = var.panorama_mode == true ? try(each.value.device_group, "shared") : null
+  rulebase     = var.panorama_mode == true ? try(each.value.rulebase, "pre-rulebase") : null
 
   position_keyword   = try(each.value.position_keyword, "")
   position_reference = try(each.value.position_reference, null)
@@ -191,10 +191,10 @@ resource "panos_panorama_nat_rule_group" "panorama_mode" {
 resource "panos_nat_rule_group" "fw_mode" {
   for_each = length(var.nat_policy) != 0 && var.panorama_mode == false ? {
     for item in var.nat_policy :
-  "${try(item.device_group, "shared")}_${replace(try(item.rulebase, "pre-rulebase"), "-","_")}_${replace(try(item.position_keyword, "")," ","_")}"
+    "${try(item.device_group, "shared")}_${replace(try(item.rulebase, "pre-rulebase"), "-", "_")}_${replace(try(item.position_keyword, ""), " ", "_")}"
     => item
   } : tomap({})
-  vsys               = var.panorama_mode == false ? try(each.value.vsys, "vsys1") : null
+  vsys = var.panorama_mode == false ? try(each.value.vsys, "vsys1") : null
 
   position_keyword   = try(each.value.position_keyword, "")
   position_reference = try(each.value.position_reference, null)

@@ -136,7 +136,7 @@ resource "panos_virtual_router" "this" {
   for_each = length(var.virtual_routers) != 0 ? { for vrouter in var.virtual_routers : vrouter.name => vrouter } : {}
 
   template = var.panorama_mode == true ? try(each.value.template, "default") : null
-  vsys     = each.value.vsys != "" ? each.value.vsys : "vsys1"
+  vsys     = try(each.value.vsys, "vsys1")
   name     = each.key
 }
 
