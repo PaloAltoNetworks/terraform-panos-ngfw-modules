@@ -45,8 +45,9 @@ func main() {
 		Username: username,
 		Password: password,
 		ApiKey:   apiKey,
-		Logging:  pango.LogOp | pango.LogAction | pango.LogSend | pango.LogReceive | pango.LogLog | pango.LogUid,
-		Timeout:  timeout,
+		// Logging:  pango.LogOp | pango.LogAction | pango.LogSend | pango.LogReceive | pango.LogLog | pango.LogUid,
+		Logging: pango.LogOp | pango.LogAction,
+		Timeout: timeout,
 	}}
 	if err = panorama.InitializeUsing(configFile, true); err != nil {
 		log.Fatalf("Failed: %s", err)
