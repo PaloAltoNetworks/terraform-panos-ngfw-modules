@@ -51,7 +51,7 @@ commit:
     - go mod init panorama_commit_push
     - go mod tidy
     - go build panorama_commit_push.go
-    - ./panorama_commit_push -config ../creds/serviceaccount.json
+    - ./panorama_commit_push -config ../creds/serviceaccount.json -deviceGroup "AWSGlobalProtectFirewalls"
   dependencies:
     - apply
   only:
