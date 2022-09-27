@@ -45,7 +45,7 @@ func main() {
 		Username: username,
 		Password: password,
 		ApiKey:   apiKey,
-		Logging:  pango.LogOp | pango.LogAction,
+		Logging:  pango.LogOp | pango.LogAction | pango.LogSend | pango.LogReceive | pango.LogLog | pango.LogUid,
 		Timeout:  timeout,
 	}}
 	if err = panorama.InitializeUsing(configFile, true); err != nil {
