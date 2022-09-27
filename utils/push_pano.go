@@ -79,24 +79,24 @@ func main() {
 	log.Printf("Commit all - template stack\n")
 	jobId, _, err = panorama.Commit(cmdTemplateStack, "", nil)
 	if err != nil {
-		log.Fatalf("Error in commit: %s", err)
+		log.Fatalf("Fatal error in push: %s", err)
 	} else if jobId == 0 {
 		log.Printf("No commit needed")
 	} else if err = panorama.WaitForJob(jobId, sd, nil, nil); err != nil {
-		log.Printf("Error in commit: %s", err)
+		log.Printf("Error in push: %s", err)
 	} else {
-		log.Printf("Committed config successfully")
+		log.Printf("Pushed config successfully")
 	}
 
 	log.Printf("Commit all - device group\n")
 	jobId, _, err = panorama.Commit(cmdDeviceGroup, "", nil)
 	if err != nil {
-		log.Fatalf("Error in commit: %s", err)
+		log.Fatalf("Fatal error in push: %s", err)
 	} else if jobId == 0 {
 		log.Printf("No commit needed")
 	} else if err = panorama.WaitForJob(jobId, sd, nil, nil); err != nil {
-		log.Printf("Error in commit: %s", err)
+		log.Printf("Error in push: %s", err)
 	} else {
-		log.Printf("Committed config successfully")
+		log.Printf("Pushed config successfully")
 	}
 }
