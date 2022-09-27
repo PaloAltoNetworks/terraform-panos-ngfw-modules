@@ -12,12 +12,12 @@ import (
 
 func main() {
 	var (
-		err                                                                            error
-		configFile, hostname, username, password, apiKey, admins, devices, deviceGroup string
-		edan, eso, epao, force                                                         bool
-		jobId                                                                          uint
-		sleep                                                                          int64
-		timeout                                                                        int
+		err                                                                                           error
+		configFile, hostname, username, password, apiKey, admins, devices, deviceGroup, templateStack string
+		edan, eso, epao, force                                                                        bool
+		jobId                                                                                         uint
+		sleep                                                                                         int64
+		timeout                                                                                       int
 	)
 
 	log.SetFlags(log.Ldate | log.Ltime | log.Lmicroseconds)
@@ -30,6 +30,7 @@ func main() {
 	flag.StringVar(&admins, "admins", "", "CSV of specific admins for partial config commit")
 	flag.StringVar(&deviceGroup, "deviceGroup", "", "Device group")
 	flag.StringVar(&devices, "devices", "", "Devices")
+	flag.StringVar(&templateStack, "templateStack", "", "Template stack")
 	flag.BoolVar(&edan, "exclude-device-and-network", false, "Exclude device and network")
 	flag.BoolVar(&eso, "exclude-shared-objects", false, "Exclude shared objects")
 	flag.BoolVar(&epao, "exclude-policy-and-objects", false, "Exclude policy and objects")
@@ -52,7 +53,13 @@ func main() {
 	}
 
 	// Build the commit to be performed.
-	cmd := commit.PanoramaCommitAll{
+	cmdTemplateStack := commit.PanoramaCommitAll{
+		Type:                commit.TypeTemplateStack,
+		Name:                templateStack,
+		Description:         flag.Arg(0),
+		ForceTemplateValues: true,
+	}
+	cmdDeviceGroup := commit.PanoramaCommitAll{
 		Type:            commit.TypeDeviceGroup,
 		Name:            deviceGroup,
 		Description:     flag.Arg(0),
@@ -61,14 +68,28 @@ func main() {
 	log.Printf("Devices: %s\n", devices)
 	devices = strings.TrimSpace(devices)
 	if devices != "" {
-		cmd.Devices = strings.Split(devices, ",")
+		cmdDeviceGroup.Devices = strings.Split(devices, ",")
+		cmdTemplateStack.Devices = strings.Split(devices, ",")
 	}
-	log.Printf("Devices list: %s\n", cmd.Devices)
+	log.Printf("Devices list: %s\n", cmdDeviceGroup.Devices)
 
 	sd := time.Duration(sleep) * time.Second
 
 	// Perform the commit
-	jobId, _, err = panorama.Commit(cmd, "", nil)
+	log.Printf("Commit all - template stack\n")
+	jobId, _, err = panorama.Commit(cmdTemplateStack, "", nil)
+	if err != nil {
+		log.Fatalf("Error in commit: %s", err)
+	} else if jobId == 0 {
+		log.Printf("No commit needed")
+	} else if err = panorama.WaitForJob(jobId, sd, nil, nil); err != nil {
+		log.Printf("Error in commit: %s", err)
+	} else {
+		log.Printf("Committed config successfully")
+	}
+
+	log.Printf("Commit all - device group\n")
+	jobId, _, err = panorama.Commit(cmdDeviceGroup, "", nil)
 	if err != nil {
 		log.Fatalf("Error in commit: %s", err)
 	} else if jobId == 0 {
