@@ -1,3 +1,4 @@
 template,vsys,name,mode
-default,,internal,layer3
-default,,external,layer3
+default,vsys1,internal,layer3
+default,vsys1,external,layer3
+default,vsys1,default,layer3

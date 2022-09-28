@@ -404,6 +404,6 @@ variable "nat_policy" {
 
 variable "panorama_mode" {
   description = "If modules have target to Panorama, it enable Panorama specific variables."
-  default = false
-  type = bool
+  default     = false
+  type        = bool
 }
