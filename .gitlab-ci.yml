@@ -66,7 +66,8 @@ push:
     - go mod init panorama_commit_push
     - go mod tidy
     - go build panorama_commit_push.go
-    - ./panorama_commit_push -config ../creds/serviceaccount.json -mode "push" -deviceGroup "AWSGlobalProtectFirewalls" -devices "007255000331988" -templateStack "default-stack"
+    # - ./panorama_commit_push -config ../creds/serviceaccount.json -mode "push" -deviceGroup "AWSGlobalProtectFirewalls" -devices "007255000331988" -templateStack "default-stack"
+    - ./panorama_commit_push -config ../creds/serviceaccount.json -mode "push" -deviceGroup "$DEVICE_GROUP" -devices "$DEVICES" -templateStack "$TEMPLATE_STACK"
   dependencies:
     - apply
   only:
