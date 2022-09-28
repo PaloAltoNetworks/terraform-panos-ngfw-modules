@@ -80,7 +80,7 @@ revert:
   stage: revert
   script:
     - git reset --hard HEAD^
-    - terraform apply -auto-approve -var="pan_creds=../../../creds/serviceaccount.json" -var="panorama_mode=true" $TERRAFORM_OPTIONS
+    - terraform apply -auto-approve -var="pan_creds=../../../creds/serviceaccount.json" -var="panorama_mode=true"
     - apk update && apk add go
     - cd ../../../utils
     - go mod init panorama_commit_push
