@@ -24,6 +24,7 @@ stages:
 validate:
   stage: validate
   script:
+    - terraform init -upgrade
     - terraform validate
 
 plan:
@@ -80,21 +81,22 @@ push:
     - main
     - demo
 
-# revert:
-#   stage: revert
-#   script:
-#     - git reset --hard HEAD^
-#     - terraform apply -auto-approve -var="pan_creds=../../../creds/serviceaccount.json" -var="panorama_mode=true" $TERRAFORM_OPTIONS
-#     - apk update && apk add go
-#     - cd ../../../utils
-#     - go mod init panorama_commit_push
-#     - go mod tidy
-#     - go build panorama_commit_push.go
-#     - ./panorama_commit_push -config ../creds/serviceaccount.json -deviceGroup "$DEVICE_GROUP"
-#     - ./panorama_commit_push -config ../creds/serviceaccount.json -mode "push" -deviceGroup "$DEVICE_GROUP" -devices "$DEVICES" -templateStack "$TEMPLATE_STACK"
-#   dependencies:
-#     - push
-#   only:
-#     - main
-#     - demo
-#   when: on_failure
+revert:
+  stage: revert
+  script:
+    - git reset --hard HEAD^
+    - terraform init -upgrade
+    - terraform apply -auto-approve -var="pan_creds=../../../creds/serviceaccount.json" -var="panorama_mode=true" $TERRAFORM_OPTIONS
+    - apk update && apk add go
+    - cd ../../../utils
+    - go mod init panorama_commit_push
+    - go mod tidy
+    - go build panorama_commit_push.go
+    - ./panorama_commit_push -config ../creds/serviceaccount.json -deviceGroup "$DEVICE_GROUP"
+    - ./panorama_commit_push -config ../creds/serviceaccount.json -mode "push" -deviceGroup "$DEVICE_GROUP" -devices "$DEVICES" -templateStack "$TEMPLATE_STACK"
+  dependencies:
+    - push
+  only:
+    - main
+    - demo
+  when: on_failure
