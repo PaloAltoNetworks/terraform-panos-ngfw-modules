@@ -11,7 +11,6 @@ before_script:
   - mkdir -p ../../../creds
   - echo $SERVICEACCOUNT > ../../../creds/serviceaccount.json
   - cat ../../../creds/serviceaccount.json
-  - terraform init -upgrade
   - echo "Running pipeline with additional Terraform options - $TERRAFORM_OPTIONS"
 
 stages:
@@ -30,6 +29,7 @@ validate:
 plan:
   stage: plan
   script:
+    - terraform init -upgrade
     - terraform plan -var="pan_creds=../../../creds/serviceaccount.json" -var="panorama_mode=true" $TERRAFORM_OPTIONS
   dependencies:
     - validate
@@ -37,6 +37,7 @@ plan:
 apply:
   stage: apply
   script:
+    - terraform init -upgrade
     - terraform apply -auto-approve -var="pan_creds=../../../creds/serviceaccount.json" -var="panorama_mode=true" $TERRAFORM_OPTIONS
   dependencies:
     - plan
@@ -67,7 +68,7 @@ push:
   stage: push
   script:
     # - apk update && apk add go
-    # - cd ../../../utils
+    - cd ../../../utils
     # - go mod init panorama_commit_push
     # - go mod tidy
     # - go build panorama_commit_push.go
@@ -79,21 +80,21 @@ push:
     - main
     - demo
 
-revert:
-  stage: revert
-  script:
-    - git reset --hard HEAD^
-    - terraform apply -auto-approve -var="pan_creds=../../../creds/serviceaccount.json" -var="panorama_mode=true" $TERRAFORM_OPTIONS
-    - apk update && apk add go
-    - cd ../../../utils
-    - go mod init panorama_commit_push
-    - go mod tidy
-    - go build panorama_commit_push.go
-    - ./panorama_commit_push -config ../creds/serviceaccount.json -deviceGroup "$DEVICE_GROUP"
-    - ./panorama_commit_push -config ../creds/serviceaccount.json -mode "push" -deviceGroup "$DEVICE_GROUP" -devices "$DEVICES" -templateStack "$TEMPLATE_STACK"
-  dependencies:
-    - push
-  only:
-    - main
-    - demo
-  when: on_failure
+# revert:
+#   stage: revert
+#   script:
+#     - git reset --hard HEAD^
+#     - terraform apply -auto-approve -var="pan_creds=../../../creds/serviceaccount.json" -var="panorama_mode=true" $TERRAFORM_OPTIONS
+#     - apk update && apk add go
+#     - cd ../../../utils
+#     - go mod init panorama_commit_push
+#     - go mod tidy
+#     - go build panorama_commit_push.go
+#     - ./panorama_commit_push -config ../creds/serviceaccount.json -deviceGroup "$DEVICE_GROUP"
+#     - ./panorama_commit_push -config ../creds/serviceaccount.json -mode "push" -deviceGroup "$DEVICE_GROUP" -devices "$DEVICES" -templateStack "$TEMPLATE_STACK"
+#   dependencies:
+#     - push
+#   only:
+#     - main
+#     - demo
+#   when: on_failure
