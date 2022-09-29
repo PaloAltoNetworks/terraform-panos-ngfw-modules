@@ -69,13 +69,7 @@ commit:
 push:
   stage: push
   script:
-    # - apk update && apk add go
     - cd ../../../utils
-    - ls -al
-    - ls -al ../
-    # - go mod init panorama_commit_push
-    # - go mod tidy
-    # - go build panorama_commit_push.go
     # - ./panorama_commit_push -config ../creds/serviceaccount.json -mode "push" -deviceGroup "AWSGlobalProtectFirewalls" -devices "007255000331988" -templateStack "default-stack"
     - ./panorama_commit_push -config ../creds/serviceaccount.json -mode "push" -deviceGroup "$DEVICE_GROUP" -devices "$DEVICES" -templateStack "$TEMPLATE_STACK"
   dependencies:
@@ -84,22 +78,22 @@ push:
     - main
     - demo
 
-# revert:
-#   stage: revert
-#   script:
-#     - git reset --hard HEAD^
-#     - terraform init -upgrade
-#     - terraform apply -auto-approve -var="pan_creds=../../../creds/serviceaccount.json" -var="panorama_mode=true" $TERRAFORM_OPTIONS
-#     - apk update && apk add go
-#     - cd ../../../utils
-#     - go mod init panorama_commit_push
-#     - go mod tidy
-#     - go build panorama_commit_push.go
-#     - ./panorama_commit_push -config ../creds/serviceaccount.json -deviceGroup "$DEVICE_GROUP"
-#     - ./panorama_commit_push -config ../creds/serviceaccount.json -mode "push" -deviceGroup "$DEVICE_GROUP" -devices "$DEVICES" -templateStack "$TEMPLATE_STACK"
-#   dependencies:
-#     - push
-#   only:
-#     - main
-#     - demo
-#   when: on_failure
+revert:
+  stage: revert
+  script:
+    - git reset --hard HEAD^
+    - terraform init -upgrade
+    - terraform apply -auto-approve -var="pan_creds=../../../creds/serviceaccount.json" -var="panorama_mode=true" $TERRAFORM_OPTIONS
+    - apk update && apk add go
+    - cd ../../../utils
+    - go mod init panorama_commit_push
+    - go mod tidy
+    - go build panorama_commit_push.go
+    - ./panorama_commit_push -config ../creds/serviceaccount.json -deviceGroup "$DEVICE_GROUP"
+    - ./panorama_commit_push -config ../creds/serviceaccount.json -mode "push" -deviceGroup "$DEVICE_GROUP" -devices "$DEVICES" -templateStack "$TEMPLATE_STACK"
+  dependencies:
+    - push
+  only:
+    - main
+    - demo
+  when: on_failure
