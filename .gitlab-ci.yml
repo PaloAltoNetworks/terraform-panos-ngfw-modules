@@ -21,10 +21,6 @@ stages:
   - push
   - revert
 
-artifacts:
-  paths:
-  - utils/panorama_commit_push
-
 validate:
   stage: validate
   script:
@@ -60,6 +56,10 @@ commit:
     - go build panorama_commit_push.go
     # - ./panorama_commit_push -config ../creds/serviceaccount.json -deviceGroup "AWSGlobalProtectFirewalls"
     - ./panorama_commit_push -config ../creds/serviceaccount.json -deviceGroup "$DEVICE_GROUP"
+  artifacts:
+    untracked: true
+    paths:
+    - utils/panorama_commit_push
   dependencies:
     - apply
   only:
