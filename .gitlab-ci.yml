@@ -70,6 +70,8 @@ push:
   script:
     # - apk update && apk add go
     - cd ../../../utils
+    - ls -al
+    - ls -al ../
     # - go mod init panorama_commit_push
     # - go mod tidy
     # - go build panorama_commit_push.go
