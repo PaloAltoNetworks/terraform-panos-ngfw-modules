@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"log"
 	"os"
 	"strings"
@@ -114,7 +115,10 @@ func main() {
 			log.Printf("No commit needed")
 		} else if err = panorama.WaitForJob(jobId, sd, nil, nil); err != nil {
 			log.Printf("Error in commit: %s", err)
-			os.Exit(COMMIT_ERROR)
+			// sometimes there are problems with unmarshaling, but changes are committed
+			if !strings.Contains(fmt.Sprintf("%s", err), "Error unmarshaling") {
+				os.Exit(COMMIT_ERROR)
+			}
 		} else {
 			log.Printf("Committed config successfully")
 		}
