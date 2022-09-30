@@ -10,7 +10,6 @@ before_script:
   - terraform --version
   - mkdir -p ../../../creds
   - echo $SERVICEACCOUNT > ../../../creds/serviceaccount.json
-  - cat ../../../creds/serviceaccount.json
   - echo "Running pipeline with additional Terraform options - $TERRAFORM_OPTIONS"
 
 stages:
