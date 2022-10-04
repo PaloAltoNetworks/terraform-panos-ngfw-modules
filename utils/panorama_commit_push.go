@@ -2,13 +2,19 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"log"
+	"os"
 	"strings"
 	"time"
 
 	"github.com/PaloAltoNetworks/pango"
 	"github.com/PaloAltoNetworks/pango/commit"
 )
+
+const COMMIT_ERROR = 1
+const PUSH_TEMPLATE_ERROR = 2
+const PUSH_DEVICE_GROUP_ERROR = 3
 
 func main() {
 	var (
@@ -103,37 +109,46 @@ func main() {
 		log.Printf("Commit: %s\n", deviceGroup)
 		jobId, _, err = panorama.Commit(cmdCommit, "", nil)
 		if err != nil {
-			log.Fatalf("Error in commit: %s", err)
+			log.Fatalf("Fatal error in commit: %s", err)
+			os.Exit(COMMIT_ERROR)
 		} else if jobId == 0 {
 			log.Printf("No commit needed")
 		} else if err = panorama.WaitForJob(jobId, sd, nil, nil); err != nil {
 			log.Printf("Error in commit: %s", err)
+			// sometimes there are problems with unmarshaling, but changes are committed
+			if !strings.Contains(fmt.Sprintf("%s", err), "Error unmarshaling") {
+				os.Exit(COMMIT_ERROR)
+			}
 		} else {
 			log.Printf("Committed config successfully")
 		}
 	} else {
-		log.Printf("Commit all - template stack: %s\n", templateStack)
-		jobId, _, err = panorama.Commit(cmdPushTemplateStack, "", nil)
-		if err != nil {
-			log.Fatalf("Error in commit: %s", err)
-		} else if jobId == 0 {
-			log.Printf("No commit needed")
-		} else if err = panorama.WaitForJob(jobId, sd, nil, nil); err != nil {
-			log.Printf("Error in commit: %s", err)
-		} else {
-			log.Printf("Committed config successfully")
-		}
-
 		log.Printf("Commit all - device group: %s\n", deviceGroup)
 		jobId, _, err = panorama.Commit(cmdPushDeviceGroups, "", nil)
 		if err != nil {
-			log.Fatalf("Error in commit: %s", err)
+			log.Fatalf("Fatal error in push: %s", err)
+			os.Exit(PUSH_DEVICE_GROUP_ERROR)
 		} else if jobId == 0 {
-			log.Printf("No commit needed")
+			log.Printf("No push needed")
 		} else if err = panorama.WaitForJob(jobId, sd, nil, nil); err != nil {
-			log.Printf("Error in commit: %s", err)
+			log.Printf("Error in push: %s", err)
+			os.Exit(PUSH_DEVICE_GROUP_ERROR)
 		} else {
-			log.Printf("Committed config successfully")
+			log.Printf("Pushed config successfully")
+		}
+
+		log.Printf("Commit all - template stack: %s\n", templateStack)
+		jobId, _, err = panorama.Commit(cmdPushTemplateStack, "", nil)
+		if err != nil {
+			log.Fatalf("Fatal error in push: %s", err)
+			os.Exit(PUSH_TEMPLATE_ERROR)
+		} else if jobId == 0 {
+			log.Printf("No push needed")
+		} else if err = panorama.WaitForJob(jobId, sd, nil, nil); err != nil {
+			log.Printf("Error in push: %s", err)
+			os.Exit(PUSH_TEMPLATE_ERROR)
+		} else {
+			log.Printf("Pushed config successfully")
 		}
 	}
 }
