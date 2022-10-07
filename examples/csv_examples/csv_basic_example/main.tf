@@ -358,6 +358,29 @@ locals {
 
   virtual_router_static_routes = concat(local.virtual_router_static_routes_defined, local.ipsec_routers)
 
+  # If we add new resources in future, then below list needs to be updated.
+  # Every change of IDs for configured resources is going to trigger commit and push.
+  configured_resource_ids = join(",",
+    [for item in module.policy_as_code_network.panos_ike_crypto_profile : item.id],
+    [for item in module.policy_as_code_network.panos_panorama_ethernet_interface : item.id],
+    [for item in module.policy_as_code_network.panos_panorama_ike_gateway : item.id],
+    [for item in module.policy_as_code_network.panos_panorama_ipsec_crypto_profile : item.id],
+    [for item in module.policy_as_code_network.panos_panorama_ipsec_tunnel : item.id],
+    [for item in module.policy_as_code_network.panos_panorama_loopback_interface : item.id],
+    [for item in module.policy_as_code_network.panos_panorama_static_route_ipv4 : item.id],
+    [for item in module.policy_as_code_network.panos_panorama_tunnel_interface : item.id],
+    [for item in module.policy_as_code_network.panos_virtual_router : item.id],
+    [for item in module.policy_as_code_network.panos_virtual_router_entry : item.id],
+    [for item in module.policy_as_code_network.panos_zones : item.id],
+    [for item in module.policy_as_code_network.panos_zone_entry : item.id],
+    [for item in module.policy_as_code_objects.panos_address_object : item.id],
+    [for item in module.policy_as_code_objects.panos_panorama_address_group : item.id],
+    [for item in module.policy_as_code_objects.panos_panorama_administrative_tag : item.id],
+    [for item in module.policy_as_code_objects.panos_panorama_service_group : item.id],
+    [for item in module.policy_as_code_objects.panos_panorama_service_object : item.id],
+    [for item in module.policy_as_code_policy.panos_panorama_nat_rule_group : item.id],
+    [for item in module.policy_as_code_policy.panos_security_rule_group : item.id],
+  )
 }
 
 module "policy_as_code_objects" {
@@ -404,4 +427,45 @@ module "policy_as_code_network" {
   ike_gateways          = try(local.ike_gateways, {})
   ipsec_tunnels         = try(local.ipsec_tunnels, {})
   ipsec_tunnels_proxy   = try(local.ipsec_tunnels_proxy, {})
+}
+
+# Until we don't have possiblity to configure device groups and templates stack from CSV/YAML/JSON files,
+# then we are commiting and pushing changes by providing as variable name of the device group and template stack.
+# It needs to improved into for_each when device groups and template stacke will be added.
+module "panoroma_commit" {
+  count = var.panorama_mode ? 1 : 0
+
+  source = "../../../modules/commit-push"
+
+  configured_resource_ids     = local.configured_resource_ids
+  panorama_commit_push_binary = var.panorama_commit_push_binary
+  pan_creds                   = var.pan_creds
+  mode                        = "commit"
+
+  depends_on = [
+    module.policy_as_code_objects,
+    module.policy_as_code_network,
+    module.policy_as_code_network
+  ]
+}
+
+module "panoroma_push" {
+  count = var.panorama_mode ? 1 : 0
+
+  source = "../../../modules/commit-push"
+
+  configured_resource_ids     = local.configured_resource_ids
+  panorama_commit_push_binary = var.panorama_commit_push_binary
+  pan_creds                   = var.pan_creds
+  mode                        = "push"
+  device_group                = var.device_group
+  devices                     = var.devices
+  template_stack              = var.template_stack
+
+  depends_on = [
+    module.policy_as_code_objects,
+    module.policy_as_code_network,
+    module.policy_as_code_network,
+    module.panoroma_commit
+  ]
 }
