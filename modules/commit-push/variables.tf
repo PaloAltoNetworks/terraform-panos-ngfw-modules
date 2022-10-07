@@ -35,3 +35,8 @@ variable "template_stack" {
   type        = string
   default     = null
 }
+
+variable "configured_resource_ids" {
+  description = "List of IDs of configured resources (used as trigger)"
+  type        = string
+}

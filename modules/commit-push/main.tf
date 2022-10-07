@@ -6,7 +6,11 @@ locals {
   parameter_template_stack = var.template_stack != null ? "-templateStack '${var.template_stack}'" : ""
 }
 
-resource "null_resource" "commit_panorama" {
+resource "null_resource" "panorama_commit_push_binary" {
+  triggers = {
+    configured_resource_ids = var.configured_resource_ids
+  }
+
   provisioner "local-exec" {
     command = "${var.panorama_commit_push_binary} ${local.parameter_config} ${local.parameter_mode} ${local.parameter_device_group} ${local.parameter_devices} ${local.parameter_template_stack}"
   }
