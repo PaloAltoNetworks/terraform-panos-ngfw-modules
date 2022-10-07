@@ -405,3 +405,39 @@ module "policy_as_code_network" {
   ipsec_tunnels         = try(local.ipsec_tunnels, {})
   ipsec_tunnels_proxy   = try(local.ipsec_tunnels_proxy, {})
 }
+
+module "panoroma_commit" {
+  count = var.panorama_mode ? 1 : 0
+
+  source = "../../../modules/commit-push"
+
+  panorama_commit_push_binary = var.panorama_commit_push_binary
+  pan_creds                   = var.pan_creds
+  mode                        = "commit"
+
+  depends_on = [
+    module.policy_as_code_objects,
+    module.policy_as_code_network,
+    module.policy_as_code_network
+  ]
+}
+
+module "panoroma_push" {
+  count = var.panorama_mode ? 1 : 0
+
+  source = "../../../modules/commit-push"
+
+  panorama_commit_push_binary = var.panorama_commit_push_binary
+  pan_creds                   = var.pan_creds
+  mode                        = "push"
+  device_group                = var.device_group
+  devices                     = var.devices
+  template_stack              = var.template_stack
+
+  depends_on = [
+    module.policy_as_code_objects,
+    module.policy_as_code_network,
+    module.policy_as_code_network,
+    module.panoroma_commit
+  ]
+}
