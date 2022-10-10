@@ -26,7 +26,7 @@ variable "device_group" {
 
 variable "devices" {
   description = "List of devices (serial numbers)"
-  type        = string
+  type        = list(string)
   default     = null
 }
 
@@ -38,5 +38,5 @@ variable "template_stack" {
 
 variable "configured_resource_ids" {
   description = "List of IDs of configured resources (used as trigger)"
-  type        = string
+  type        = list(string)
 }
