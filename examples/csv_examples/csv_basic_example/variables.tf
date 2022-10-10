@@ -103,3 +103,23 @@ variable "network_ipsec_tunnels_file" {
   default     = "csv/ipsec_tunnels.csv"
   type        = string
 }
+
+variable "panorama_commit_push_binary" {
+  description = "Path to binary file used to commit and push changes from Panorama to devices"
+  type        = string
+}
+
+variable "device_group" {
+  description = "Name of the device group"
+  type        = string
+}
+
+variable "devices" {
+  description = "List of devices (serial numbers)"
+  type        = list(string)
+}
+
+variable "template_stack" {
+  description = "Name of the template stack"
+  type        = string
+}

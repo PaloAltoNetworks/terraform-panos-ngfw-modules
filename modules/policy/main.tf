@@ -13,7 +13,7 @@ resource "panos_security_rule_group" "this" {
   position_reference = try(each.value.position_reference, null)
 
   dynamic "rule" {
-    for_each = [ for policy in each.value.rules : policy ]
+    for_each = [for policy in each.value.rules : policy]
     content {
       applications                       = try(rule.value.applications, ["any"])
       categories                         = try(rule.value.categories, ["any"])
@@ -74,7 +74,7 @@ resource "panos_panorama_nat_rule_group" "panorama_mode" {
 
 
   dynamic "rule" {
-    for_each = [ for policy in each.value.rules : policy if !can(policy.target) ]
+    for_each = [for policy in each.value.rules : policy if !can(policy.target)]
 
     content {
       name        = rule.value.name
@@ -201,7 +201,7 @@ resource "panos_nat_rule_group" "fw_mode" {
 
 
   dynamic "rule" {
-    for_each = [ for policy in each.value.rules : policy if !can(policy.target) ]
+    for_each = [for policy in each.value.rules : policy if !can(policy.target)]
 
     content {
       name        = rule.value.name
