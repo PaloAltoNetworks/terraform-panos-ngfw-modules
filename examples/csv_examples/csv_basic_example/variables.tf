@@ -116,7 +116,7 @@ variable "device_group" {
 
 variable "devices" {
   description = "List of devices (serial numbers)"
-  type        = string
+  type        = list(string)
 }
 
 variable "template_stack" {

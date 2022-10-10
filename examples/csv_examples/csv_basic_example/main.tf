@@ -360,7 +360,7 @@ locals {
 
   # If we add new resources in future, then below list needs to be updated.
   # Every change of IDs for configured resources is going to trigger commit and push.
-  configured_resource_ids = join(",",
+  configured_resource_ids = concat(
     [for item in module.policy_as_code_network.panos_ike_crypto_profile : item.id],
     [for item in module.policy_as_code_network.panos_panorama_ethernet_interface : item.id],
     [for item in module.policy_as_code_network.panos_panorama_ike_gateway : item.id],
