@@ -52,7 +52,7 @@ AWS,AWS,color8,
 
 ```terraform
 module "policy-as-code_policy" {
-  source  = "sarah-blazic/policy-as-code/panos//modules/policy"
+  source  = "PaloAltoNetworks/terraform-panos-ngfw-modules//modules/policy"
   version = "0.1.0"
 
   #for JSON examples: try(jsondecode(file("<*.json>")), {})
@@ -124,11 +124,6 @@ No modules.
 
 | Name | Type |
 |------|------|
-| [panos_address_group.this](https://registry.terraform.io/providers/PaloAltoNetworks/panos/latest/docs/resources/address_group) | resource |
-| [panos_address_object.this](https://registry.terraform.io/providers/PaloAltoNetworks/panos/latest/docs/resources/address_object) | resource |
-| [panos_administrative_tag.this](https://registry.terraform.io/providers/PaloAltoNetworks/panos/latest/docs/resources/administrative_tag) | resource |
-| [panos_panorama_address_group.this](https://registry.terraform.io/providers/PaloAltoNetworks/panos/latest/docs/resources/panorama_address_group) | resource |
-| [panos_panorama_administrative_tag.this](https://registry.terraform.io/providers/PaloAltoNetworks/panos/latest/docs/resources/panorama_administrative_tag) | resource |
 | [panos_panorama_service_group.this](https://registry.terraform.io/providers/PaloAltoNetworks/panos/latest/docs/resources/panorama_service_group) | resource |
 | [panos_panorama_service_object.this](https://registry.terraform.io/providers/PaloAltoNetworks/panos/latest/docs/resources/panorama_service_object) | resource |
 | [panos_service_group.this](https://registry.terraform.io/providers/PaloAltoNetworks/panos/latest/docs/resources/service_group) | resource |
@@ -150,9 +145,6 @@ No modules.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_panos_address_object"></a> [panos\_address\_object](#output\_panos\_address\_object) | n/a |
-| <a name="output_panos_panorama_address_group"></a> [panos\_panorama\_address\_group](#output\_panos\_panorama\_address\_group) | n/a |
-| <a name="output_panos_panorama_administrative_tag"></a> [panos\_panorama\_administrative\_tag](#output\_panos\_panorama\_administrative\_tag) | n/a |
 | <a name="output_panos_panorama_service_group"></a> [panos\_panorama\_service\_group](#output\_panos\_panorama\_service\_group) | n/a |
 | <a name="output_panos_panorama_service_object"></a> [panos\_panorama\_service\_object](#output\_panos\_panorama\_service\_object) | n/a |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

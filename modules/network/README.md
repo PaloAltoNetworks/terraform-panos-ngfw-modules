@@ -59,7 +59,7 @@ No modules.
 | <a name="input_virtual_router_entries"></a> [virtual\_router\_entries](#input\_virtual\_router\_entries) | n/a | `map` | `{}` | no |
 | <a name="input_virtual_router_static_routes"></a> [virtual\_router\_static\_routes](#input\_virtual\_router\_static\_routes) | n/a | `map` | `{}` | no |
 | <a name="input_virtual_routers"></a> [virtual\_routers](#input\_virtual\_routers) | n/a | `map` | `{}` | no |
-| <a name="input_zone_entres"></a> [zone\_entres](#input\_zone\_entres) | n/a | `map` | `{}` | no |
+| <a name="input_zone_entries"></a> [zone\_entries](#input\_zone\_entries) | n/a | `map` | `{}` | no |
 | <a name="input_zones"></a> [zones](#input\_zones) | n/a | `map` | `{}` | no |
 
 ## Outputs

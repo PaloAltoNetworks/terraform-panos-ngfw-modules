@@ -376,24 +376,24 @@ locals {
 }
 
 module "policy_as_code_objects_tags" {
-  source = "../../../modules/objects_tags"
+  source   = "../../../modules/objects_tags"
   panorama = var.panorama
 
-  tags           = try(local.tags, {})
+  tags = try(local.tags, {})
 }
 
 module "policy_as_code_objects_addresses" {
-  source = "../../../modules/objects_addresses"
+  source   = "../../../modules/objects_addresses"
   panorama = var.panorama
 
-  addr_obj       = try(local.addr_object, {})
-  addr_group     = try(local.addr_groups, {})
+  addr_obj   = try(local.addr_object, {})
+  addr_group = try(local.addr_groups, {})
 
   depends_on = [module.policy_as_code_objects_tags]
 }
 
 module "policy_as_code_objects_services" {
-  source = "../../../modules/objects_services"
+  source   = "../../../modules/objects_services"
   panorama = var.panorama
 
   services       = try(local.services, {})
@@ -403,7 +403,7 @@ module "policy_as_code_objects_services" {
 }
 
 module "policy_as_code_sec_policy" {
-  source = "../../../modules/security_policies"
+  source   = "../../../modules/security_policies"
   panorama = var.panorama
 
   sec_policy = try(local.sec_rules, {})
@@ -416,7 +416,7 @@ module "policy_as_code_sec_policy" {
 }
 
 module "policy_as_code_sec_nat" {
-  source = "../../../modules/nat_policies"
+  source   = "../../../modules/nat_policies"
   panorama = var.panorama
 
   nat_policy = try(local.nat_rules, {})
@@ -429,12 +429,12 @@ module "policy_as_code_sec_nat" {
 }
 
 module "policy_as_code_network" {
-  source = "../../../modules/network"
+  source   = "../../../modules/network"
   panorama = var.panorama
 
   interfaces                   = try(local.interfaces, {})
   zones                        = try(local.zones, {})
-  zone_entries                  = try(local.zone_entries, {})
+  zone_entries                 = try(local.zone_entries, {})
   virtual_routers              = try(local.virtual_routers, {})
   virtual_router_entries       = try(local.virtual_router_entries, {})
   virtual_router_static_routes = try(local.virtual_router_static_routes, {})
