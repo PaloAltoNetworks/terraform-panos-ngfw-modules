@@ -1,3 +1,3 @@
-template,name,protocol,authentications,encryptions,dh_group,lifetime_type,lifetime_value,lifesize_type,lifesize_value
-default,AES128_default,esp,"md5,sha1","aes-128-cbc,aes-192-cbc","group5",hours,24,,
-default,AES128_DH14,esp,"sha1","aes-128-cbc,aes-192-cbc","group14",hours,24,,
+template,template_stack,name,protocol,authentications,encryptions,dh_group,lifetime_type,lifetime_value,lifesize_type,lifesize_value
+default,,AES128_default,esp,"md5,sha1","aes-128-cbc,aes-192-cbc","group5",hours,24,,
+default,,AES128_DH14,esp,"sha1","aes-128-cbc,aes-192-cbc","group14",hours,24,,

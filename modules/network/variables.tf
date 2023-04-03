@@ -1,11 +1,11 @@
-variable "panorama_mode" {
+variable "panorama" {
   description = "If modules have target to Panorama, it enable Panorama specific variables."
   default     = false
   type        = bool
 }
 
 variable "zones" { default = {} }
-variable "zone_entres" { default = {} }
+variable "zone_entries" { default = {} }
 variable "interfaces" { default = {} }
 variable "virtual_routers" { default = {} }
 variable "virtual_router_entries" { default = {} }

@@ -3,7 +3,7 @@ variable "pan_creds" {
   type        = string
 }
 
-variable "panorama_mode" {
+variable "panorama" {
   description = "If modules have target to Panorama, it enable Panorama specific variables."
   default     = false
   type        = bool
@@ -101,25 +101,5 @@ variable "network_ipsec_crypto_profiles_file" {
 variable "network_ipsec_tunnels_file" {
   description = "Path to file with Network IPSec tunnels config."
   default     = "csv/ipsec_tunnels.csv"
-  type        = string
-}
-
-variable "panorama_commit_push_binary" {
-  description = "Path to binary file used to commit and push changes from Panorama to devices"
-  type        = string
-}
-
-variable "device_group" {
-  description = "Name of the device group"
-  type        = string
-}
-
-variable "devices" {
-  description = "List of devices (serial numbers)"
-  type        = list(string)
-}
-
-variable "template_stack" {
-  description = "Name of the template stack"
   type        = string
 }

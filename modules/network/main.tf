@@ -1,9 +1,10 @@
 resource "panos_zone" "this" {
   for_each = length(var.zones) != 0 ? { for zone in var.zones : zone.name => zone } : {}
 
-  template = var.panorama_mode == true ? try(each.value.template, "default") : null
-  vsys     = var.panorama_mode == true ? try(each.value.vsys, "vsys1") : null
+  template       = var.panorama == true ? (each.value.template_stack == "" ? try(each.value.template, "default") : null) : null
+  template_stack = var.panorama == true ? each.value.template_stack == "" ? null : each.value.template_stack : null
 
+  vsys           = try(each.value.vsys, "vsys1")
   name           = each.key
   mode           = try(each.value.mode, null)
   interfaces     = try(each.value.interfaces, [])
@@ -13,9 +14,10 @@ resource "panos_zone" "this" {
 }
 
 resource "panos_zone_entry" "this" {
-  for_each = length(var.zone_entres) != 0 ? { for intf in var.zone_entres : intf.interface => intf } : {}
+  for_each = length(var.zone_entries) != 0 ? { for intf in var.zone_entries : intf.interface => intf } : {}
 
-  template = var.panorama_mode == true ? try(each.value.template, "default") : null
+  template       = var.panorama == true ? (each.value.template_stack == "" ? try(each.value.template, "default") : null) : null
+  template_stack = var.panorama == true ? each.value.template_stack == "" ? null : each.value.template_stack : null
 
   vsys      = try(each.value.vsys, "vsys1")
   zone      = each.value.zone
@@ -33,7 +35,7 @@ resource "panos_zone_entry" "this" {
 }
 
 resource "panos_panorama_ethernet_interface" "this" {
-  for_each = var.panorama_mode == true && length(var.interfaces) != 0 ? { for intf in var.interfaces : intf.name => intf if intf.type == "ethernet" } : {}
+  for_each = var.panorama == true && length(var.interfaces) != 0 ? { for intf in var.interfaces : intf.name => intf if intf.type == "ethernet" } : {}
 
   template = try(each.value.template, "default")
 
@@ -55,7 +57,7 @@ resource "panos_panorama_ethernet_interface" "this" {
 }
 
 resource "panos_ethernet_interface" "this" {
-  for_each = var.panorama_mode == false && length(var.interfaces) != 0 ? { for intf in var.interfaces : intf.name => intf if intf.type == "ethernet" } : {}
+  for_each = var.panorama == false && length(var.interfaces) != 0 ? { for intf in var.interfaces : intf.name => intf if intf.type == "ethernet" } : {}
 
   vsys                      = try(each.value.vsys, "vsys1")
   name                      = each.key
@@ -75,7 +77,7 @@ resource "panos_ethernet_interface" "this" {
 }
 
 resource "panos_panorama_loopback_interface" "this" {
-  for_each = var.panorama_mode == true && length(var.interfaces) != 0 ? { for intf in var.interfaces : intf.name => intf if intf.type == "loopback" } : {}
+  for_each = var.panorama == true && length(var.interfaces) != 0 ? { for intf in var.interfaces : intf.name => intf if intf.type == "loopback" } : {}
 
   template = try(each.value.template, "default")
 
@@ -92,7 +94,7 @@ resource "panos_panorama_loopback_interface" "this" {
 }
 
 resource "panos_loopback_interface" "this" {
-  for_each = var.panorama_mode == false && length(var.interfaces) != 0 ? { for intf in var.interfaces : intf.name => intf if intf.type == "loopback" } : {}
+  for_each = var.panorama == false && length(var.interfaces) != 0 ? { for intf in var.interfaces : intf.name => intf if intf.type == "loopback" } : {}
 
   vsys               = each.value.vsys != "" ? each.value.vsys : "vsys1"
   name               = each.key
@@ -107,7 +109,7 @@ resource "panos_loopback_interface" "this" {
 }
 
 resource "panos_panorama_tunnel_interface" "this" {
-  for_each = var.panorama_mode == true && length(var.interfaces) != 0 ? { for intf in var.interfaces : intf.name => intf if intf.type == "tunnel" } : {}
+  for_each = var.panorama == true && length(var.interfaces) != 0 ? { for intf in var.interfaces : intf.name => intf if intf.type == "tunnel" } : {}
 
   template = try(each.value.template, "default")
 
@@ -124,7 +126,7 @@ resource "panos_panorama_tunnel_interface" "this" {
 }
 
 resource "panos_tunnel_interface" "this" {
-  for_each = var.panorama_mode == false && length(var.interfaces) != 0 ? { for intf in var.interfaces : intf.name => intf if intf.type == "tunnel" } : {}
+  for_each = var.panorama == false && length(var.interfaces) != 0 ? { for intf in var.interfaces : intf.name => intf if intf.type == "tunnel" } : {}
 
   vsys               = each.value.vsys != "" ? each.value.vsys : "vsys1"
   name               = each.key
@@ -141,15 +143,19 @@ resource "panos_tunnel_interface" "this" {
 resource "panos_virtual_router" "this" {
   for_each = length(var.virtual_routers) != 0 ? { for vrouter in var.virtual_routers : vrouter.name => vrouter } : {}
 
-  template = var.panorama_mode == true ? try(each.value.template, "default") : null
-  vsys     = try(each.value.vsys, "vsys1")
-  name     = each.key
+  template       = var.panorama == true ? (each.value.template_stack == "" ? try(each.value.template, "default") : null) : null
+  template_stack = var.panorama == true ? each.value.template_stack == "" ? null : each.value.template_stack : null
+
+  vsys = try(each.value.vsys, "vsys1")
+  name = each.key
 }
 
 resource "panos_virtual_router_entry" "this" {
   for_each = length(var.virtual_router_entries) != 0 ? { for intf in var.virtual_router_entries : intf.interface => intf } : {}
 
-  template       = var.panorama_mode == true ? try(each.value.template, "default") : null
+  template       = var.panorama == true ? (each.value.template_stack == "" ? try(each.value.template, "default") : null) : null
+  template_stack = var.panorama == true ? each.value.template_stack == "" ? null : each.value.template_stack : null
+
   virtual_router = try(each.value.virtual_router, "vsys1")
   interface      = each.key
 
@@ -165,9 +171,11 @@ resource "panos_virtual_router_entry" "this" {
 }
 
 resource "panos_panorama_static_route_ipv4" "this" {
-  for_each = var.panorama_mode == true && length(var.virtual_router_static_routes) != 0 ? { for route in var.virtual_router_static_routes : "${route.virtual_router}_${route.name}" => route } : {}
+  for_each = var.panorama == true && length(var.virtual_router_static_routes) != 0 ? { for route in var.virtual_router_static_routes : "${route.virtual_router}_${route.name}" => route } : {}
 
-  template       = each.value.template
+  template       = each.value.template_stack == "" ? try(each.value.template, "default") : null
+  template_stack = each.value.template_stack == "" ? null : each.value.template_stack
+
   name           = each.value.name
   virtual_router = each.value.virtual_router
   route_table    = each.value.route_table
@@ -188,7 +196,7 @@ resource "panos_panorama_static_route_ipv4" "this" {
 }
 
 resource "panos_static_route_ipv4" "this" {
-  for_each = var.panorama_mode == false && length(var.virtual_router_static_routes) != 0 ? { for route in var.virtual_router_static_routes : "${route.virtual_router}_${route.name}" => route } : {}
+  for_each = var.panorama == false && length(var.virtual_router_static_routes) != 0 ? { for route in var.virtual_router_static_routes : "${route.virtual_router}_${route.name}" => route } : {}
 
   name           = each.value.name
   virtual_router = each.value.virtual_router
@@ -210,9 +218,10 @@ resource "panos_static_route_ipv4" "this" {
 }
 
 resource "panos_panorama_management_profile" "this" {
-  for_each = var.panorama_mode == true && length(var.management_profiles) != 0 ? { for prof in var.management_profiles : prof.name => prof } : {}
+  for_each = var.panorama == true && length(var.management_profiles) != 0 ? { for prof in var.management_profiles : prof.name => prof } : {}
 
-  template       = each.value.template
+  template       = each.value.template_stack == "" ? try(each.value.template, "default") : null
+  template_stack = each.value.template_stack == "" ? null : each.value.template_stack
   name           = each.value.name
   ping           = each.value.ping
   telnet         = each.value.telnet
@@ -225,7 +234,7 @@ resource "panos_panorama_management_profile" "this" {
 }
 
 resource "panos_management_profile" "this" {
-  for_each = var.panorama_mode == false && length(var.management_profiles) != 0 ? { for prof in var.management_profiles : prof.name => prof } : {}
+  for_each = var.panorama == false && length(var.management_profiles) != 0 ? { for prof in var.management_profiles : prof.name => prof } : {}
 
   name           = each.value.name
   ping           = each.value.ping
@@ -242,20 +251,23 @@ resource "panos_management_profile" "this" {
 resource "panos_ike_crypto_profile" "this" {
   for_each = length(var.ike_crypto_profiles) != 0 ? { for profile in var.ike_crypto_profiles : profile.name => profile } : {}
 
-  template        = var.panorama_mode == true ? try(each.value.template, "default") : null
-  name            = each.value.name
-  dh_groups       = each.value.dh_groups
-  authentications = each.value.authentications
-  encryptions     = each.value.encryptions
-  #lifetime_type           = each.value.lifetime_type
+  template       = var.panorama == true ? (each.value.template_stack == "" ? try(each.value.template, "default") : null) : null
+  template_stack = var.panorama == true ? each.value.template_stack == "" ? null : each.value.template_stack : null
+
+  name                    = each.value.name
+  dh_groups               = each.value.dh_groups
+  authentications         = each.value.authentications
+  encryptions             = each.value.encryptions
   lifetime_value          = each.value.lifetime_value
   authentication_multiple = each.value.authentication_multiple
 }
 
 resource "panos_panorama_ipsec_crypto_profile" "this" {
-  for_each = var.panorama_mode == true && length(var.ipsec_crypto_profiles) != 0 ? { for profile in var.ipsec_crypto_profiles : profile.name => profile } : {}
+  for_each = var.panorama == true && length(var.ipsec_crypto_profiles) != 0 ? { for profile in var.ipsec_crypto_profiles : profile.name => profile } : {}
 
-  template        = var.panorama_mode == true ? try(each.value.template, "default") : null
+  template       = var.panorama == true ? (each.value.template_stack == "" ? try(each.value.template, "default") : null) : null
+  template_stack = var.panorama == true ? each.value.template_stack == "" ? null : each.value.template_stack : null
+
   name            = each.value.name
   protocol        = each.value.protocol
   dh_group        = each.value.dh_group
@@ -268,7 +280,7 @@ resource "panos_panorama_ipsec_crypto_profile" "this" {
 }
 
 resource "panos_ipsec_crypto_profile" "this" {
-  for_each = var.panorama_mode == false && length(var.ipsec_crypto_profiles) != 0 ? { for profile in var.ipsec_crypto_profiles : profile.name => profile } : {}
+  for_each = var.panorama == false && length(var.ipsec_crypto_profiles) != 0 ? { for profile in var.ipsec_crypto_profiles : profile.name => profile } : {}
 
   name            = each.value.name
   protocol        = each.value.protocol
@@ -282,9 +294,10 @@ resource "panos_ipsec_crypto_profile" "this" {
 }
 
 resource "panos_panorama_ike_gateway" "this" {
-  for_each = var.panorama_mode == true && length(var.ike_gateways) != 0 ? { for gw in var.ike_gateways : gw.name => gw } : {}
+  for_each = var.panorama == true && length(var.ike_gateways) != 0 ? { for gw in var.ike_gateways : gw.name => gw } : {}
 
-  template = try(each.value.template, "default")
+  template       = each.value.template_stack == "" ? try(each.value.template, "default") : null
+  template_stack = each.value.template_stack == "" ? null : each.value.template_stack
 
   name                 = each.value.name
   version              = each.value.version
@@ -306,7 +319,7 @@ resource "panos_panorama_ike_gateway" "this" {
 }
 
 resource "panos_ike_gateway" "this" {
-  for_each = var.panorama_mode == false && length(var.ike_gateways) != 0 ? { for gw in var.ike_gateways : gw.name => gw } : {}
+  for_each = var.panorama == false && length(var.ike_gateways) != 0 ? { for gw in var.ike_gateways : gw.name => gw } : {}
 
   name                 = each.value.name
   version              = each.value.version
@@ -333,7 +346,7 @@ resource "panos_ike_gateway" "this" {
 }
 
 resource "panos_panorama_ipsec_tunnel" "this" {
-  for_each = var.panorama_mode == true && length(var.ipsec_tunnels) != 0 ? { for tun in var.ipsec_tunnels : tun.name => tun } : {}
+  for_each = var.panorama == true && length(var.ipsec_tunnels) != 0 ? { for tun in var.ipsec_tunnels : tun.name => tun } : {}
 
   template = try(each.value.template, "default")
 
@@ -358,7 +371,7 @@ resource "panos_panorama_ipsec_tunnel" "this" {
 }
 
 resource "panos_ipsec_tunnel" "this" {
-  for_each = var.panorama_mode == false && length(var.ipsec_tunnels) != 0 ? { for tun in var.ipsec_tunnels : tun.name => tun } : {}
+  for_each = var.panorama == false && length(var.ipsec_tunnels) != 0 ? { for tun in var.ipsec_tunnels : tun.name => tun } : {}
 
   name                          = each.value.name
   tunnel_interface              = each.value.tunnel_interface
@@ -381,7 +394,7 @@ resource "panos_ipsec_tunnel" "this" {
 }
 
 resource "panos_panorama_ipsec_tunnel_proxy_id_ipv4" "this" {
-  for_each = var.panorama_mode == true && length(var.ipsec_tunnels_proxy) != 0 ? { for pbvpn in var.ipsec_tunnels_proxy : pbvpn.name => pbvpn } : {}
+  for_each = var.panorama == true && length(var.ipsec_tunnels_proxy) != 0 ? { for pbvpn in var.ipsec_tunnels_proxy : pbvpn.name => pbvpn } : {}
 
   template     = try(each.value.template, "default")
   ipsec_tunnel = each.value.ipsec_tunnel
@@ -392,7 +405,7 @@ resource "panos_panorama_ipsec_tunnel_proxy_id_ipv4" "this" {
 }
 
 resource "panos_ipsec_tunnel_proxy_id_ipv4" "this" {
-  for_each = var.panorama_mode == false && length(var.ipsec_tunnels_proxy) != 0 ? { for pbvpn in var.ipsec_tunnels_proxy : pbvpn.name => pbvpn } : {}
+  for_each = var.panorama == false && length(var.ipsec_tunnels_proxy) != 0 ? { for pbvpn in var.ipsec_tunnels_proxy : pbvpn.name => pbvpn } : {}
 
   ipsec_tunnel = each.value.ipsec_tunnel
   name         = each.value.name
