@@ -10,7 +10,7 @@ locals {
   dg_service_group_obj_raw = flatten([ for v in var.device_group : [ for i, j in var.services_group : merge({device_group=v},{name=i},j)] ])
   dg_service_group_obj_normalized = { for v in local.dg_service_group_obj_raw : "${v.name}_${try(v.device_group, "shared")}" => v if var.panorama == true }
   vsys_service_group_obj_raw = flatten([ for v in var.vsys : [ for i, j in var.services_group : merge({vsys=v},{name=i},j)] ])
-  vsys_service_group_obj_normalized = { for v in local.vsys_service_obj_raw : "${v.name}_${try(v.vsys, "vsys1")}" => v if var.panorama == false }
+  vsys_service_group_obj_normalized = { for v in local.vsys_service_group_obj_raw : "${v.name}_${try(v.vsys, "vsys1")}" => v if var.panorama == false }
 
 }
 
