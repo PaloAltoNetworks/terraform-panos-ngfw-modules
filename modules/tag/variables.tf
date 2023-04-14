@@ -11,12 +11,11 @@ variable "device_group" {
 }
 
 variable "vsys" {
-  description = "Used in variable panorama is true, it gives possibility to choose Device Group for the deployment"
+  description = "Used in variable panorama is false, it gives possibility to choose Virtual System for the deployment"
   default     = ["vsys1"]
   type        = list(string)
 }
 
-#tags
 variable "tags" {
   description = <<-EOF
   List of tag objects.
@@ -94,5 +93,5 @@ variable "tag_color_map" {
     burnt_sienna   = "color41"
     chestnut       = "color42"
   }
-  type = any
+  type = map(string)
 }

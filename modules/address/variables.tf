@@ -4,7 +4,18 @@ variable "panorama" {
   type        = bool
 }
 
-#address
+variable "device_group" {
+  description = "Used in variable panorama is true, it gives possibility to choose Device Group for the deployment"
+  default     = ["shared"]
+  type        = list(string)
+}
+
+variable "vsys" {
+  description = "Used in variable panorama is false, it gives possibility to choose Virtual System for the deployment"
+  default     = ["vsys1"]
+  type        = list(string)
+}
+
 variable "addr_obj" {
   description = <<-EOF
   Map of the address objects, where key is the address object's name:
@@ -42,7 +53,6 @@ variable "addr_obj" {
     description = optional(string)
     tags        = optional(list(string))
   }))
-
 }
 
 variable "addr_group" {
@@ -74,17 +84,4 @@ variable "addr_group" {
     description   = optional(string)
     tags          = optional(list(string))
   }))
-
-}
-
-variable "device_group" {
-  description = "Used in variable panorama is true, it gives possibility to choose Device Group for the deployment"
-  default     = ["shared"]
-  type        = list(string)
-}
-
-variable "vsys" {
-  description = "Used in variable panorama is false, it gives possibility to choose Virtual System for the deployment"
-  default     = ["vsys1"]
-  type        = list(string)
 }
