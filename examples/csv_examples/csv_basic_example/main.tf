@@ -376,14 +376,14 @@ locals {
 }
 
 module "policy_as_code_objects_tags" {
-  source   = "../../../modules/objects_tags"
+  source   = "../../../modules/old_model/objects_tags"
   panorama = var.panorama
 
   tags = try(local.tags, {})
 }
 
 module "policy_as_code_objects_addresses" {
-  source   = "../../../modules/objects_addresses"
+  source   = "../../../modules/old_model/objects_addresses"
   panorama = var.panorama
 
   addr_obj   = try(local.addr_object, {})
@@ -393,7 +393,7 @@ module "policy_as_code_objects_addresses" {
 }
 
 module "policy_as_code_objects_services" {
-  source   = "../../../modules/objects_services"
+  source   = "../../../modules/old_model/objects_services"
   panorama = var.panorama
 
   services       = try(local.services, {})
@@ -403,7 +403,7 @@ module "policy_as_code_objects_services" {
 }
 
 module "policy_as_code_sec_policy" {
-  source   = "../../../modules/security_policies"
+  source   = "../../../modules/old_model/security_policies"
   panorama = var.panorama
 
   sec_policy = try(local.sec_rules, {})
@@ -416,7 +416,7 @@ module "policy_as_code_sec_policy" {
 }
 
 module "policy_as_code_sec_nat" {
-  source   = "../../../modules/nat_policies"
+  source   = "../../../modules/old_model/nat_policies"
   panorama = var.panorama
 
   nat_policy = try(local.nat_rules, {})
@@ -429,7 +429,7 @@ module "policy_as_code_sec_nat" {
 }
 
 module "policy_as_code_network" {
-  source   = "../../../modules/network"
+  source   = "../../../modules/old_model/network"
   panorama = var.panorama
 
   interfaces                   = try(local.interfaces, {})
