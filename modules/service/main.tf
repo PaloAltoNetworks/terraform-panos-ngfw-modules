@@ -1,14 +1,14 @@
 locals {
 
   ## Service data normalization
-  dg_service_obj_raw = flatten([ for v in var.device_group : [ for i, j in var.services : merge({dg=v},{name=i},j)] ])
-  dg_service_obj_normalized = { for v in local.dg_service_obj_raw : "${v.name}_${try(v.dg, "shared")}" => v }
+  dg_service_obj_raw = flatten([ for i, j in var.services : merge({device_group=try(j.device_group, "shared")},{name=i},j)])
+  dg_service_obj_normalized = { for v in local.dg_service_obj_raw : "${v.name}_${v.device_group}" => v }
   vsys_service_obj_raw = flatten([ for v in var.vsys : [ for i, j in var.services : merge({dg=v},{name=i},j)] ])
   vsys_service_obj_normalized = { for v in local.vsys_service_obj_raw : "${v.name}_${try(v.vsys, "vsys1")}" => v }
 
   ## Service Group data normalization
-  dg_service_group_obj_raw = flatten([ for v in var.device_group : [ for i, j in var.services_group : merge({dg=v},{name=i},j)] ])
-  dg_service_group_obj_normalized = { for v in local.dg_service_group_obj_raw : "${v.name}_${try(v.dg, "shared")}" => v if var.panorama == true }
+  dg_service_group_obj_raw = flatten([ for i, j in var.services_group : merge({device_group=try(j.device_group, "shared")},{name=i},j)] )
+  dg_service_group_obj_normalized = { for v in local.dg_service_group_obj_raw : "${v.name}_${v.device_group}" => v if var.panorama == true }
   vsys_service_group_obj_raw = flatten([ for v in var.vsys : [ for i, j in var.services_group : merge({dg=v},{name=i},j)] ])
   vsys_service_group_obj_normalized = { for v in local.vsys_service_obj_raw : "${v.name}_${try(v.vsys, "vsys1")}" => v if var.panorama == false }
 
