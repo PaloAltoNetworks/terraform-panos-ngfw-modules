@@ -1,8 +1,5 @@
-pan_creds = "./creds/credentials_panorama.json"
+pan_creds = "./creds/credentials.json"
 panorama  = true
-
-# pan_creds = "./creds/credentials_vmseries.json"
-# panorama  = false
 
 device_group = ["AWSTestDG", "AzureTestDG"]
 vsys         = ["vsys1"]

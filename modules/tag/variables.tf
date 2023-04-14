@@ -18,34 +18,28 @@ variable "vsys" {
 
 variable "tags" {
   description = <<-EOF
-  List of tag objects.
-  - `name`: (required) The administrative tag's name.
-  - `device_group`: (optional) The device group location (default: `shared`).
+  Map of the tag objects, where key is the tag object's name:
+  - `color`: (optional) The tag's color. This should either be an empty string (no color) or a string such as `color1`.
   - `comment`: (optional) The description of the administrative tag.
-  - `color`: (optional) The tag's color. This should either be an empty string (no color) or a string such as `color1`. Note that the colors go from 1 to 16.
 
   Example:
   ```
-[
-  {
-    name = "trust"
+  tags = {
+    DNS-SRV = {
+      comment = "Tag for DNS servers"
+    }
+    dns-proxy = {
+      color   = "Olive"
+      comment = "dns-proxy"
+    }
   }
-  {
-    name = "untrust"
-    comment = "for untrusted zones"
-    color = "color4"
-  }
-  {
-    name = "AWS"
-    device_group = "AWS"
-    color = "color8"
-  }
-]
   ```
   EOF
-  default     = []
-  type        = any
-
+  default     = {}
+  type = map(object({
+    color   = optional(string)
+    comment = optional(string)
+  }))
 }
 
 variable "tag_color_map" {
