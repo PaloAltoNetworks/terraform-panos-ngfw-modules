@@ -1,7 +1,8 @@
 pan_creds = "./creds/credentials.json"
-panorama  = true
+panorama  = false
 
 device_group = ["AWSTestDG", "AzureTestDG"]
+vsys = ["vsys1"]
 
 ### Tags
 
