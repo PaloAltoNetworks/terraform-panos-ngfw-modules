@@ -26,7 +26,7 @@ variable "address_objects" {
 
   Example:
   ```
-  addr_obj = {
+  {
     DNS-TAGS-1 = {
       value       = "1.1.1.1/32"
       type        = "ip-netmask"
@@ -65,7 +65,7 @@ variable "address_groups" {
 
   Example:
   ```
-  addr_group = {
+  {
     AddressDeviceGroup = {
       members     = ["DNS1", "DNS2"]
       description = "DNS servers"
