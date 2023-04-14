@@ -18,9 +18,7 @@ variable "vsys" {
 
 variable "services" {
   description = <<-EOF
-  List of service objects.
-  - `name`: (required) The service object's name.
-  - `device_group`: (optional) The device group location (default: `shared`).
+  Map of the service objects, where key is the service object's name:
   - `description`: (optional) The description of the service object.
   - `protocol`: (required) The service's protocol. Valid values are `tcp`, `udp`, or `sctp` (only for PAN-OS 8.1+).
   - `source_port`: (optional) The source port. This can be a single port number, range (1-65535), or comma separated (80,8080,443).
@@ -33,38 +31,57 @@ variable "services" {
 
   Example:
   ```
-  [
-    {
-      name = "service1"
-      protocol = "tcp"
-      destination_port = "8080"
-      source_port = "400"
-      override_session_timeout = true
-      override_timeout = 250
-      override_time_wait_timeout = 590
+  services = {
+    WEB-APP = {
+      protocol         = "tcp"
+      destination_port = "80,443"
+      description      = "Some web services"
     }
-    {
-      name = "service2"
-      protocol = "udp"
-      destination_port = "80"
+    SSH-8022 = {
+      protocol         = "tcp"
+      destination_port = "8022"
+      description      = "SSH not-default port"
     }
-  ]
+    TCP-4457-4458 = {
+      protocol         = "tcp"
+      destination_port = "4457-4458"
+      description      = "Custom port range"
+    }    
+  }
   ```
   EOF
-  default     = []
-  type        = any
-
+  default     = {}
+  type = map(object({
+    description                  = optional(string)
+    protocol                     = string
+    source_port                  = optional(string)
+    destination_port             = string
+    tags                         = optional(list(string))
+    override_session_timeout     = optional(bool)
+    override_timeout             = optional(number)
+    override_half_closed_timeout = optional(number)
+    override_time_wait_timeout   = optional(number)
+  }))
 }
 
 variable "services_group" {
   description = <<-EOF
-  List of the address group objects.
-  - `name`: (required) The address group's name.
-  - `device_group`: (optional) The device group location (default: `shared`).
-  - `services`: (optional) The service objects to include in this service group.
+  Map of the service groups, where key is the service group's name:
+  - `members`: (required) The service objects to include in this service group.
   - `tags`: (optional) List of administrative tags.
-  EOF
-  default     = []
-  type        = any
 
+  Example:
+  ```
+  services_group = {
+    "Customer Group" = {
+      members = ["WEB-APP", "TCP-4457-4458"]
+    }
+  }  
+  ```  
+  EOF
+  default     = {}
+  type = map(object({
+    members = list(string)
+    tags    = optional(list(string))
+  }))
 }
