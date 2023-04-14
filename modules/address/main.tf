@@ -16,7 +16,7 @@ locals {
 
 resource "panos_address_object" "this" {
   #  for_each = length(local.dg_addr_obj) != 0 ? { for obj in var.addr_obj : obj.name => obj } : {}
-  for_each = var.panorama == true ? local.dg_addr_obj_normalized : var.panorama == false != 0 ? local.vsys_addr_obj_normalized : {}
+  for_each = var.panorama == true ? local.dg_addr_obj_normalized : var.panorama == false ? local.vsys_addr_obj_normalized : {}
 
   device_group = var.panorama == true ? try(each.value.device_group, "shared") : null
   vsys         = var.panorama == false ? try(each.value.vsys, "vsys1") : null
