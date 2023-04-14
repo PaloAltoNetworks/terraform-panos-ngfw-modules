@@ -1,16 +1,16 @@
 locals {
 
   ## Address data normalization
-  dg_addr_obj_raw = flatten([ for v in var.device_group : [ for i, j in var.addr_obj : merge({dg=v},{name=i},j)] ])
-  dg_addr_obj_normalized = { for v in local.dg_addr_obj_raw : "${v.name}_${try(v.dg, "shared")}" => v }
+  dg_addr_obj_raw = flatten([ for v in var.device_group : [ for i, j in var.addr_obj : merge({device_group=v},{name=i},j)] ])
+  dg_addr_obj_normalized = { for v in local.dg_addr_obj_raw : "${v.name}_${try(v.device_group, "shared")}" => v }
   vsys_addr_obj_raw = flatten([ for v in var.vsys : [ for i, j in var.addr_obj : merge({dg=v},{name=i},j)] ])
   vsys_addr_obj_normalized = { for v in local.vsys_addr_obj_raw : "${v.name}_${try(v.vsys, "vsys1")}" => v }
 
   ## Address Group data normalization
-  dg_addr_group_obj_raw = flatten([ for v in var.device_group : [ for i, j in var.addr_group : merge({dg=v},{name=i},j)] ])
-  dg_addr_group_obj_normalized = { for v in local.dg_addr_group_obj_raw : "${v.name}_${try(v.dg, "shared")}" => v if var.panorama == true }
-  vsys_addr_group_obj_raw = flatten([ for v in var.vsys : [ for i, j in var.addr_group : merge({dg=v},{name=i},j)] ])
-  vsys_addr_group_obj_normalized = { for v in local.vsys_addr_obj_raw : "${v.name}_${try(v.vsys, "vsys1")}" => v if var.panorama == false }
+  dg_addr_group_obj_raw = flatten([ for v in var.device_group : [ for i, j in var.addr_group : merge({device_group=v},{name=i},j)] ])
+  dg_addr_group_obj_normalized = { for v in local.dg_addr_group_obj_raw : "${v.name}_${try(v.device_group, "shared")}" => v if var.panorama == true }
+  vsys_addr_group_obj_raw = flatten([ for v in var.vsys : [ for i, j in var.addr_group : merge({vsys=v},{name=i},j)] ])
+  vsys_addr_group_obj_normalized = { for v in local.vsys_addr_group_obj_raw : "${v.name}_${try(v.vsys, "vsys1")}" => v if var.panorama == false }
 
 }
 
