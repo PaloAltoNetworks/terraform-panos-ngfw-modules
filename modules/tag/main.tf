@@ -1,6 +1,6 @@
 locals {
-  dg_tags_obj = toset(flatten([ for v in var.device_group : [ for i, j in var.tags : merge({dg=v},{name=i},j)] ]))
-  vsys_tags_obj = toset(flatten([ for v in var.vsys : [ for i, j in var.tags : merge({dg=v},{name=i},j)] ]))
+  dg_tags_obj   = toset(flatten([for v in var.device_group : [for i, j in var.tags : merge({ dg = v }, { name = i }, j)]]))
+  vsys_tags_obj = toset(flatten([for v in var.vsys : [for i, j in var.tags : merge({ dg = v }, { name = i }, j)]]))
 }
 
 resource "panos_panorama_administrative_tag" "this" {

@@ -29,14 +29,14 @@ variable "address_groups" {
 
 variable "services" {
   description = "Service object"
-  default = {}
-  type = any
+  default     = {}
+  type        = any
 }
 
 variable "services_group" {
   description = "Service group object"
-  default = {}
-  type = any
+  default     = {}
+  type        = any
 }
 
 variable "device_group" {
