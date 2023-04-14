@@ -1,22 +1,22 @@
-variable "panorama" {
+variable "mode" {
   description = "If modules have target to Panorama, it enable Panorama specific variables."
   default     = false
-  type        = bool
+  type        = string
 }
 
 variable "device_group" {
-  description = "Used in variable panorama is true, it gives possibility to choose Device Group for the deployment"
-  default     = ["shared"]
-  type        = list(string)
+  description = "Used if _mode_ is panorama, this defines the Device Group for the deployment"
+  default     = "shared"
+  type        = string
 }
 
 variable "vsys" {
-  description = "Used in variable panorama is false, it gives possibility to choose Virtual System for the deployment"
-  default     = ["vsys1"]
-  type        = list(string)
+  description = "Used if _mode_ is ngfw, this defines the vsys for the deployment"
+  default     = "vsys1"
+  type        = string
 }
 
-variable "addr_obj" {
+variable "address_objects" {
   description = <<-EOF
   Map of the address objects, where key is the address object's name:
   - `type`: (optional) The type of address object. This can be ip-netmask (default), ip-range, fqdn, or ip-wildcard (PAN-OS 9.0+).
@@ -55,7 +55,7 @@ variable "addr_obj" {
   }))
 }
 
-variable "addr_group" {
+variable "address_groups" {
   description = <<-EOF
   Map of the address group objects, where key is the address group's name:
   - `members`: (optional) The address objects to include in this statically defined address group.
