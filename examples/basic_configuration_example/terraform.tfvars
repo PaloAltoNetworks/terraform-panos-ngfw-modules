@@ -5,7 +5,7 @@ pan_creds = "./creds/credentials_vmseries.json"
 panorama  = false
 
 device_group = ["AWSTestDG", "AzureTestDG"]
-vsys = ["vsys1"]
+vsys         = ["vsys1"]
 
 ### Tags
 
@@ -157,50 +157,50 @@ address_groups = {
 
 services = {
   SomeWeb = {
-    protocol = "tcp"
+    protocol         = "tcp"
     destination_port = "80,443"
-    description = "Some web services"
+    description      = "Some web services"
   }
   SomeFTP = {
-    protocol = "tcp"
+    protocol         = "tcp"
     destination_port = "21"
-    description = "Some FTP services"
+    description      = "Some FTP services"
   }
   SomeSSH = {
-    protocol = "tcp"
+    protocol         = "tcp"
     destination_port = "21"
-    description = "Some SSH services"
+    description      = "Some SSH services"
   }
   SSH-8022 = {
-    protocol = "tcp"
+    protocol         = "tcp"
     destination_port = "8022"
-    description = "SSH not-default port"
+    description      = "SSH not-default port"
   }
   Web-8080 = {
-    protocol = "tcp"
+    protocol         = "tcp"
     destination_port = "8080"
-    description = "HTTP not-default port"
+    description      = "HTTP not-default port"
   }
   tcp_4450 = {
-    protocol = "tcp"
+    protocol         = "tcp"
     destination_port = "4450"
-    description = "Custom ports for PSN Services"
+    description      = "Custom ports for PSN Services"
   }
   tcp_4457-4458 = {
-    protocol = "tcp"
+    protocol         = "tcp"
     destination_port = "4457-4458"
-    description = "Custom ports for PSN Services"
+    description      = "Custom ports for PSN Services"
   }
 }
 
 services_group = {
   "Customer Group" = {
-    members = ["SomeWeb","SomeSSH","SomeFTP"]
+    members = ["SomeWeb", "SomeSSH", "SomeFTP"]
   }
   HTTP-ports = {
-    members = ["SomeWeb","Web-8080"]
+    members = ["SomeWeb", "Web-8080"]
   }
   "PSN Custom Ports" = {
-    members = ["tcp_4450","tcp_4457-4458"]
+    members = ["tcp_4450", "tcp_4457-4458"]
   }
 }
