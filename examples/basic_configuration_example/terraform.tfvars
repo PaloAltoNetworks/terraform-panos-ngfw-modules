@@ -1,8 +1,10 @@
 pan_creds = "./creds/credentials.json"
-panorama  = true
+mode  = "panorama"
 
-device_group = ["AWSTestDG", "AzureTestDG"]
-vsys         = ["vsys1"]
+#device_group = ["AWSTestDG", "AzureTestDG"]
+device_group = "AWSTestDG"
+#vsys         = ["vsys1"]
+vsys         = "vsys1"
 
 ### Tags
 
@@ -199,5 +201,138 @@ services_group = {
   }
   "PSN Custom Ports" = {
     members = ["tcp_4450", "tcp_4457-4458"]
+  }
+}
+
+security_policies = {
+  "Block Some Traffic" = {
+    "rulebase" = "pre-rulebase"
+    "tags"     = [
+      "Outbound",
+      "Managed by Terraform"
+    ]
+    "source_zones"                       = ["Trust-L3"]
+    "source_addresses"                   = ["10.0.0.100/32"]
+    "negate_source"                      = "false"
+    "source_users"                       = ["any"]
+    "hip_profiles"                       = ["any"]
+    "destination_zones"                  = ["any"]
+    "destination_addresses"              = ["any"]
+    "negate_destination"                 = "false"
+    "applications"                       = ["ssh"]
+    "services"                           = ["any"]
+    "categories"                         = ["any"]
+    "action"                             = "deny"
+    "disable_server_response_inspection" = "false"
+    "log_start"                          = "false"
+    "log_end"                            = "true"
+    "disabled"                           = "false"
+  },
+  "Allow access to DNS Servers" = {
+    "rulebase" = "pre-rulebase"
+    "tags"     = [
+      "Outbound",
+      "Managed by Terraform"
+    ]
+    "source_zones"                       = ["Trust-L3"]
+    "source_addresses"                   = ["RFC1918_Subnets"]
+    "negate_source"                      = "false"
+    "source_users"                       = ["any"]
+    "hip_profiles"                       = ["any"]
+    "destination_zones"                  = ["Untrust-L3"]
+    "destination_addresses"              = ["DNS-Servers"]
+    "negate_destination"                 = "false"
+    "applications"                       = ["dns"]
+    "services"                           = ["application-default"]
+    "categories"                         = ["any"]
+    "action"                             = "allow"
+    "disable_server_response_inspection" = "false"
+    "log_start"                          = "false"
+    "log_end"                            = "true"
+    "disabled"                           = "false"
+    "virus"                              = "default"
+    "spyware"                            = "default"
+    "vulnerability"                      = "default"
+  },
+  "Allow access to RFC1918" = {
+    "rulebase"          = "pre-rulebase"
+    "tags"              = ["Managed by Terraform"]
+    "source_zones"      = ["Trust-L3"]
+    "source_addresses"  = ["RFC1918_Subnets"]
+    "negate_source"     = "false"
+    "source_users"      = ["any"]
+    "hip_profiles"      = ["any"]
+    "destination_zones" = [
+      "Trust-L3",
+      "Untrust-L3"
+    ]
+    "destination_addresses"              = ["RFC1918_Subnets"]
+    "negate_destination"                 = "false"
+    "applications"                       = ["any"]
+    "services"                           = ["application-default"]
+    "categories"                         = ["any"]
+    "action"                             = "allow"
+    "disable_server_response_inspection" = "false"
+    "log_start"                          = "false"
+    "log_end"                            = "true"
+    "disabled"                           = "false"
+    "virus"                              = "default"
+    "spyware"                            = "default"
+    "vulnerability"                      = "default"
+  },
+  "Disabled - temporary access to Srv10 and Srv11" = {
+    "rulebase" = "pre-rulebase"
+    "tags"     = [
+      "Outbound",
+      "Managed by Terraform"
+    ]
+    "source_zones"     = ["Trust-L3"]
+    "source_addresses" = [
+      "Server10",
+      "Server11"
+    ]
+    "negate_source"                      = "false"
+    "source_users"                       = ["any"]
+    "hip_profiles"                       = ["any"]
+    "destination_zones"                  = ["Untrust-L3"]
+    "destination_addresses"              = ["123.123.123.123/32"]
+    "negate_destination"                 = "false"
+    "applications"                       = ["any"]
+    "services"                           = ["SSH-8022"]
+    "categories"                         = ["any"]
+    "action"                             = "allow"
+    "disable_server_response_inspection" = "false"
+    "log_start"                          = "false"
+    "log_end"                            = "true"
+    "disabled"                           = "false"
+    "virus"                              = "default"
+    "spyware"                            = "default"
+    "vulnerability"                      = "default"
+    "url_filtering"                      = "default"
+    "file_blocking"                      = "basic file blocking"
+    "wildfire_analysis"                  = "default"
+  },
+  "Allow access to SSH Servers" = {
+    "rulebase" = "pre-rulebase"
+    "tags"     = [
+      "Inbound",
+      "Managed by Terraform"
+    ]
+    "source_zones"                       = ["Untrust-L3"]
+    "source_addresses"                   = ["any"]
+    "negate_source"                      = "false"
+    "source_users"                       = ["any"]
+    "hip_profiles"                       = ["any"]
+    "destination_zones"                  = ["Trust-L3"]
+    "destination_addresses"              = ["SSH-Servers"]
+    "negate_destination"                 = "false"
+    "applications"                       = ["ssh"]
+    "services"                           = ["application-default"]
+    "categories"                         = ["any"]
+    "action"                             = "allow"
+    "disable_server_response_inspection" = "false"
+    "log_start"                          = "false"
+    "log_end"                            = "true"
+    "disabled"                           = "false"
   }
 }

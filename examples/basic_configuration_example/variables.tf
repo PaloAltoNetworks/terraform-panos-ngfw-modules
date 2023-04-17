@@ -3,10 +3,10 @@ variable "pan_creds" {
   type        = string
 }
 
-variable "panorama" {
-  description = "Give information if Panorama is a target."
-  default     = false
-  type        = bool
+variable "mode" {
+  description = "Provide information about target."
+  default     = ""
+  type        = string
 }
 
 variable "tags" {
@@ -40,13 +40,32 @@ variable "services_group" {
 }
 
 variable "device_group" {
-  description = "Used in variable panorama is true, it gives possibility to choose Device Group for the deployment"
-  default     = []
-  type        = list(string)
+  description = "Used if _mode_ is panorama, this defines the Device Group for the deployment"
+  default     = "shared"
+  type        = string
 }
 
 variable "vsys" {
-  description = "Used in variable panorama is true, it gives possibility to choose Device Group for the deployment"
-  default     = []
-  type        = list(string)
+  description = "Used if _mode_ is ngfw, this defines the vsys for the deployment"
+  default     = "vsys1"
+  type        = string
+}
+
+variable "mode_map" {
+  description = "The mode to use for the modules. Valid values are `panorama` and `ngfw`."
+  default = {
+    panorama = 0
+    ngfw     = 1
+    # cloud_manager = 2 # Not yet supported
+  }
+  type = object({
+    panorama = number
+    ngfw = number
+  })
+}
+
+variable "security_policies" {
+  description = "Security policies"
+  default = {}
+  type = any
 }

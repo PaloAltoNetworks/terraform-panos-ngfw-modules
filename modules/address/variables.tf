@@ -1,7 +1,23 @@
 variable "mode" {
-  description = "If modules have target to Panorama, it enable Panorama specific variables."
-  default     = false
+  description = "The mode to use for the modules. Valid values are `panorama` and `ngfw`."
   type        = string
+  validation {
+    condition     = contains(["panorama", "ngfw"], var.mode)
+    error_message = "The mode must be either `panorama` or `ngfw`."
+  }
+}
+
+variable "mode_map" {
+  description = "The mode to use for the modules. Valid values are `panorama` and `ngfw`."
+  default = {
+    panorama = 0
+    ngfw     = 1
+    # cloud_manager = 2 # Not yet supported
+  }
+  type = object({
+    panorama = number
+    ngfw = number
+  })
 }
 
 variable "device_group" {
