@@ -207,219 +207,8 @@ services_group = {
   }
 }
 
-### Network - interfaces
+### Security policies
 
-interfaces = {
-  "ethernet1/1" = {
-    type                      = "ethernet"
-    mode                      = "layer3"
-    management_profile        = "mgmt_default"
-    link_state                = "up"
-    enable_dhcp               = true
-    create_dhcp_default_route = false
-    comment                   = "mgmt"
-    virtual_router            = "default"
-    zone                      = "mgmt"
-    vsys                      = "vsys1"
-  }
-  "ethernet1/2" = {
-    type               = "ethernet"
-    mode               = "layer3"
-    management_profile = "mgmt_default"
-    link_state         = "up"
-    comment            = "external"
-    virtual_router     = "external"
-    zone               = "external"
-    vsys               = "vsys1"
-  }
-  "ethernet1/3" = {
-    type           = "ethernet"
-    mode           = "layer3"
-    link_state     = "up"
-    comment        = "internal"
-    virtual_router = "internal"
-    zone           = "internal"
-    vsys           = "vsys1"
-  }
-  "loopback.42" = {
-    type           = "loopback"
-    mode           = "layer3"
-    link_state     = "up"
-    comment        = "internal"
-    virtual_router = "internal"
-    zone           = "vpn"
-    vsys           = "vsys1"
-  }
-  "tunnel.42" = {
-    type           = "tunnel"
-    mode           = "layer3"
-    link_state     = "up"
-    comment        = "internal"
-    virtual_router = "internal"
-    zone           = "vpn"
-    vsys           = "vsys1"
-  }
-}
-
-### Network - management profile
-
-management_profiles = {
-  "mgmt_default" = {
-    ping          = true
-    telnet        = false
-    ssh           = true
-    http          = false
-    https         = true
-    snmp          = false
-    permitted_ips = ["1.1.1.1/32", "2.2.2.2/32"]
-  }
-}
-
-### Network - virtual router
-
-virtual_routers = {
-  "default"  = {}
-  "external" = {}
-  "internal" = {}
-}
-
-static_routes = {
-  "default_unicast" = {
-    virtual_router = "default"
-    route_table    = "unicast"
-    routes = {
-      "df_route" = {
-        destination    = "0.0.0.0/0"
-        interface      = "ethernet1/1"
-        type           = "ip-address"
-        next_hop       = "10.1.1.1"
-        admin_distance = null
-        metric         = 10
-      }
-    }
-  }
-  "internal_unicast" = {
-    virtual_router = "internal"
-    route_table    = "unicast"
-    routes = {
-      "IPSec_route" = {
-        destination    = "10.10.10.0/24"
-        interface      = "tunnel.42"
-        type           = ""
-        next_hop       = null
-        admin_distance = null
-        metric         = null
-      }
-    }
-  }
-  "external_unicast" = {
-    virtual_router = "external"
-    route_table    = "unicast"
-    routes = {
-      "df_route" = {
-        destination    = "0.0.0.0/0"
-        interface      = "ethernet1/2"
-        type           = "ip-address"
-        next_hop       = "10.1.2.1"
-        admin_distance = null
-        metric         = 10
-      }
-    }
-  }
-}
-
-### Network - zone
-
-zones = {
-  "internal" = {
-    mode           = "layer3"
-    zone_profile   = null
-    log_setting    = null
-    enable_user_id = null
-    interfaces     = null
-    include_acls   = null
-    exclude_acls   = null
-  }
-}
-
-### Network - IPSec
-
-ike_gateways = {
-  "IKE-GW-1" = {
-    version              = "ikev1"
-    disabled             = false
-    peer_ip_type         = "ip"
-    peer_ip_value        = "5.5.5.5"
-    interface            = "ethernet1/1"
-    pre_shared_key       = "test12345"
-    local_id_type        = "ipaddr"
-    local_id_value       = "10.1.1.1"
-    peer_id_type         = "ipaddr"
-    peer_id_value        = "10.5.1.1"
-    ikev1_crypto_profile = "AES128_default"
-  }
-}
-
-ike_crypto_profiles = {
-  "AES128_default" = {
-    dh_groups               = ["group2", "group5"]
-    authentications         = ["md5", "sha1"]
-    encryptions             = ["aes-128-cbc", "aes-192-cbc"]
-    lifetime_type           = "hours"
-    lifetime_value          = 24
-    authentication_multiple = 0
-  }
-  "AES128_DH5" = {
-    dh_groups               = ["group5"]
-    authentications         = ["sha1"]
-    encryptions             = ["aes-128-cbc", "aes-192-cbc"]
-    lifetime_type           = "hours"
-    lifetime_value          = 8
-    authentication_multiple = 3
-  }
-}
-
-ipsec_crypto_profiles = {
-  "AES128_default" = {
-    protocol        = "esp"
-    authentications = ["md5", "sha1"]
-    encryptions     = ["aes-128-cbc", "aes-192-cbc"]
-    dh_group        = "group5"
-    lifetime_type   = "hours"
-    lifetime_value  = 24
-    lifesize_type   = null
-    lifesize_value  = null
-  }
-  "AES128_DH14" = {
-    protocol        = "esp"
-    authentications = ["sha1"]
-    encryptions     = ["aes-128-cbc", "aes-192-cbc"]
-    dh_group        = "group14"
-    lifetime_type   = "hours"
-    lifetime_value  = 24
-    lifesize_type   = null
-    lifesize_value  = null
-  }
-}
-
-ipsec_tunnels = {
-  "some_tunnel" = {
-    virtual_router                = "internal"
-    tunnel_interface              = "tunnel.42"
-    type                          = "auto-key"
-    disabled                      = false
-    ak_ike_gateway                = "IKE-GW-1"
-    ak_ipsec_crypto_profile       = "AES128_DH14"
-    anti_replay                   = false
-    copy_flow_label               = false
-    enable_tunnel_monitor         = false
-    tunnel_monitor_destination_ip = null
-    tunnel_monitor_source_ip      = null
-    tunnel_monitor_profile        = null
-    tunnel_monitor_proxy_id       = null
-    proxy_subnets                 = "example1,10.10.10.0/24,10.10.20.0/24;example2,10.10.10.0/24,10.10.30.0/24"
-  }
-}
 security_policies_group = {
   "allow_rule_group" = {
     rulebase = "pre-rulebase"
@@ -561,5 +350,201 @@ security_policies_group = {
         disabled                           = "false"
       }
     ]
+  }
+}
+
+### Network - interfaces
+
+interfaces = {
+  "ethernet1/1" = {
+    type                      = "ethernet"
+    mode                      = "layer3"
+    management_profile        = "mgmt_default"
+    link_state                = "up"
+    enable_dhcp               = true
+    create_dhcp_default_route = false
+    comment                   = "mgmt"
+    virtual_router            = "default"
+    zone                      = "mgmt"
+    vsys                      = "vsys1"
+  }
+  "ethernet1/2" = {
+    type               = "ethernet"
+    mode               = "layer3"
+    management_profile = "mgmt_default"
+    link_state         = "up"
+    comment            = "external"
+    virtual_router     = "external"
+    zone               = "external"
+    vsys               = "vsys1"
+  }
+  "ethernet1/3" = {
+    type           = "ethernet"
+    mode           = "layer3"
+    link_state     = "up"
+    comment        = "internal"
+    virtual_router = "internal"
+    zone           = "internal"
+    vsys           = "vsys1"
+  }
+  "loopback.42" = {
+    type           = "loopback"
+    mode           = "layer3"
+    link_state     = "up"
+    comment        = "internal"
+    virtual_router = "internal"
+    zone           = "vpn"
+    vsys           = "vsys1"
+  }
+  "tunnel.42" = {
+    type           = "tunnel"
+    mode           = "layer3"
+    link_state     = "up"
+    comment        = "internal"
+    virtual_router = "internal"
+    zone           = "vpn"
+    vsys           = "vsys1"
+  }
+}
+
+### Network - management profile
+
+management_profiles = {
+  "mgmt_default" = {
+    ping          = true
+    telnet        = false
+    ssh           = true
+    http          = false
+    https         = true
+    snmp          = false
+    permitted_ips = ["1.1.1.1/32", "2.2.2.2/32"]
+  }
+}
+
+### Network - virtual router
+
+virtual_routers = {
+  "default"  = {}
+  "external" = {}
+  "internal" = {}
+}
+
+static_routes = {
+  "default_unicast" = {
+    virtual_router = "default"
+    route_table    = "unicast"
+    routes = {
+      "df_route" = {
+        destination = "0.0.0.0/0"
+        interface   = "ethernet1/1"
+        type        = "ip-address"
+        next_hop    = "10.1.1.1"
+        metric      = 10
+      }
+    }
+  }
+  "internal_unicast" = {
+    virtual_router = "internal"
+    route_table    = "unicast"
+    routes = {
+      "IPSec_route" = {
+        destination = "10.10.10.0/24"
+        interface   = "tunnel.42"
+        type        = ""
+      }
+    }
+  }
+  "external_unicast" = {
+    virtual_router = "external"
+    route_table    = "unicast"
+    routes = {
+      "df_route" = {
+        destination = "0.0.0.0/0"
+        interface   = "ethernet1/2"
+        type        = "ip-address"
+        next_hop    = "10.1.2.1"
+        metric      = 10
+      }
+    }
+  }
+}
+
+### Network - zone
+
+zones = {
+  "internal" = {
+    mode = "layer3"
+  }
+}
+
+### Network - IPSec
+
+ike_gateways = {
+  "IKE-GW-1" = {
+    version              = "ikev1"
+    disabled             = false
+    peer_ip_type         = "ip"
+    peer_ip_value        = "5.5.5.5"
+    interface            = "ethernet1/1"
+    pre_shared_key       = "test12345"
+    local_id_type        = "ipaddr"
+    local_id_value       = "10.1.1.1"
+    peer_id_type         = "ipaddr"
+    peer_id_value        = "10.5.1.1"
+    ikev1_crypto_profile = "AES128_default"
+  }
+}
+
+ike_crypto_profiles = {
+  "AES128_default" = {
+    dh_groups               = ["group2", "group5"]
+    authentications         = ["md5", "sha1"]
+    encryptions             = ["aes-128-cbc", "aes-192-cbc"]
+    lifetime_type           = "hours"
+    lifetime_value          = 24
+    authentication_multiple = 0
+  }
+  "AES128_DH5" = {
+    dh_groups               = ["group5"]
+    authentications         = ["sha1"]
+    encryptions             = ["aes-128-cbc", "aes-192-cbc"]
+    lifetime_type           = "hours"
+    lifetime_value          = 8
+    authentication_multiple = 3
+  }
+}
+
+ipsec_crypto_profiles = {
+  "AES128_default" = {
+    protocol        = "esp"
+    authentications = ["md5", "sha1"]
+    encryptions     = ["aes-128-cbc", "aes-192-cbc"]
+    dh_group        = "group5"
+    lifetime_type   = "hours"
+    lifetime_value  = 24
+  }
+  "AES128_DH14" = {
+    protocol        = "esp"
+    authentications = ["sha1"]
+    encryptions     = ["aes-128-cbc", "aes-192-cbc"]
+    dh_group        = "group14"
+    lifetime_type   = "hours"
+    lifetime_value  = 24
+
+  }
+}
+
+ipsec_tunnels = {
+  "some_tunnel" = {
+    virtual_router          = "internal"
+    tunnel_interface        = "tunnel.42"
+    type                    = "auto-key"
+    disabled                = false
+    ak_ike_gateway          = "IKE-GW-1"
+    ak_ipsec_crypto_profile = "AES128_DH14"
+    anti_replay             = false
+    copy_flow_label         = false
+    enable_tunnel_monitor   = false
+    proxy_subnets           = "example1,10.10.10.0/24,10.10.20.0/24;example2,10.10.10.0/24,10.10.30.0/24"
   }
 }
