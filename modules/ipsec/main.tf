@@ -1,7 +1,7 @@
 resource "panos_ike_crypto_profile" "this" {
   for_each = var.ike_crypto_profiles
 
-  template       = var.mode_map[var.mode] == 0 ? (var.template_stack == "" ? try(var.template, "default") : null) : null
+  template       = var.mode_map[var.mode] == 0 ? (var.template_stack == "" ? var.template : null) : null
   template_stack = var.mode_map[var.mode] == 0 ? var.template_stack == "" ? null : var.template_stack : null
 
   name                    = each.key
@@ -16,8 +16,8 @@ resource "panos_ike_crypto_profile" "this" {
 resource "panos_panorama_ipsec_crypto_profile" "this" {
   for_each = var.mode_map[var.mode] == 0 ? var.ipsec_crypto_profiles : {}
 
-  template       = var.mode_map[var.mode] == 0 ? (var.template_stack == "" ? try(var.template, "default") : null) : null
-  template_stack = var.mode_map[var.mode] == 0 ? var.template_stack == "" ? null : var.template_stack : null
+  template       = var.template_stack == "" ? var.template : null
+  template_stack = var.template_stack == "" ? null : var.template_stack
 
   name            = each.key
   protocol        = each.value.protocol
@@ -47,7 +47,7 @@ resource "panos_ipsec_crypto_profile" "this" {
 resource "panos_panorama_ike_gateway" "this" {
   for_each = var.mode_map[var.mode] == 0 ? var.ike_gateways : {}
 
-  template       = var.template_stack == "" ? try(var.template, "default") : null
+  template       = var.template_stack == "" ? var.template : null
   template_stack = var.template_stack == "" ? null : var.template_stack
 
   name                              = each.key
@@ -142,7 +142,8 @@ resource "panos_ike_gateway" "this" {
 resource "panos_panorama_ipsec_tunnel" "this" {
   for_each = var.mode_map[var.mode] == 0 ? var.ipsec_tunnels : {}
 
-  template = try(var.template, "default")
+  template = var.template
+  ### an argument named "template_stack" is not expected here
 
   name                           = each.key
   tunnel_interface               = each.value.tunnel_interface
@@ -232,7 +233,8 @@ resource "panos_ipsec_tunnel" "this" {
 resource "panos_panorama_ipsec_tunnel_proxy_id_ipv4" "this" {
   for_each = var.mode_map[var.mode] == 0 ? var.ipsec_tunnels_proxy : {}
 
-  template = try(var.template, "default")
+  template = var.template
+  ### an argument named "template_stack" is not expected here
 
   name                = each.key
   ipsec_tunnel        = each.value.ipsec_tunnel

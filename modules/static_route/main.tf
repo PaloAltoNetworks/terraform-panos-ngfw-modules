@@ -1,7 +1,7 @@
 resource "panos_panorama_static_route_ipv4" "this" {
   for_each = var.mode_map[var.mode] == 0 ? var.static_routes : {}
 
-  template       = var.template_stack == "" ? try(var.template, "default") : null
+  template       = var.template_stack == "" ? var.template : null
   template_stack = var.template_stack == "" ? null : var.template_stack
 
   name           = each.key

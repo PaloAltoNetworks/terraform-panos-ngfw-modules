@@ -2,6 +2,7 @@ resource "panos_panorama_ethernet_interface" "this" {
   for_each = var.mode_map[var.mode] == 0 ? { for name, intf in var.interfaces : name => intf if intf.type == "ethernet" } : {}
 
   template = var.template
+  ### an argument named "template_stack" is not expected here
 
   name                            = each.key
   vsys                            = each.value.vsys
@@ -72,6 +73,7 @@ resource "panos_panorama_loopback_interface" "this" {
   for_each = var.mode_map[var.mode] == 0 ? { for name, intf in var.interfaces : name => intf if intf.type == "loopback" } : {}
 
   template = var.template
+  ### an argument named "template_stack" is not expected here
 
   name               = each.key
   vsys               = each.value.vsys
@@ -104,6 +106,7 @@ resource "panos_panorama_tunnel_interface" "this" {
   for_each = var.mode_map[var.mode] == 0 ? { for name, intf in var.interfaces : name => intf if intf.type == "tunnel" } : {}
 
   template = var.template
+  ### an argument named "template_stack" is not expected here
 
   name               = each.key
   vsys               = each.value.vsys

@@ -7,7 +7,7 @@ mode      = "panorama"
 device_group   = "AWSTestDG"
 vsys           = "vsys1"
 template       = "test-template"
-template_stack = ""
+template_stack = "" ### not every resource can be created in template stack e.g. panos_panorama_ethernet_interface can be only in template
 
 ### Tags
 

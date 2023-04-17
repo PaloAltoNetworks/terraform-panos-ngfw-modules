@@ -1,8 +1,9 @@
 resource "panos_panorama_management_profile" "this" {
   for_each = var.mode_map[var.mode] == 0 ? var.management_profiles : {}
 
-  template                   = var.template_stack == "" ? try(var.template, "default") : null
-  template_stack             = var.template_stack == "" ? null : var.template_stack
+  template       = var.template_stack == "" ? var.template : null
+  template_stack = var.template_stack == "" ? null : var.template_stack
+
   name                       = each.key
   ping                       = each.value.ping
   telnet                     = each.value.telnet
