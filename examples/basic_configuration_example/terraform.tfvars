@@ -264,29 +264,22 @@ interfaces = {
 
 management_profiles = {
   "mgmt_default" = {
-    ping           = true
-    telnet         = false
-    ssh            = true
-    http           = false
-    https          = true
-    snmp           = false
-    userid_service = null
-    permitted_ips  = ["1.1.1.1/32", "2.2.2.2/32"]
+    ping          = true
+    telnet        = false
+    ssh           = true
+    http          = false
+    https         = true
+    snmp          = false
+    permitted_ips = ["1.1.1.1/32", "2.2.2.2/32"]
   }
 }
 
 ### Network - virtual router
 
 virtual_routers = {
-  "default" = {
-    mode = "layer3"
-  }
-  "external" = {
-    mode = "layer3"
-  }
-  "internal" = {
-    mode = "layer3"
-  }
+  "default"  = {}
+  "external" = {}
+  "internal" = {}
 }
 
 static_routes = {

@@ -35,7 +35,6 @@ variable "template_stack" {
 variable "management_profiles" {
   description = <<-EOF
   Map of the management profiles, where key is the management profile's name:
-  - `name` - (Required) The management profile's name.
   - `ping` - (Optional) Allow ping.
   - `telnet` - (Optional) Allow telnet.
   - `ssh` - (Optional) Allow SSH.

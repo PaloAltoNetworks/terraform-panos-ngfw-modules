@@ -34,7 +34,7 @@ variable "template_stack" {
 
 variable "interfaces" {
   description = <<-EOF
-  Map of the interfaces objects, where key is the interface's name:
+  Map of the interfaces, where key is the interface's name:
   - `type` - (Required) Type of interface. Valid values are `ethernet`,`loopback`,`tunnel`.
   - `mode` - (Required) The interface mode. This can be any of the following values: layer3, layer2, virtual-wire, tap, ha, decrypt-mirror, or aggregate-group.
   - `zone` - (Required) The zone's name
