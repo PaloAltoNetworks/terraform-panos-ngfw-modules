@@ -17,6 +17,7 @@ resource "panos_panorama_static_route_ipv4" "this" {
   next_hop       = each.value.route.next_hop
   admin_distance = each.value.route.admin_distance
   metric         = each.value.route.metric
+  bfd_profile    = each.value.route.bfd_profile
 }
 
 resource "panos_static_route_ipv4" "this" {
@@ -31,4 +32,5 @@ resource "panos_static_route_ipv4" "this" {
   next_hop       = each.value.route.next_hop
   admin_distance = each.value.route.admin_distance
   metric         = each.value.route.metric
+  bfd_profile    = each.value.route.bfd_profile
 }
