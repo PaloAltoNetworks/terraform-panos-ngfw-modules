@@ -3,10 +3,10 @@ variable "pan_creds" {
   type        = string
 }
 
-variable "panorama" {
-  description = "Give information if Panorama is a target."
-  default     = false
-  type        = bool
+variable "mode" {
+  description = "If modules have target to Panorama, it enable Panorama specific variables."
+  default     = "ngfw"
+  type        = string
 }
 
 variable "tags" {

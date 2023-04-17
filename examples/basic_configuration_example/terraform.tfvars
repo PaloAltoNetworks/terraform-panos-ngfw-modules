@@ -1,5 +1,8 @@
-pan_creds = "./creds/credentials.json"
-panorama  = true
+# pan_creds = "./creds/credentials_panorama.json"
+# mode      = "panorama"
+
+# pan_creds = "./creds/credentials_vmseries.json"
+# mode      = "ngfw"
 
 device_group = ["AWSTestDG", "AzureTestDG"]
 vsys         = ["vsys1"]
@@ -201,3 +204,13 @@ services_group = {
     members = ["tcp_4450", "tcp_4457-4458"]
   }
 }
+
+### Network - interfaces
+
+### Network - management profile
+
+### Network - virtual router
+
+### Network - zone
+
+### Network - IPSec
