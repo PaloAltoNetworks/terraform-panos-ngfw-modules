@@ -50,3 +50,35 @@ variable "vsys" {
   default     = []
   type        = list(string)
 }
+
+variable "template" {
+  type = string
+}
+
+variable "template_stack" {
+  type = string
+}
+
+variable "interfaces" {
+}
+
+variable "management_profiles" {
+}
+
+variable "virtual_routers" {
+}
+
+variable "zones" {
+}
+
+variable "ike_gateways" {
+}
+
+variable "ike_crypto_profiles" {
+}
+
+variable "ipsec_crypto_profiles" {
+}
+
+variable "ipsec_tunnels" {
+}

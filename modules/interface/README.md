@@ -28,6 +28,8 @@
 | [panos_panorama_loopback_interface.this](https://registry.terraform.io/providers/PaloAltoNetworks/panos/latest/docs/resources/panorama_loopback_interface) | resource |
 | [panos_panorama_tunnel_interface.this](https://registry.terraform.io/providers/PaloAltoNetworks/panos/latest/docs/resources/panorama_tunnel_interface) | resource |
 | [panos_tunnel_interface.this](https://registry.terraform.io/providers/PaloAltoNetworks/panos/latest/docs/resources/tunnel_interface) | resource |
+| [panos_virtual_router_entry.this](https://registry.terraform.io/providers/PaloAltoNetworks/panos/latest/docs/resources/virtual_router_entry) | resource |
+| [panos_zone_entry.this](https://registry.terraform.io/providers/PaloAltoNetworks/panos/latest/docs/resources/zone_entry) | resource |
 
 ## Inputs
 
@@ -35,6 +37,8 @@
 |------|-------------|------|---------|:--------:|
 | <a name="input_interfaces"></a> [interfaces](#input\_interfaces) | n/a | `map` | `{}` | no |
 | <a name="input_mode"></a> [mode](#input\_mode) | The mode to use for the modules. Valid values are `panorama` and `ngfw`. | `string` | `"panorama"` | no |
+| <a name="input_template"></a> [template](#input\_template) | n/a | `string` | n/a | yes |
+| <a name="input_template_stack"></a> [template\_stack](#input\_template\_stack) | n/a | `string` | n/a | yes |
 
 ## Outputs
 
@@ -46,4 +50,6 @@
 | <a name="output_panos_panorama_loopback_interface"></a> [panos\_panorama\_loopback\_interface](#output\_panos\_panorama\_loopback\_interface) | n/a |
 | <a name="output_panos_panorama_tunnel_interface"></a> [panos\_panorama\_tunnel\_interface](#output\_panos\_panorama\_tunnel\_interface) | n/a |
 | <a name="output_panos_tunnel_interface"></a> [panos\_tunnel\_interface](#output\_panos\_tunnel\_interface) | n/a |
+| <a name="output_panos_virtual_router_entry"></a> [panos\_virtual\_router\_entry](#output\_panos\_virtual\_router\_entry) | n/a |
+| <a name="output_panos_zone_entry"></a> [panos\_zone\_entry](#output\_panos\_zone\_entry) | n/a |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

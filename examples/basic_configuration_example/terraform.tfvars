@@ -1,11 +1,13 @@
 # pan_creds = "./creds/credentials_panorama.json"
 # mode      = "panorama"
 
-# pan_creds = "./creds/credentials_vmseries.json"
-# mode      = "ngfw"
+pan_creds = "./creds/credentials_vmseries.json"
+mode      = "ngfw"
 
-device_group = ["AWSTestDG", "AzureTestDG"]
-vsys         = ["vsys1"]
+device_group   = ["AWSTestDG", "AzureTestDG"]
+vsys           = ["vsys1"]
+template       = "test-template"
+template_stack = ""
 
 ### Tags
 
@@ -207,10 +209,167 @@ services_group = {
 
 ### Network - interfaces
 
+interfaces = {
+  "ethernet1/1" = {
+    type                      = "ethernet"
+    mode                      = "layer3"
+    management_profile        = "mgmt_default"
+    link_state                = "up"
+    static_ips                = null
+    enable_dhcp               = true
+    create_dhcp_default_route = false
+    dhcp_default_route_metric = null
+    comment                   = "mgmt"
+    virtual_router            = "default"
+    zone                      = "mgmt"
+    vsys                      = "vsys1"
+  }
+  "ethernet1/2" = {
+    type                      = "ethernet"
+    mode                      = "layer3"
+    management_profile        = "mgmt_default"
+    link_state                = "up"
+    static_ips                = null
+    enable_dhcp               = null
+    create_dhcp_default_route = null
+    dhcp_default_route_metric = null
+    comment                   = "external"
+    virtual_router            = "external"
+    zone                      = "external"
+    vsys                      = "vsys1"
+  }
+  "ethernet1/3" = {
+    type                      = "ethernet"
+    mode                      = "layer3"
+    management_profile        = null
+    link_state                = "up"
+    static_ips                = null
+    enable_dhcp               = null
+    create_dhcp_default_route = null
+    dhcp_default_route_metric = null
+    comment                   = "internal"
+    virtual_router            = "internal"
+    zone                      = "internal"
+    vsys                      = "vsys1"
+  }
+  "loopback.42" = {
+    type                      = "loopback"
+    mode                      = "layer3"
+    management_profile        = null
+    link_state                = "up"
+    static_ips                = null
+    enable_dhcp               = null
+    create_dhcp_default_route = null
+    dhcp_default_route_metric = null
+    comment                   = "internal"
+    virtual_router            = "internal"
+    zone                      = "vpn"
+    vsys                      = "vsys1"
+  }
+  "tunnel.42" = {
+    type                      = "tunnel"
+    mode                      = "layer3"
+    management_profile        = null
+    link_state                = "up"
+    static_ips                = null
+    enable_dhcp               = null
+    create_dhcp_default_route = null
+    dhcp_default_route_metric = null
+    comment                   = "internal"
+    virtual_router            = "internal"
+    zone                      = "vpn"
+    vsys                      = "vsys1"
+  }
+}
+
 ### Network - management profile
+
+management_profiles = {
+  "mgmt_default" = {
+    ping           = true
+    telnet         = false
+    ssh            = true
+    http           = false
+    https          = true
+    snmp           = false
+    userid_service = null
+    permitted_ips  = ["1.1.1.1/32", "2.2.2.2/32"]
+  }
+}
 
 ### Network - virtual router
 
+virtual_routers = {
+  "default" = {
+    mode = "layer3"
+    route_tables = {
+      "unicast" = {
+        routes = {
+          "df_route" = {
+            destination    = "0.0.0.0/0"
+            interface      = "ethernet1/1"
+            type           = "ip-address"
+            next_hop       = "10.1.1.1"
+            admin_distance = null
+            metric         = 10
+          }
+        }
+      }
+    }
+  }
+  "external" = {
+    mode = "layer3"
+    route_tables = {
+      "unicast" = {
+        routes = {
+          "df_route" = {
+            destination    = "0.0.0.0/0"
+            interface      = "ethernet1/2"
+            type           = "ip-address"
+            next_hop       = "10.1.2.1"
+            admin_distance = null
+            metric         = 10
+          }
+        }
+      }
+    }
+  }
+  "internal" = {
+    mode = "layer3"
+    route_tables = {
+      "unicast" = {
+        routes = {
+          "IPSec_route" = {
+            destination    = "10.10.10.0/24"
+            interface      = "tunnel.42"
+            type           = ""
+            next_hop       = null
+            admin_distance = null
+            metric         = null
+          }
+        }
+      }
+    }
+  }
+}
+
 ### Network - zone
 
+zones = {
+  "internal" = {
+    mode           = "layer3"
+    zone_profile   = null
+    log_setting    = null
+    enable_user_id = null
+    interfaces     = null
+    include_acls   = null
+    exclude_acls   = null
+  }
+}
+
 ### Network - IPSec
+
+ike_gateways          = {}
+ike_crypto_profiles   = {}
+ipsec_crypto_profiles = {}
+ipsec_tunnels         = {}

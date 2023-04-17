@@ -16,9 +16,14 @@ No providers.
 |------|--------|---------|
 | <a name="module_policy_as_code_address"></a> [policy\_as\_code\_address](#module\_policy\_as\_code\_address) | ../../modules/address | n/a |
 | <a name="module_policy_as_code_address_groups"></a> [policy\_as\_code\_address\_groups](#module\_policy\_as\_code\_address\_groups) | ../../modules/address | n/a |
+| <a name="module_policy_as_code_interfaces"></a> [policy\_as\_code\_interfaces](#module\_policy\_as\_code\_interfaces) | ../../modules/interface | n/a |
+| <a name="module_policy_as_code_management_profiles"></a> [policy\_as\_code\_management\_profiles](#module\_policy\_as\_code\_management\_profiles) | ../../modules/management_profile | n/a |
+| <a name="module_policy_as_code_routes"></a> [policy\_as\_code\_routes](#module\_policy\_as\_code\_routes) | ../../modules/route | n/a |
 | <a name="module_policy_as_code_service"></a> [policy\_as\_code\_service](#module\_policy\_as\_code\_service) | ../../modules/service | n/a |
 | <a name="module_policy_as_code_service_groups"></a> [policy\_as\_code\_service\_groups](#module\_policy\_as\_code\_service\_groups) | ../../modules/service | n/a |
 | <a name="module_policy_as_code_tag"></a> [policy\_as\_code\_tag](#module\_policy\_as\_code\_tag) | ../../modules/tag | n/a |
+| <a name="module_policy_as_code_virtual_routers"></a> [policy\_as\_code\_virtual\_routers](#module\_policy\_as\_code\_virtual\_routers) | ../../modules/virtual_router | n/a |
+| <a name="module_policy_as_code_zones"></a> [policy\_as\_code\_zones](#module\_policy\_as\_code\_zones) | ../../modules/zone | n/a |
 
 ## Resources
 
@@ -31,12 +36,22 @@ No resources.
 | <a name="input_address_groups"></a> [address\_groups](#input\_address\_groups) | Address groups object | `any` | `{}` | no |
 | <a name="input_addresses"></a> [addresses](#input\_addresses) | Address object | `any` | `{}` | no |
 | <a name="input_device_group"></a> [device\_group](#input\_device\_group) | Used in variable panorama is true, it gives possibility to choose Device Group for the deployment | `list(string)` | `[]` | no |
+| <a name="input_ike_crypto_profiles"></a> [ike\_crypto\_profiles](#input\_ike\_crypto\_profiles) | n/a | `any` | n/a | yes |
+| <a name="input_ike_gateways"></a> [ike\_gateways](#input\_ike\_gateways) | n/a | `any` | n/a | yes |
+| <a name="input_interfaces"></a> [interfaces](#input\_interfaces) | n/a | `any` | n/a | yes |
+| <a name="input_ipsec_crypto_profiles"></a> [ipsec\_crypto\_profiles](#input\_ipsec\_crypto\_profiles) | n/a | `any` | n/a | yes |
+| <a name="input_ipsec_tunnels"></a> [ipsec\_tunnels](#input\_ipsec\_tunnels) | n/a | `any` | n/a | yes |
+| <a name="input_management_profiles"></a> [management\_profiles](#input\_management\_profiles) | n/a | `any` | n/a | yes |
 | <a name="input_mode"></a> [mode](#input\_mode) | If modules have target to Panorama, it enable Panorama specific variables. | `string` | `"ngfw"` | no |
 | <a name="input_pan_creds"></a> [pan\_creds](#input\_pan\_creds) | Path to file with credentials to Panorama | `string` | n/a | yes |
 | <a name="input_services"></a> [services](#input\_services) | Service object | `any` | `{}` | no |
 | <a name="input_services_group"></a> [services\_group](#input\_services\_group) | Service group object | `any` | `{}` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | Tags object | `any` | `{}` | no |
+| <a name="input_template"></a> [template](#input\_template) | n/a | `string` | n/a | yes |
+| <a name="input_template_stack"></a> [template\_stack](#input\_template\_stack) | n/a | `string` | n/a | yes |
+| <a name="input_virtual_routers"></a> [virtual\_routers](#input\_virtual\_routers) | n/a | `any` | n/a | yes |
 | <a name="input_vsys"></a> [vsys](#input\_vsys) | Used in variable panorama is true, it gives possibility to choose Device Group for the deployment | `list(string)` | `[]` | no |
+| <a name="input_zones"></a> [zones](#input\_zones) | n/a | `any` | n/a | yes |
 
 ## Outputs
 

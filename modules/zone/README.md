@@ -23,20 +23,19 @@
 | Name | Type |
 |------|------|
 | [panos_zone.this](https://registry.terraform.io/providers/PaloAltoNetworks/panos/latest/docs/resources/zone) | resource |
-| [panos_zone_entry.this](https://registry.terraform.io/providers/PaloAltoNetworks/panos/latest/docs/resources/zone_entry) | resource |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_mode"></a> [mode](#input\_mode) | The mode to use for the modules. Valid values are `panorama` and `ngfw`. | `string` | `"panorama"` | no |
-| <a name="input_zone_entries"></a> [zone\_entries](#input\_zone\_entries) | n/a | `map` | `{}` | no |
+| <a name="input_template"></a> [template](#input\_template) | n/a | `string` | n/a | yes |
+| <a name="input_template_stack"></a> [template\_stack](#input\_template\_stack) | n/a | `string` | n/a | yes |
 | <a name="input_zones"></a> [zones](#input\_zones) | n/a | `map` | `{}` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| <a name="output_panos_zone_entry"></a> [panos\_zone\_entry](#output\_panos\_zone\_entry) | n/a |
 | <a name="output_panos_zones"></a> [panos\_zones](#output\_panos\_zones) | n/a |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

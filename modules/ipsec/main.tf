@@ -6,8 +6,8 @@ module "mode_lookup" {
 resource "panos_ike_crypto_profile" "this" {
   for_each = length(var.ike_crypto_profiles) != 0 ? { for profile in var.ike_crypto_profiles : profile.name => profile } : {}
 
-  template       = module.mode_lookup.mode == 0 ? (each.value.template_stack == "" ? try(each.value.template, "default") : null) : null
-  template_stack = module.mode_lookup.mode == 0 ? each.value.template_stack == "" ? null : each.value.template_stack : null
+  template       = module.mode_lookup.mode == 0 ? (var.template_stack == "" ? try(var.template, "default") : null) : null
+  template_stack = module.mode_lookup.mode == 0 ? var.template_stack == "" ? null : var.template_stack : null
 
   name                    = each.value.name
   dh_groups               = each.value.dh_groups
@@ -20,8 +20,8 @@ resource "panos_ike_crypto_profile" "this" {
 resource "panos_panorama_ipsec_crypto_profile" "this" {
   for_each = module.mode_lookup.mode == 0 && length(var.ipsec_crypto_profiles) != 0 ? { for profile in var.ipsec_crypto_profiles : profile.name => profile } : {}
 
-  template       = module.mode_lookup.mode == 0 ? (each.value.template_stack == "" ? try(each.value.template, "default") : null) : null
-  template_stack = module.mode_lookup.mode == 0 ? each.value.template_stack == "" ? null : each.value.template_stack : null
+  template       = module.mode_lookup.mode == 0 ? (var.template_stack == "" ? try(var.template, "default") : null) : null
+  template_stack = module.mode_lookup.mode == 0 ? var.template_stack == "" ? null : var.template_stack : null
 
   name            = each.value.name
   protocol        = each.value.protocol
@@ -51,8 +51,8 @@ resource "panos_ipsec_crypto_profile" "this" {
 resource "panos_panorama_ike_gateway" "this" {
   for_each = module.mode_lookup.mode == 0 && length(var.ike_gateways) != 0 ? { for gw in var.ike_gateways : gw.name => gw } : {}
 
-  template       = each.value.template_stack == "" ? try(each.value.template, "default") : null
-  template_stack = each.value.template_stack == "" ? null : each.value.template_stack
+  template       = var.template_stack == "" ? try(var.template, "default") : null
+  template_stack = var.template_stack == "" ? null : var.template_stack
 
   name                 = each.value.name
   version              = each.value.version
@@ -69,7 +69,6 @@ resource "panos_panorama_ike_gateway" "this" {
 
   depends_on = [
     panos_ike_crypto_profile.this,
-    panos_panorama_loopback_interface.this,
   ]
 }
 
@@ -90,20 +89,14 @@ resource "panos_ike_gateway" "this" {
   ikev1_crypto_profile = each.value.ikev1_crypto_profile
 
   depends_on = [
-    panos_ike_crypto_profile.this,
-    panos_tunnel_interface.this,
-    panos_loopback_interface.this,
-    panos_ethernet_interface.this,
-    panos_panorama_tunnel_interface.this,
-    panos_panorama_loopback_interface.this,
-    panos_panorama_ethernet_interface.this,
+    panos_ike_crypto_profile.this
   ]
 }
 
 resource "panos_panorama_ipsec_tunnel" "this" {
   for_each = module.mode_lookup.mode == 0 && length(var.ipsec_tunnels) != 0 ? { for tun in var.ipsec_tunnels : tun.name => tun } : {}
 
-  template = try(each.value.template, "default")
+  template = try(var.template, "default")
 
   name                          = each.value.name
   tunnel_interface              = each.value.tunnel_interface
@@ -120,7 +113,6 @@ resource "panos_panorama_ipsec_tunnel" "this" {
   tunnel_monitor_proxy_id       = each.value.tunnel_monitor_proxy_id
 
   depends_on = [
-    panos_panorama_tunnel_interface.this,
     panos_panorama_ike_gateway.this,
   ]
 }
@@ -143,7 +135,6 @@ resource "panos_ipsec_tunnel" "this" {
   tunnel_monitor_proxy_id       = each.value.tunnel_monitor_proxy_id
 
   depends_on = [
-    panos_tunnel_interface.this,
     panos_ike_gateway.this,
   ]
 }
@@ -151,7 +142,7 @@ resource "panos_ipsec_tunnel" "this" {
 resource "panos_panorama_ipsec_tunnel_proxy_id_ipv4" "this" {
   for_each = module.mode_lookup.mode == 0 && length(var.ipsec_tunnels_proxy) != 0 ? { for pbvpn in var.ipsec_tunnels_proxy : pbvpn.name => pbvpn } : {}
 
-  template     = try(each.value.template, "default")
+  template     = try(var.template, "default")
   ipsec_tunnel = each.value.ipsec_tunnel
   name         = each.value.name
   local        = each.value.local

@@ -4,11 +4,11 @@ module "mode_lookup" {
 }
 
 resource "panos_panorama_management_profile" "this" {
-  for_each = module.mode_lookup.mode == 0 && length(var.management_profiles) != 0 ? { for prof in var.management_profiles : prof.name => prof } : {}
+  for_each = module.mode_lookup.mode == 0 ? var.management_profiles : {}
 
-  template       = each.value.template_stack == "" ? try(each.value.template, "default") : null
-  template_stack = each.value.template_stack == "" ? null : each.value.template_stack
-  name           = each.value.name
+  template       = var.template_stack == "" ? try(var.template, "default") : null
+  template_stack = var.template_stack == "" ? null : var.template_stack
+  name           = each.key
   ping           = each.value.ping
   telnet         = each.value.telnet
   ssh            = each.value.ssh
@@ -20,9 +20,9 @@ resource "panos_panorama_management_profile" "this" {
 }
 
 resource "panos_management_profile" "this" {
-  for_each = module.mode_lookup.mode == 1 && length(var.management_profiles) != 0 ? { for prof in var.management_profiles : prof.name => prof } : {}
+  for_each = module.mode_lookup.mode == 1 ? var.management_profiles : {}
 
-  name           = each.value.name
+  name           = each.key
   ping           = each.value.ping
   telnet         = each.value.telnet
   ssh            = each.value.ssh

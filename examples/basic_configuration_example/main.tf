@@ -48,3 +48,72 @@ module "policy_as_code_service_groups" {
   depends_on = [module.policy_as_code_tag, module.policy_as_code_service]
 }
 
+module "policy_as_code_interfaces" {
+  source = "../../modules/interface"
+
+  mode           = var.mode
+  template       = var.template
+  template_stack = var.template_stack
+  interfaces     = var.interfaces
+
+  depends_on = [module.policy_as_code_management_profiles, module.policy_as_code_zones, module.policy_as_code_virtual_routers]
+}
+
+module "policy_as_code_management_profiles" {
+  source = "../../modules/management_profile"
+
+  mode                = var.mode
+  template            = var.template
+  template_stack      = var.template_stack
+  management_profiles = var.management_profiles
+
+  depends_on = []
+}
+
+module "policy_as_code_virtual_routers" {
+  source = "../../modules/virtual_router"
+
+  mode            = var.mode
+  template        = var.template
+  template_stack  = var.template_stack
+  virtual_routers = var.virtual_routers
+
+  depends_on = []
+}
+
+module "policy_as_code_routes" {
+  source = "../../modules/route"
+
+  mode            = var.mode
+  template        = var.template
+  template_stack  = var.template_stack
+  virtual_routers = var.virtual_routers
+
+  depends_on = [module.policy_as_code_virtual_routers, module.policy_as_code_interfaces]
+}
+
+module "policy_as_code_zones" {
+  source = "../../modules/zone"
+
+  mode           = var.mode
+  template       = var.template
+  template_stack = var.template_stack
+  zones          = var.zones
+
+  depends_on = []
+}
+
+# module "policy_as_code_ipsec" {
+#   source   = "../../modules/ipsec"
+
+#   mode       = var.mode
+# template   = var.template
+# template_stack = var.template_stack
+#   ike_crypto_profiles = null
+#   ipsec_crypto_profiles = null
+#   ike_gateways = null
+#   ipsec_tunnels = null
+#   ipsec_tunnels_proxy = null
+
+#   depends_on = []
+# }

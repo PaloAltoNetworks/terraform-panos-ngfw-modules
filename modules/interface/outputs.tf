@@ -21,3 +21,11 @@ output "panos_panorama_tunnel_interface" {
 output "panos_tunnel_interface" {
   value = panos_tunnel_interface.this
 }
+
+output "panos_virtual_router_entry" {
+  value = panos_virtual_router_entry.this
+}
+
+output "panos_zone_entry" {
+  value = panos_zone_entry.this
+}

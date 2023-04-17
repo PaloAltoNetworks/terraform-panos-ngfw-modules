@@ -4,6 +4,14 @@ variable "mode" {
   type        = string
 }
 
+variable "template" {
+  type = string
+}
+
+variable "template_stack" {
+  type = string
+}
+
 variable "ike_crypto_profiles" { default = {} }
 variable "ipsec_crypto_profiles" { default = {} }
 variable "ike_gateways" { default = {} }

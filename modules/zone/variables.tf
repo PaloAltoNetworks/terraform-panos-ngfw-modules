@@ -4,5 +4,12 @@ variable "mode" {
   type        = string
 }
 
+variable "template" {
+  type = string
+}
+
+variable "template_stack" {
+  type = string
+}
+
 variable "zones" { default = {} }
-variable "zone_entries" { default = {} }
