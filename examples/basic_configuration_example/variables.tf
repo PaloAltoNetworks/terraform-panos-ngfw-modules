@@ -16,6 +16,12 @@ variable "template" {
   type        = string
 }
 
+variable "template_stack" {
+  description = "Template stack name"
+  default     = ""
+  type        = string
+}
+
 variable "pan_creds" {
   description = "Path to file with credentials to Panorama"
   type        = string

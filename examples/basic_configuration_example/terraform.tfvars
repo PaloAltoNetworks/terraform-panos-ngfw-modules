@@ -4,9 +4,10 @@ mode      = "panorama"
 # pan_creds = "./creds/credentials_vmseries.json"
 # mode      = "ngfw"
 
-device_group = "AWSTestDG"
-vsys         = "vsys1"
-template     = "test-template"
+device_group   = "AWSTestDG"
+vsys           = "vsys1"
+template       = "test-template"
+template_stack = ""
 
 ### Tags
 
