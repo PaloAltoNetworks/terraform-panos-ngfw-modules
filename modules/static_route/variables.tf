@@ -12,4 +12,4 @@ variable "template_stack" {
   type = string
 }
 
-variable "virtual_routers" { default = {} }
+variable "static_routes" { default = {} }

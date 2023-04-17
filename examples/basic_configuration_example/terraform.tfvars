@@ -1,8 +1,8 @@
-# pan_creds = "./creds/credentials_panorama.json"
-# mode      = "panorama"
+pan_creds = "./creds/credentials_panorama.json"
+mode      = "panorama"
 
-pan_creds = "./creds/credentials_vmseries.json"
-mode      = "ngfw"
+# pan_creds = "./creds/credentials_vmseries.json"
+# mode      = "ngfw"
 
 device_group   = ["AWSTestDG", "AzureTestDG"]
 vsys           = ["vsys1"]
@@ -369,7 +369,79 @@ zones = {
 
 ### Network - IPSec
 
-ike_gateways          = {}
-ike_crypto_profiles   = {}
-ipsec_crypto_profiles = {}
-ipsec_tunnels         = {}
+ike_gateways = {
+  "IKE-GW-1" = {
+    version              = "ikev1"
+    disabled             = false
+    peer_ip_type         = "ip"
+    peer_ip_value        = "5.5.5.5"
+    interface            = "ethernet1/1"
+    pre_shared_key       = "test12345"
+    local_id_type        = "ipaddr"
+    local_id_value       = "10.1.1.1"
+    peer_id_type         = "ipaddr"
+    peer_id_value        = "10.5.1.1"
+    ikev1_crypto_profile = "AES128_default"
+  }
+}
+
+ike_crypto_profiles = {
+  "AES128_default" = {
+    dh_groups               = ["group2", "group5"]
+    authentications         = ["md5", "sha1"]
+    encryptions             = ["aes-128-cbc", "aes-192-cbc"]
+    lifetime_type           = "hours"
+    lifetime_value          = 24
+    authentication_multiple = 0
+  }
+  "AES128_DH5" = {
+    dh_groups               = ["group5"]
+    authentications         = ["sha1"]
+    encryptions             = ["aes-128-cbc", "aes-192-cbc"]
+    lifetime_type           = "hours"
+    lifetime_value          = 8
+    authentication_multiple = 3
+  }
+}
+
+ipsec_crypto_profiles = {
+  "AES128_default" = {
+    protocol        = "esp"
+    authentications = ["md5", "sha1"]
+    encryptions     = ["aes-128-cbc", "aes-192-cbc"]
+    dh_group        = "group5"
+    lifetime_type   = "hours"
+    lifetime_value  = 24
+    lifesize_type   = null
+    lifesize_value  = null
+  }
+  "AES128_DH14" = {
+    protocol        = "esp"
+    authentications = ["sha1"]
+    encryptions     = ["aes-128-cbc", "aes-192-cbc"]
+    dh_group        = "group14"
+    lifetime_type   = "hours"
+    lifetime_value  = 24
+    lifesize_type   = null
+    lifesize_value  = null
+  }
+}
+
+ipsec_tunnels = {
+  "some_tunnel" = {
+    virtual_router                = "internal"
+    tunnel_interface              = "tunnel.42"
+    type                          = "auto-key"
+    disabled                      = false
+    ak_ike_gateway                = "IKE-GW-1"
+    ak_ipsec_crypto_profile       = "AES128_DH14"
+    anti_replay                   = false
+    copy_flow_label               = false
+    enable_tunnel_monitor         = false
+    tunnel_monitor_destination_ip = null
+    tunnel_monitor_source_ip      = null
+    tunnel_monitor_profile        = null
+    tunnel_monitor_proxy_id       = null
+    proxy_subnets                 = "example1,10.10.10.0/24,10.10.20.0/24;example2,10.10.10.0/24,10.10.30.0/24"
+  }
+}

@@ -17,10 +17,11 @@ No providers.
 | <a name="module_policy_as_code_address"></a> [policy\_as\_code\_address](#module\_policy\_as\_code\_address) | ../../modules/address | n/a |
 | <a name="module_policy_as_code_address_groups"></a> [policy\_as\_code\_address\_groups](#module\_policy\_as\_code\_address\_groups) | ../../modules/address | n/a |
 | <a name="module_policy_as_code_interfaces"></a> [policy\_as\_code\_interfaces](#module\_policy\_as\_code\_interfaces) | ../../modules/interface | n/a |
+| <a name="module_policy_as_code_ipsec"></a> [policy\_as\_code\_ipsec](#module\_policy\_as\_code\_ipsec) | ../../modules/ipsec | n/a |
 | <a name="module_policy_as_code_management_profiles"></a> [policy\_as\_code\_management\_profiles](#module\_policy\_as\_code\_management\_profiles) | ../../modules/management_profile | n/a |
-| <a name="module_policy_as_code_routes"></a> [policy\_as\_code\_routes](#module\_policy\_as\_code\_routes) | ../../modules/route | n/a |
 | <a name="module_policy_as_code_service"></a> [policy\_as\_code\_service](#module\_policy\_as\_code\_service) | ../../modules/service | n/a |
 | <a name="module_policy_as_code_service_groups"></a> [policy\_as\_code\_service\_groups](#module\_policy\_as\_code\_service\_groups) | ../../modules/service | n/a |
+| <a name="module_policy_as_code_static_routes"></a> [policy\_as\_code\_static\_routes](#module\_policy\_as\_code\_static\_routes) | ../../modules/static_route | n/a |
 | <a name="module_policy_as_code_tag"></a> [policy\_as\_code\_tag](#module\_policy\_as\_code\_tag) | ../../modules/tag | n/a |
 | <a name="module_policy_as_code_virtual_routers"></a> [policy\_as\_code\_virtual\_routers](#module\_policy\_as\_code\_virtual\_routers) | ../../modules/virtual_router | n/a |
 | <a name="module_policy_as_code_zones"></a> [policy\_as\_code\_zones](#module\_policy\_as\_code\_zones) | ../../modules/zone | n/a |

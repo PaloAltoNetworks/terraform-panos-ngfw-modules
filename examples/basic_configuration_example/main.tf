@@ -81,13 +81,18 @@ module "policy_as_code_virtual_routers" {
   depends_on = []
 }
 
-module "policy_as_code_routes" {
-  source = "../../modules/route"
+locals {
+  static_routes_list = flatten([for k, v in var.virtual_routers : [for rk, rv in v.route_tables : [for sk, sv in rv.routes : { virtual_router = k, route_table = rk, route_name = sk, route = sv }]]])
+  static_routes      = { for static_route in local.static_routes_list : "${static_route.virtual_router}_${static_route.route_table}_${static_route.route_name}" => static_route }
+}
 
-  mode            = var.mode
-  template        = var.template
-  template_stack  = var.template_stack
-  virtual_routers = var.virtual_routers
+module "policy_as_code_static_routes" {
+  source = "../../modules/static_route"
+
+  mode           = var.mode
+  template       = var.template
+  template_stack = var.template_stack
+  static_routes  = local.static_routes
 
   depends_on = [module.policy_as_code_virtual_routers, module.policy_as_code_interfaces]
 }
@@ -103,17 +108,17 @@ module "policy_as_code_zones" {
   depends_on = []
 }
 
-# module "policy_as_code_ipsec" {
-#   source   = "../../modules/ipsec"
+module "policy_as_code_ipsec" {
+  source = "../../modules/ipsec"
 
-#   mode       = var.mode
-# template   = var.template
-# template_stack = var.template_stack
-#   ike_crypto_profiles = null
-#   ipsec_crypto_profiles = null
-#   ike_gateways = null
-#   ipsec_tunnels = null
-#   ipsec_tunnels_proxy = null
+  mode                  = var.mode
+  template              = var.template
+  template_stack        = var.template_stack
+  ike_crypto_profiles   = var.ike_crypto_profiles
+  ipsec_crypto_profiles = var.ipsec_crypto_profiles
+  ike_gateways          = var.ike_gateways
+  ipsec_tunnels         = var.ipsec_tunnels
+  ipsec_tunnels_proxy   = {}
 
-#   depends_on = []
-# }
+  depends_on = [module.policy_as_code_virtual_routers, module.policy_as_code_interfaces]
+}

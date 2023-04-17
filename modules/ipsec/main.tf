@@ -4,12 +4,12 @@ module "mode_lookup" {
 }
 
 resource "panos_ike_crypto_profile" "this" {
-  for_each = length(var.ike_crypto_profiles) != 0 ? { for profile in var.ike_crypto_profiles : profile.name => profile } : {}
+  for_each = var.ike_crypto_profiles
 
   template       = module.mode_lookup.mode == 0 ? (var.template_stack == "" ? try(var.template, "default") : null) : null
   template_stack = module.mode_lookup.mode == 0 ? var.template_stack == "" ? null : var.template_stack : null
 
-  name                    = each.value.name
+  name                    = each.key
   dh_groups               = each.value.dh_groups
   authentications         = each.value.authentications
   encryptions             = each.value.encryptions
@@ -18,12 +18,12 @@ resource "panos_ike_crypto_profile" "this" {
 }
 
 resource "panos_panorama_ipsec_crypto_profile" "this" {
-  for_each = module.mode_lookup.mode == 0 && length(var.ipsec_crypto_profiles) != 0 ? { for profile in var.ipsec_crypto_profiles : profile.name => profile } : {}
+  for_each = module.mode_lookup.mode == 0 ? var.ipsec_crypto_profiles : {}
 
   template       = module.mode_lookup.mode == 0 ? (var.template_stack == "" ? try(var.template, "default") : null) : null
   template_stack = module.mode_lookup.mode == 0 ? var.template_stack == "" ? null : var.template_stack : null
 
-  name            = each.value.name
+  name            = each.key
   protocol        = each.value.protocol
   dh_group        = each.value.dh_group
   authentications = each.value.authentications
@@ -35,9 +35,9 @@ resource "panos_panorama_ipsec_crypto_profile" "this" {
 }
 
 resource "panos_ipsec_crypto_profile" "this" {
-  for_each = module.mode_lookup.mode == 1 && length(var.ipsec_crypto_profiles) != 0 ? { for profile in var.ipsec_crypto_profiles : profile.name => profile } : {}
+  for_each = module.mode_lookup.mode == 1 ? var.ipsec_crypto_profiles : {}
 
-  name            = each.value.name
+  name            = each.key
   protocol        = each.value.protocol
   dh_group        = each.value.dh_group
   authentications = each.value.authentications
@@ -49,12 +49,12 @@ resource "panos_ipsec_crypto_profile" "this" {
 }
 
 resource "panos_panorama_ike_gateway" "this" {
-  for_each = module.mode_lookup.mode == 0 && length(var.ike_gateways) != 0 ? { for gw in var.ike_gateways : gw.name => gw } : {}
+  for_each = module.mode_lookup.mode == 0 ? var.ike_gateways : {}
 
   template       = var.template_stack == "" ? try(var.template, "default") : null
   template_stack = var.template_stack == "" ? null : var.template_stack
 
-  name                 = each.value.name
+  name                 = each.key
   version              = each.value.version
   disabled             = each.value.disabled
   peer_ip_type         = each.value.peer_ip_type
@@ -73,9 +73,9 @@ resource "panos_panorama_ike_gateway" "this" {
 }
 
 resource "panos_ike_gateway" "this" {
-  for_each = module.mode_lookup.mode == 1 && length(var.ike_gateways) != 0 ? { for gw in var.ike_gateways : gw.name => gw } : {}
+  for_each = module.mode_lookup.mode == 1 ? var.ike_gateways : {}
 
-  name                 = each.value.name
+  name                 = each.key
   version              = each.value.version
   disabled             = each.value.disabled
   peer_ip_type         = each.value.peer_ip_type
@@ -94,11 +94,11 @@ resource "panos_ike_gateway" "this" {
 }
 
 resource "panos_panorama_ipsec_tunnel" "this" {
-  for_each = module.mode_lookup.mode == 0 && length(var.ipsec_tunnels) != 0 ? { for tun in var.ipsec_tunnels : tun.name => tun } : {}
+  for_each = module.mode_lookup.mode == 0 ? var.ipsec_tunnels : {}
 
   template = try(var.template, "default")
 
-  name                          = each.value.name
+  name                          = each.key
   tunnel_interface              = each.value.tunnel_interface
   type                          = each.value.type
   disabled                      = each.value.disabled
@@ -118,9 +118,9 @@ resource "panos_panorama_ipsec_tunnel" "this" {
 }
 
 resource "panos_ipsec_tunnel" "this" {
-  for_each = module.mode_lookup.mode == 1 && length(var.ipsec_tunnels) != 0 ? { for tun in var.ipsec_tunnels : tun.name => tun } : {}
+  for_each = module.mode_lookup.mode == 1 ? var.ipsec_tunnels : {}
 
-  name                          = each.value.name
+  name                          = each.key
   tunnel_interface              = each.value.tunnel_interface
   type                          = each.value.type
   disabled                      = each.value.disabled
@@ -140,21 +140,21 @@ resource "panos_ipsec_tunnel" "this" {
 }
 
 resource "panos_panorama_ipsec_tunnel_proxy_id_ipv4" "this" {
-  for_each = module.mode_lookup.mode == 0 && length(var.ipsec_tunnels_proxy) != 0 ? { for pbvpn in var.ipsec_tunnels_proxy : pbvpn.name => pbvpn } : {}
+  for_each = module.mode_lookup.mode == 0 ? var.ipsec_tunnels_proxy : {}
 
   template     = try(var.template, "default")
   ipsec_tunnel = each.value.ipsec_tunnel
-  name         = each.value.name
+  name         = each.key
   local        = each.value.local
   remote       = each.value.remote
   protocol_any = try(each.value.protocol_any, true)
 }
 
 resource "panos_ipsec_tunnel_proxy_id_ipv4" "this" {
-  for_each = module.mode_lookup.mode == 1 && length(var.ipsec_tunnels_proxy) != 0 ? { for pbvpn in var.ipsec_tunnels_proxy : pbvpn.name => pbvpn } : {}
+  for_each = module.mode_lookup.mode == 1 ? var.ipsec_tunnels_proxy : {}
 
   ipsec_tunnel = each.value.ipsec_tunnel
-  name         = each.value.name
+  name         = each.key
   local        = each.value.local
   remote       = each.value.remote
   protocol_any = try(each.value.protocol_any, true)

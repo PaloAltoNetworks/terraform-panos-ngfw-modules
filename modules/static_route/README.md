@@ -30,9 +30,9 @@
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_mode"></a> [mode](#input\_mode) | The mode to use for the modules. Valid values are `panorama` and `ngfw`. | `string` | `"panorama"` | no |
+| <a name="input_static_routes"></a> [static\_routes](#input\_static\_routes) | n/a | `map` | `{}` | no |
 | <a name="input_template"></a> [template](#input\_template) | n/a | `string` | n/a | yes |
 | <a name="input_template_stack"></a> [template\_stack](#input\_template\_stack) | n/a | `string` | n/a | yes |
-| <a name="input_virtual_routers"></a> [virtual\_routers](#input\_virtual\_routers) | n/a | `map` | `{}` | no |
 
 ## Outputs
 
