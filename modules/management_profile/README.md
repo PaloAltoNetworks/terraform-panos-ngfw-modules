@@ -31,8 +31,8 @@
 |------|-------------|------|---------|:--------:|
 | <a name="input_management_profiles"></a> [management\_profiles](#input\_management\_profiles) | n/a | `map` | `{}` | no |
 | <a name="input_mode"></a> [mode](#input\_mode) | The mode to use for the modules. Valid values are `panorama` and `ngfw`. | `string` | `"panorama"` | no |
-| <a name="input_template"></a> [template](#input\_template) | n/a | `string` | n/a | yes |
-| <a name="input_template_stack"></a> [template\_stack](#input\_template\_stack) | n/a | `string` | n/a | yes |
+| <a name="input_template"></a> [template](#input\_template) | The template name. | `string` | `"default"` | no |
+| <a name="input_template_stack"></a> [template\_stack](#input\_template\_stack) | The template stack name. | `string` | `""` | no |
 
 ## Outputs
 

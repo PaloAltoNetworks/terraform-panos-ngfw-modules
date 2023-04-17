@@ -29,8 +29,8 @@
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_mode"></a> [mode](#input\_mode) | The mode to use for the modules. Valid values are `panorama` and `ngfw`. | `string` | `"panorama"` | no |
-| <a name="input_template"></a> [template](#input\_template) | n/a | `string` | n/a | yes |
-| <a name="input_template_stack"></a> [template\_stack](#input\_template\_stack) | n/a | `string` | n/a | yes |
+| <a name="input_template"></a> [template](#input\_template) | The template name. | `string` | `"default"` | no |
+| <a name="input_template_stack"></a> [template\_stack](#input\_template\_stack) | The template stack name. | `string` | `""` | no |
 | <a name="input_zones"></a> [zones](#input\_zones) | n/a | `map` | `{}` | no |
 
 ## Outputs

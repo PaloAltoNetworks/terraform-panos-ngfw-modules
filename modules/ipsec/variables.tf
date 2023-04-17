@@ -5,11 +5,15 @@ variable "mode" {
 }
 
 variable "template" {
-  type = string
+  description = "The template name."
+  default     = "default"
+  type        = string
 }
 
 variable "template_stack" {
-  type = string
+  description = "The template stack name."
+  default     = ""
+  type        = string
 }
 
 variable "ike_crypto_profiles" { default = {} }
