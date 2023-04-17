@@ -430,42 +430,30 @@ virtual_routers = {
 }
 
 static_routes = {
-  "default_unicast" = {
+  "vr_default_unicast_0.0.0.0" = {
     virtual_router = "default"
     route_table    = "unicast"
-    routes = {
-      "df_route" = {
-        destination = "0.0.0.0/0"
-        interface   = "ethernet1/1"
-        type        = "ip-address"
-        next_hop    = "10.1.1.1"
-        metric      = 10
-      }
-    }
+    destination    = "0.0.0.0/0"
+    interface      = "ethernet1/1"
+    type           = "ip-address"
+    next_hop       = "10.1.1.1"
+    metric         = 10
   }
-  "internal_unicast" = {
+  "vr_internal_unicast_10.10.10.0" = {
     virtual_router = "internal"
     route_table    = "unicast"
-    routes = {
-      "IPSec_route" = {
-        destination = "10.10.10.0/24"
-        interface   = "tunnel.42"
-        type        = ""
-      }
-    }
+    destination    = "10.10.10.0/24"
+    interface      = "tunnel.42"
+    type           = ""
   }
-  "external_unicast" = {
+  "vr_external_unicast_0.0.0.0" = {
     virtual_router = "external"
     route_table    = "unicast"
-    routes = {
-      "df_route" = {
-        destination = "0.0.0.0/0"
-        interface   = "ethernet1/2"
-        type        = "ip-address"
-        next_hop    = "10.1.2.1"
-        metric      = 10
-      }
-    }
+    destination    = "0.0.0.0/0"
+    interface      = "ethernet1/2"
+    type           = "ip-address"
+    next_hop       = "10.1.2.1"
+    metric         = 10
   }
 }
 
