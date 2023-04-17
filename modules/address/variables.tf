@@ -1,6 +1,6 @@
 variable "mode" {
-  description = "If modules have target to Panorama, it enable Panorama specific variables."
-  default     = false
+  description = "The mode to use for the modules. Valid values are `panorama` and `ngfw`."
+  default     = "panorama"
   type        = string
 }
 

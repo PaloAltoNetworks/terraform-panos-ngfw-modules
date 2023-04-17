@@ -14,7 +14,9 @@
 
 ## Modules
 
-No modules.
+| Name | Source | Version |
+|------|--------|---------|
+| <a name="module_mode_lookup"></a> [mode\_lookup](#module\_mode\_lookup) | ../mode_lookup | n/a |
 
 ## Resources
 
@@ -39,7 +41,7 @@ No modules.
 | <a name="input_ipsec_crypto_profiles"></a> [ipsec\_crypto\_profiles](#input\_ipsec\_crypto\_profiles) | n/a | `map` | `{}` | no |
 | <a name="input_ipsec_tunnels"></a> [ipsec\_tunnels](#input\_ipsec\_tunnels) | n/a | `map` | `{}` | no |
 | <a name="input_ipsec_tunnels_proxy"></a> [ipsec\_tunnels\_proxy](#input\_ipsec\_tunnels\_proxy) | n/a | `map` | `{}` | no |
-| <a name="input_panorama"></a> [panorama](#input\_panorama) | If modules have target to Panorama, it enable Panorama specific variables. | `bool` | `false` | no |
+| <a name="input_mode"></a> [mode](#input\_mode) | The mode to use for the modules. Valid values are `panorama` and `ngfw`. | `string` | `"panorama"` | no |
 
 ## Outputs
 

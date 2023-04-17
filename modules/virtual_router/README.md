@@ -14,7 +14,9 @@
 
 ## Modules
 
-No modules.
+| Name | Source | Version |
+|------|--------|---------|
+| <a name="module_mode_lookup"></a> [mode\_lookup](#module\_mode\_lookup) | ../mode_lookup | n/a |
 
 ## Resources
 
@@ -29,7 +31,7 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_panorama"></a> [panorama](#input\_panorama) | If modules have target to Panorama, it enable Panorama specific variables. | `bool` | `false` | no |
+| <a name="input_mode"></a> [mode](#input\_mode) | The mode to use for the modules. Valid values are `panorama` and `ngfw`. | `string` | `"panorama"` | no |
 | <a name="input_virtual_router_entries"></a> [virtual\_router\_entries](#input\_virtual\_router\_entries) | n/a | `map` | `{}` | no |
 | <a name="input_virtual_router_static_routes"></a> [virtual\_router\_static\_routes](#input\_virtual\_router\_static\_routes) | n/a | `map` | `{}` | no |
 | <a name="input_virtual_routers"></a> [virtual\_routers](#input\_virtual\_routers) | n/a | `map` | `{}` | no |

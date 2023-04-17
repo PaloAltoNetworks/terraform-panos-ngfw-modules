@@ -1,5 +1,10 @@
+module "mode_lookup" {
+  source = "../mode_lookup"
+  mode   = var.mode
+}
+
 resource "panos_panorama_ethernet_interface" "this" {
-  for_each = var.panorama == true && length(var.interfaces) != 0 ? { for intf in var.interfaces : intf.name => intf if intf.type == "ethernet" } : {}
+  for_each = module.mode_lookup.mode == 0 && length(var.interfaces) != 0 ? { for intf in var.interfaces : intf.name => intf if intf.type == "ethernet" } : {}
 
   template = try(each.value.template, "default")
 
@@ -21,7 +26,7 @@ resource "panos_panorama_ethernet_interface" "this" {
 }
 
 resource "panos_ethernet_interface" "this" {
-  for_each = var.panorama == false && length(var.interfaces) != 0 ? { for intf in var.interfaces : intf.name => intf if intf.type == "ethernet" } : {}
+  for_each = module.mode_lookup.mode == 1 && length(var.interfaces) != 0 ? { for intf in var.interfaces : intf.name => intf if intf.type == "ethernet" } : {}
 
   vsys                      = try(each.value.vsys, "vsys1")
   name                      = each.key
@@ -41,7 +46,7 @@ resource "panos_ethernet_interface" "this" {
 }
 
 resource "panos_panorama_loopback_interface" "this" {
-  for_each = var.panorama == true && length(var.interfaces) != 0 ? { for intf in var.interfaces : intf.name => intf if intf.type == "loopback" } : {}
+  for_each = module.mode_lookup.mode == 0 && length(var.interfaces) != 0 ? { for intf in var.interfaces : intf.name => intf if intf.type == "loopback" } : {}
 
   template = try(each.value.template, "default")
 
@@ -58,7 +63,7 @@ resource "panos_panorama_loopback_interface" "this" {
 }
 
 resource "panos_loopback_interface" "this" {
-  for_each = var.panorama == false && length(var.interfaces) != 0 ? { for intf in var.interfaces : intf.name => intf if intf.type == "loopback" } : {}
+  for_each = module.mode_lookup.mode == 1 && length(var.interfaces) != 0 ? { for intf in var.interfaces : intf.name => intf if intf.type == "loopback" } : {}
 
   vsys               = each.value.vsys != "" ? each.value.vsys : "vsys1"
   name               = each.key
@@ -73,7 +78,7 @@ resource "panos_loopback_interface" "this" {
 }
 
 resource "panos_panorama_tunnel_interface" "this" {
-  for_each = var.panorama == true && length(var.interfaces) != 0 ? { for intf in var.interfaces : intf.name => intf if intf.type == "tunnel" } : {}
+  for_each = module.mode_lookup.mode == 0 && length(var.interfaces) != 0 ? { for intf in var.interfaces : intf.name => intf if intf.type == "tunnel" } : {}
 
   template = try(each.value.template, "default")
 
@@ -90,7 +95,7 @@ resource "panos_panorama_tunnel_interface" "this" {
 }
 
 resource "panos_tunnel_interface" "this" {
-  for_each = var.panorama == false && length(var.interfaces) != 0 ? { for intf in var.interfaces : intf.name => intf if intf.type == "tunnel" } : {}
+  for_each = module.mode_lookup.mode == 1 && length(var.interfaces) != 0 ? { for intf in var.interfaces : intf.name => intf if intf.type == "tunnel" } : {}
 
   vsys               = each.value.vsys != "" ? each.value.vsys : "vsys1"
   name               = each.key

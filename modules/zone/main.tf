@@ -1,8 +1,12 @@
+module "mode_lookup" {
+  source = "../mode_lookup"
+  mode   = var.mode
+}
 resource "panos_zone" "this" {
   for_each = length(var.zones) != 0 ? { for zone in var.zones : zone.name => zone } : {}
 
-  template       = var.panorama == true ? (each.value.template_stack == "" ? try(each.value.template, "default") : null) : null
-  template_stack = var.panorama == true ? each.value.template_stack == "" ? null : each.value.template_stack : null
+  template       = module.mode_lookup.mode == 0 ? (each.value.template_stack == "" ? try(each.value.template, "default") : null) : null
+  template_stack = module.mode_lookup.mode == 0 ? each.value.template_stack == "" ? null : each.value.template_stack : null
 
   vsys           = try(each.value.vsys, "vsys1")
   name           = each.key
@@ -16,8 +20,8 @@ resource "panos_zone" "this" {
 resource "panos_zone_entry" "this" {
   for_each = length(var.zone_entries) != 0 ? { for intf in var.zone_entries : intf.interface => intf } : {}
 
-  template       = var.panorama == true ? (each.value.template_stack == "" ? try(each.value.template, "default") : null) : null
-  template_stack = var.panorama == true ? each.value.template_stack == "" ? null : each.value.template_stack : null
+  template       = module.mode_lookup.mode == 0 ? (each.value.template_stack == "" ? try(each.value.template, "default") : null) : null
+  template_stack = module.mode_lookup.mode == 0 ? each.value.template_stack == "" ? null : each.value.template_stack : null
 
   vsys      = try(each.value.vsys, "vsys1")
   zone      = each.value.zone

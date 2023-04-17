@@ -1,5 +1,10 @@
+module "mode_lookup" {
+  source = "../mode_lookup"
+  mode   = var.mode
+}
+
 resource "panos_panorama_management_profile" "this" {
-  for_each = var.panorama == true && length(var.management_profiles) != 0 ? { for prof in var.management_profiles : prof.name => prof } : {}
+  for_each = module.mode_lookup.mode == 0 && length(var.management_profiles) != 0 ? { for prof in var.management_profiles : prof.name => prof } : {}
 
   template       = each.value.template_stack == "" ? try(each.value.template, "default") : null
   template_stack = each.value.template_stack == "" ? null : each.value.template_stack
@@ -15,7 +20,7 @@ resource "panos_panorama_management_profile" "this" {
 }
 
 resource "panos_management_profile" "this" {
-  for_each = var.panorama == false && length(var.management_profiles) != 0 ? { for prof in var.management_profiles : prof.name => prof } : {}
+  for_each = module.mode_lookup.mode == 1 && length(var.management_profiles) != 0 ? { for prof in var.management_profiles : prof.name => prof } : {}
 
   name           = each.value.name
   ping           = each.value.ping
