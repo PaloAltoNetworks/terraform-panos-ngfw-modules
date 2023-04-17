@@ -1,11 +1,29 @@
+variable "device_group" {
+  description = "Used if _mode_ is panorama, this defines the Device Group for the deployment"
+  default     = "shared"
+  type        = string
+}
+
+variable "vsys" {
+  description = "Used if _mode_ is ngfw, this defines the vsys for the deployment"
+  default     = "vsys1"
+  type        = string
+}
+
+variable "template" {
+  description = "Template name"
+  default     = "default"
+  type        = string
+}
+
 variable "pan_creds" {
   description = "Path to file with credentials to Panorama"
   type        = string
 }
 
 variable "mode" {
-  description = "If modules have target to Panorama, it enable Panorama specific variables."
-  default     = "ngfw"
+  description = "Provide information about target."
+  default     = ""
   type        = string
 }
 
@@ -39,49 +57,18 @@ variable "services_group" {
   type        = any
 }
 
-variable "device_group" {
-  description = "Used in variable panorama is true, it gives possibility to choose Device Group for the deployment"
-  default     = []
-  type        = list(string)
+variable "security_policies_group" {
+  description = "Security policies"
+  default     = {}
+  type        = any
 }
 
-variable "vsys" {
-  description = "Used in variable panorama is true, it gives possibility to choose Device Group for the deployment"
-  default     = []
-  type        = list(string)
-}
-
-variable "template" {
-  type = string
-}
-
-variable "template_stack" {
-  type = string
-}
-
-variable "interfaces" {
-}
-
-variable "management_profiles" {
-}
-
-variable "virtual_routers" {
-}
-
-variable "static_routes" {
-}
-
-variable "zones" {
-}
-
-variable "ike_gateways" {
-}
-
-variable "ike_crypto_profiles" {
-}
-
-variable "ipsec_crypto_profiles" {
-}
-
-variable "ipsec_tunnels" {
-}
+variable "interfaces" {}
+variable "management_profiles" {}
+variable "virtual_routers" {}
+variable "static_routes" {}
+variable "zones" {}
+variable "ike_gateways" {}
+variable "ike_crypto_profiles" {}
+variable "ipsec_crypto_profiles" {}
+variable "ipsec_tunnels" {}

@@ -1,10 +1,5 @@
-module "mode_lookup" {
-  source = "../mode_lookup"
-  mode   = var.mode
-}
-
 resource "panos_panorama_ethernet_interface" "this" {
-  for_each = module.mode_lookup.mode == 0 ? { for name, intf in var.interfaces : name => intf if intf.type == "ethernet" } : {}
+  for_each = var.mode_map[var.mode] == 0 ? { for name, intf in var.interfaces : name => intf if intf.type == "ethernet" } : {}
 
   template = var.template
 
@@ -40,7 +35,7 @@ resource "panos_panorama_ethernet_interface" "this" {
 }
 
 resource "panos_ethernet_interface" "this" {
-  for_each = module.mode_lookup.mode == 1 ? { for name, intf in var.interfaces : name => intf if intf.type == "ethernet" } : {}
+  for_each = var.mode_map[var.mode] == 1 ? { for name, intf in var.interfaces : name => intf if intf.type == "ethernet" } : {}
 
   name                            = each.key
   vsys                            = each.value.vsys
@@ -74,7 +69,7 @@ resource "panos_ethernet_interface" "this" {
 }
 
 resource "panos_panorama_loopback_interface" "this" {
-  for_each = module.mode_lookup.mode == 0 ? { for name, intf in var.interfaces : name => intf if intf.type == "loopback" } : {}
+  for_each = var.mode_map[var.mode] == 0 ? { for name, intf in var.interfaces : name => intf if intf.type == "loopback" } : {}
 
   template = var.template
 
@@ -91,7 +86,7 @@ resource "panos_panorama_loopback_interface" "this" {
 }
 
 resource "panos_loopback_interface" "this" {
-  for_each = module.mode_lookup.mode == 1 ? { for name, intf in var.interfaces : name => intf if intf.type == "loopback" } : {}
+  for_each = var.mode_map[var.mode] == 1 ? { for name, intf in var.interfaces : name => intf if intf.type == "loopback" } : {}
 
   name               = each.key
   vsys               = each.value.vsys
@@ -106,7 +101,7 @@ resource "panos_loopback_interface" "this" {
 }
 
 resource "panos_panorama_tunnel_interface" "this" {
-  for_each = module.mode_lookup.mode == 0 ? { for name, intf in var.interfaces : name => intf if intf.type == "tunnel" } : {}
+  for_each = var.mode_map[var.mode] == 0 ? { for name, intf in var.interfaces : name => intf if intf.type == "tunnel" } : {}
 
   template = var.template
 
@@ -120,7 +115,7 @@ resource "panos_panorama_tunnel_interface" "this" {
 }
 
 resource "panos_tunnel_interface" "this" {
-  for_each = module.mode_lookup.mode == 1 ? { for name, intf in var.interfaces : name => intf if intf.type == "tunnel" } : {}
+  for_each = var.mode_map[var.mode] == 1 ? { for name, intf in var.interfaces : name => intf if intf.type == "tunnel" } : {}
 
   name               = each.key
   vsys               = each.value.vsys
@@ -134,8 +129,8 @@ resource "panos_tunnel_interface" "this" {
 resource "panos_virtual_router_entry" "this" {
   for_each = { for k, v in var.interfaces : "${v.virtual_router}_${k}" => { interface = k, virtual_router = v.virtual_router } }
 
-  template       = module.mode_lookup.mode == 0 ? (var.template_stack == "" ? var.template : null) : null
-  template_stack = module.mode_lookup.mode == 0 ? var.template_stack == "" ? null : var.template_stack : null
+  template       = var.mode_map[var.mode] == 0 ? (var.template_stack == "" ? var.template : null) : null
+  template_stack = var.mode_map[var.mode] == 0 ? var.template_stack == "" ? null : var.template_stack : null
 
   virtual_router = try(each.value.virtual_router, "vsys1")
   interface      = each.value.interface
@@ -153,8 +148,8 @@ resource "panos_virtual_router_entry" "this" {
 resource "panos_zone_entry" "this" {
   for_each = { for k, v in var.interfaces : "${v.zone}_${k}" => { interface = k, zone = v.zone, vsys = v.vsys } }
 
-  template       = module.mode_lookup.mode == 0 ? (var.template_stack == "" ? var.template : null) : null
-  template_stack = module.mode_lookup.mode == 0 ? var.template_stack == "" ? null : var.template_stack : null
+  template       = var.mode_map[var.mode] == 0 ? (var.template_stack == "" ? var.template : null) : null
+  template_stack = var.mode_map[var.mode] == 0 ? var.template_stack == "" ? null : var.template_stack : null
 
   vsys      = try(each.value.vsys, "vsys1")
   zone      = each.value.zone

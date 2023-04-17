@@ -1,13 +1,8 @@
-module "mode_lookup" {
-  source = "../mode_lookup"
-  mode   = var.mode
-}
-
 resource "panos_ike_crypto_profile" "this" {
   for_each = var.ike_crypto_profiles
 
-  template       = module.mode_lookup.mode == 0 ? (var.template_stack == "" ? try(var.template, "default") : null) : null
-  template_stack = module.mode_lookup.mode == 0 ? var.template_stack == "" ? null : var.template_stack : null
+  template       = var.mode_map[var.mode] == 0 ? (var.template_stack == "" ? try(var.template, "default") : null) : null
+  template_stack = var.mode_map[var.mode] == 0 ? var.template_stack == "" ? null : var.template_stack : null
 
   name                    = each.key
   dh_groups               = each.value.dh_groups
@@ -18,10 +13,10 @@ resource "panos_ike_crypto_profile" "this" {
 }
 
 resource "panos_panorama_ipsec_crypto_profile" "this" {
-  for_each = module.mode_lookup.mode == 0 ? var.ipsec_crypto_profiles : {}
+  for_each = var.mode_map[var.mode] == 0 ? var.ipsec_crypto_profiles : {}
 
-  template       = module.mode_lookup.mode == 0 ? (var.template_stack == "" ? try(var.template, "default") : null) : null
-  template_stack = module.mode_lookup.mode == 0 ? var.template_stack == "" ? null : var.template_stack : null
+  template       = var.mode_map[var.mode] == 0 ? (var.template_stack == "" ? try(var.template, "default") : null) : null
+  template_stack = var.mode_map[var.mode] == 0 ? var.template_stack == "" ? null : var.template_stack : null
 
   name            = each.key
   protocol        = each.value.protocol
@@ -35,7 +30,7 @@ resource "panos_panorama_ipsec_crypto_profile" "this" {
 }
 
 resource "panos_ipsec_crypto_profile" "this" {
-  for_each = module.mode_lookup.mode == 1 ? var.ipsec_crypto_profiles : {}
+  for_each = var.mode_map[var.mode] == 1 ? var.ipsec_crypto_profiles : {}
 
   name            = each.key
   protocol        = each.value.protocol
@@ -49,7 +44,7 @@ resource "panos_ipsec_crypto_profile" "this" {
 }
 
 resource "panos_panorama_ike_gateway" "this" {
-  for_each = module.mode_lookup.mode == 0 ? var.ike_gateways : {}
+  for_each = var.mode_map[var.mode] == 0 ? var.ike_gateways : {}
 
   template       = var.template_stack == "" ? try(var.template, "default") : null
   template_stack = var.template_stack == "" ? null : var.template_stack
@@ -73,7 +68,7 @@ resource "panos_panorama_ike_gateway" "this" {
 }
 
 resource "panos_ike_gateway" "this" {
-  for_each = module.mode_lookup.mode == 1 ? var.ike_gateways : {}
+  for_each = var.mode_map[var.mode] == 1 ? var.ike_gateways : {}
 
   name                 = each.key
   version              = each.value.version
@@ -94,7 +89,7 @@ resource "panos_ike_gateway" "this" {
 }
 
 resource "panos_panorama_ipsec_tunnel" "this" {
-  for_each = module.mode_lookup.mode == 0 ? var.ipsec_tunnels : {}
+  for_each = var.mode_map[var.mode] == 0 ? var.ipsec_tunnels : {}
 
   template = try(var.template, "default")
 
@@ -118,7 +113,7 @@ resource "panos_panorama_ipsec_tunnel" "this" {
 }
 
 resource "panos_ipsec_tunnel" "this" {
-  for_each = module.mode_lookup.mode == 1 ? var.ipsec_tunnels : {}
+  for_each = var.mode_map[var.mode] == 1 ? var.ipsec_tunnels : {}
 
   name                          = each.key
   tunnel_interface              = each.value.tunnel_interface
@@ -140,7 +135,7 @@ resource "panos_ipsec_tunnel" "this" {
 }
 
 resource "panos_panorama_ipsec_tunnel_proxy_id_ipv4" "this" {
-  for_each = module.mode_lookup.mode == 0 ? var.ipsec_tunnels_proxy : {}
+  for_each = var.mode_map[var.mode] == 0 ? var.ipsec_tunnels_proxy : {}
 
   template     = try(var.template, "default")
   ipsec_tunnel = each.value.ipsec_tunnel
@@ -151,7 +146,7 @@ resource "panos_panorama_ipsec_tunnel_proxy_id_ipv4" "this" {
 }
 
 resource "panos_ipsec_tunnel_proxy_id_ipv4" "this" {
-  for_each = module.mode_lookup.mode == 1 ? var.ipsec_tunnels_proxy : {}
+  for_each = var.mode_map[var.mode] == 1 ? var.ipsec_tunnels_proxy : {}
 
   ipsec_tunnel = each.value.ipsec_tunnel
   name         = each.key

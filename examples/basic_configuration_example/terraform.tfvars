@@ -4,10 +4,9 @@ mode      = "panorama"
 # pan_creds = "./creds/credentials_vmseries.json"
 # mode      = "ngfw"
 
-device_group   = ["AWSTestDG", "AzureTestDG"]
-vsys           = ["vsys1"]
-template       = "test-template"
-template_stack = ""
+device_group = "AWSTestDG"
+vsys         = "vsys1"
+template     = "test-template"
 
 ### Tags
 
@@ -425,5 +424,148 @@ ipsec_tunnels = {
     tunnel_monitor_profile        = null
     tunnel_monitor_proxy_id       = null
     proxy_subnets                 = "example1,10.10.10.0/24,10.10.20.0/24;example2,10.10.10.0/24,10.10.30.0/24"
+  }
+}
+security_policies_group = {
+  "allow_rule_group" = {
+    rulebase = "pre-rulebase"
+    policies_rules = [
+      {
+        name = "Allow access to DNS Servers"
+        tags = [
+          "Outbound",
+          "Managed by Terraform"
+        ]
+        source_zones                       = ["Trust-L3"]
+        source_addresses                   = ["RFC1918_Subnets"]
+        negate_source                      = "false"
+        source_users                       = ["any"]
+        hip_profiles                       = ["any"]
+        destination_zones                  = ["Untrust-L3"]
+        destination_addresses              = ["DNS-Servers"]
+        negate_destination                 = "false"
+        applications                       = ["dns"]
+        services                           = ["application-default"]
+        categories                         = ["any"]
+        action                             = "allow"
+        disable_server_response_inspection = "false"
+        log_start                          = "false"
+        log_end                            = "true"
+        disabled                           = "false"
+        virus                              = "default"
+        spyware                            = "default"
+        vulnerability                      = "default"
+      },
+      {
+        name             = "Allow access to RFC1918"
+        tags             = ["Managed by Terraform"]
+        source_zones     = ["Trust-L3"]
+        source_addresses = ["RFC1918_Subnets"]
+        negate_source    = "false"
+        source_users     = ["any"]
+        hip_profiles     = ["any"]
+        destination_zones = [
+          "Trust-L3",
+          "Untrust-L3"
+        ]
+        destination_addresses              = ["RFC1918_Subnets"]
+        negate_destination                 = "false"
+        applications                       = ["any"]
+        services                           = ["application-default"]
+        categories                         = ["any"]
+        action                             = "allow"
+        disable_server_response_inspection = "false"
+        log_start                          = "false"
+        log_end                            = "true"
+        disabled                           = "false"
+        virus                              = "default"
+        spyware                            = "default"
+        vulnerability                      = "default"
+      },
+      {
+        name = "Disabled - temporary access to Srv10 and Srv11"
+        tags = [
+          "Outbound",
+          "Managed by Terraform"
+        ]
+        source_zones = ["Trust-L3"]
+        source_addresses = [
+          "Server10",
+          "Server11"
+        ]
+        negate_source                      = "false"
+        source_users                       = ["any"]
+        hip_profiles                       = ["any"]
+        destination_zones                  = ["Untrust-L3"]
+        destination_addresses              = ["123.123.123.123/32"]
+        negate_destination                 = "false"
+        applications                       = ["any"]
+        services                           = ["SSH-8022"]
+        categories                         = ["any"]
+        action                             = "allow"
+        disable_server_response_inspection = "false"
+        log_start                          = "false"
+        log_end                            = "true"
+        disabled                           = "true"
+        virus                              = "default"
+        spyware                            = "default"
+        vulnerability                      = "default"
+        url_filtering                      = "default"
+        file_blocking                      = "basic file blocking"
+        wildfire_analysis                  = "default"
+      },
+      {
+        name = "Allow access to SSH Servers"
+        tags = [
+          "Inbound",
+          "Managed by Terraform"
+        ]
+        source_zones                       = ["Untrust-L3"]
+        source_addresses                   = ["any"]
+        negate_source                      = "false"
+        source_users                       = ["any"]
+        hip_profiles                       = ["any"]
+        destination_zones                  = ["Trust-L3"]
+        destination_addresses              = ["SSH-Servers"]
+        negate_destination                 = "false"
+        applications                       = ["ssh"]
+        services                           = ["application-default"]
+        categories                         = ["any"]
+        action                             = "allow"
+        disable_server_response_inspection = "false"
+        log_start                          = "false"
+        log_end                            = "true"
+        disabled                           = "false"
+      }
+    ]
+  }
+  "block_rule_group" = {
+    position_keyword = "bottom"
+    rulebase         = "pre-rulebase"
+    policies_rules = [
+      {
+        name = "Block Some Traffic"
+        tags = [
+          "Outbound",
+          "Managed by Terraform"
+        ]
+        source_zones                       = ["Trust-L3"]
+        source_addresses                   = ["10.0.0.100/32"]
+        negate_source                      = "false"
+        source_users                       = ["any"]
+        hip_profiles                       = ["any"]
+        destination_zones                  = ["any"]
+        destination_addresses              = ["any"]
+        negate_destination                 = "false"
+        applications                       = ["ssh"]
+        services                           = ["any"]
+        categories                         = ["any"]
+        action                             = "deny"
+        disable_server_response_inspection = "false"
+        log_start                          = "false"
+        log_end                            = "true"
+        disabled                           = "false"
+      }
+    ]
   }
 }
