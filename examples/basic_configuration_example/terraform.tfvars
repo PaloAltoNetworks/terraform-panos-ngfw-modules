@@ -1,8 +1,8 @@
-pan_creds = "./creds/credentials_panorama.json"
-mode      = "panorama"
+# pan_creds = "./creds/credentials_panorama.json"
+# mode      = "panorama"
 
-# pan_creds = "./creds/credentials_vmseries.json"
-# mode      = "ngfw"
+pan_creds = "./creds/credentials_vmseries.json"
+mode      = "ngfw"
 
 device_group   = ["AWSTestDG", "AzureTestDG"]
 vsys           = ["vsys1"]
@@ -302,52 +302,55 @@ management_profiles = {
 virtual_routers = {
   "default" = {
     mode = "layer3"
-    route_tables = {
-      "unicast" = {
-        routes = {
-          "df_route" = {
-            destination    = "0.0.0.0/0"
-            interface      = "ethernet1/1"
-            type           = "ip-address"
-            next_hop       = "10.1.1.1"
-            admin_distance = null
-            metric         = 10
-          }
-        }
-      }
-    }
   }
   "external" = {
     mode = "layer3"
-    route_tables = {
-      "unicast" = {
-        routes = {
-          "df_route" = {
-            destination    = "0.0.0.0/0"
-            interface      = "ethernet1/2"
-            type           = "ip-address"
-            next_hop       = "10.1.2.1"
-            admin_distance = null
-            metric         = 10
-          }
-        }
-      }
-    }
   }
   "internal" = {
     mode = "layer3"
-    route_tables = {
-      "unicast" = {
-        routes = {
-          "IPSec_route" = {
-            destination    = "10.10.10.0/24"
-            interface      = "tunnel.42"
-            type           = ""
-            next_hop       = null
-            admin_distance = null
-            metric         = null
-          }
-        }
+  }
+}
+
+static_routes = {
+  "default_unicast" = {
+    virtual_router = "default"
+    route_table    = "unicast"
+    routes = {
+      "df_route" = {
+        destination    = "0.0.0.0/0"
+        interface      = "ethernet1/1"
+        type           = "ip-address"
+        next_hop       = "10.1.1.1"
+        admin_distance = null
+        metric         = 10
+      }
+    }
+  }
+  "internal_unicast" = {
+    virtual_router = "internal"
+    route_table    = "unicast"
+    routes = {
+      "IPSec_route" = {
+        destination    = "10.10.10.0/24"
+        interface      = "tunnel.42"
+        type           = ""
+        next_hop       = null
+        admin_distance = null
+        metric         = null
+      }
+    }
+  }
+  "external_unicast" = {
+    virtual_router = "external"
+    route_table    = "unicast"
+    routes = {
+      "df_route" = {
+        destination    = "0.0.0.0/0"
+        interface      = "ethernet1/2"
+        type           = "ip-address"
+        next_hop       = "10.1.2.1"
+        admin_distance = null
+        metric         = 10
       }
     }
   }

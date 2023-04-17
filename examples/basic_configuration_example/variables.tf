@@ -68,6 +68,9 @@ variable "management_profiles" {
 variable "virtual_routers" {
 }
 
+variable "static_routes" {
+}
+
 variable "zones" {
 }
 

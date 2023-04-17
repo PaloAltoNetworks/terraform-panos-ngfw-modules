@@ -81,18 +81,13 @@ module "policy_as_code_virtual_routers" {
   depends_on = []
 }
 
-locals {
-  static_routes_list = flatten([for k, v in var.virtual_routers : [for rk, rv in v.route_tables : [for sk, sv in rv.routes : { virtual_router = k, route_table = rk, route_name = sk, route = sv }]]])
-  static_routes      = { for static_route in local.static_routes_list : "${static_route.virtual_router}_${static_route.route_table}_${static_route.route_name}" => static_route }
-}
-
 module "policy_as_code_static_routes" {
   source = "../../modules/static_route"
 
   mode           = var.mode
   template       = var.template
   template_stack = var.template_stack
-  static_routes  = local.static_routes
+  static_routes  = var.static_routes
 
   depends_on = [module.policy_as_code_virtual_routers, module.policy_as_code_interfaces]
 }

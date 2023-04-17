@@ -47,6 +47,7 @@ No resources.
 | <a name="input_pan_creds"></a> [pan\_creds](#input\_pan\_creds) | Path to file with credentials to Panorama | `string` | n/a | yes |
 | <a name="input_services"></a> [services](#input\_services) | Service object | `any` | `{}` | no |
 | <a name="input_services_group"></a> [services\_group](#input\_services\_group) | Service group object | `any` | `{}` | no |
+| <a name="input_static_routes"></a> [static\_routes](#input\_static\_routes) | n/a | `any` | n/a | yes |
 | <a name="input_tags"></a> [tags](#input\_tags) | Tags object | `any` | `{}` | no |
 | <a name="input_template"></a> [template](#input\_template) | n/a | `string` | n/a | yes |
 | <a name="input_template_stack"></a> [template\_stack](#input\_template\_stack) | n/a | `string` | n/a | yes |
