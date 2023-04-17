@@ -35,6 +35,7 @@ variable "template_stack" {
 variable "virtual_routers" {
   description = <<-EOF
   Map of the virtual routers, where key is the virtual router's name:
+  - `vsys` - The vsys (default: vsys1)
   - `static_dist - (int) Admin distance - Static (default: 10).
   - `static_ipv6_dist - (int) Admin distance - Static IPv6 (default: 10).
   - `ospf_int_dist - (int) Admin distance - OSPF Int (default: 30).
@@ -52,7 +53,7 @@ variable "virtual_routers" {
   - `ecmp_hash_source_only - (bool) For ecmp_load_balance_method = ip-hash: Only use source address for hash.
   - `ecmp_hash_use_port - (bool) For ecmp_load_balance_method = ip-hash: Use source/destination port for hash.
   - `ecmp_hash_seed - (int) For ecmp_load_balance_method = ip-hash: User-specified hash seed.
-  - `ecmp_weighted_round_robin_interfaces - (Map of ints) For ecmp_load_balance_method = weighted-round-robin: Interface weight used in weighted ECMP load balancing.  
+  - `ecmp_weighted_round_robin_interfaces - (Map of ints) For ecmp_load_balance_method = weighted-round-robin: Interface weight used in weighted ECMP load balancing.
 
   Example:
   ```
@@ -63,6 +64,7 @@ variable "virtual_routers" {
   EOF
   default     = {}
   type = map(object({
+    vsys                                 = optional(string, "vsys1")
     static_dist                          = optional(number, 10)
     static_ipv6_dist                     = optional(number, 10)
     ospf_int_dist                        = optional(number, 30)

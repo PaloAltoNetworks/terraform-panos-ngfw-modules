@@ -84,7 +84,7 @@ variable "interfaces" {
     }
   }
   ```
-  EOF  
+  EOF
   default     = {}
   type = map(object({
     type                            = string

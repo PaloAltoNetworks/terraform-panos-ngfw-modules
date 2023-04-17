@@ -4,9 +4,8 @@ resource "panos_virtual_router" "this" {
   template       = var.mode_map[var.mode] == 0 ? (var.template_stack == "" ? try(var.template, "default") : null) : null
   template_stack = var.mode_map[var.mode] == 0 ? var.template_stack == "" ? null : var.template_stack : null
 
-  vsys = try(each.value.vsys, "vsys1")
-  name = each.key
-
+  name                                 = each.key
+  vsys                                 = each.value.vsys
   static_dist                          = each.value.static_dist
   static_ipv6_dist                     = each.value.static_ipv6_dist
   ospf_int_dist                        = each.value.ospf_int_dist
