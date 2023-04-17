@@ -51,7 +51,7 @@ module "policy_as_code_security_policies" {
   mode = var.mode
 
   device_group = var.device_group
-  sec_policy = var.security_policies
+  sec_policy = var.security_policies_group
 
   depends_on = [module.policy_as_code_address_groups, module.policy_as_code_service_groups]
 }
