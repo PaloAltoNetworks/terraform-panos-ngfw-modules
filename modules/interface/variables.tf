@@ -128,7 +128,7 @@ variable "interfaces" {
     error_message = "Valid types of interfaces are `ethernet`,`loopback`,`tunnel`"
   }
   validation {
-    condition     = alltrue([for interface in var.interfaces : contains(["up", "down", "auto"], interface.link_state)])
+    condition     = alltrue([for interface in var.interfaces : contains(["up", "down", "auto"], coalesce(interface.link_state, "up"))])
     error_message = "Valid types of link state are `up`, `down`, `auto`"
   }
   validation {
