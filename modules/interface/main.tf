@@ -159,7 +159,7 @@ resource "panos_virtual_router_entry" "this" {
   template       = var.mode_map[var.mode] == 0 ? (var.template_stack == "" ? var.template : null) : null
   template_stack = var.mode_map[var.mode] == 0 ? var.template_stack == "" ? null : var.template_stack : null
 
-  virtual_router = try(each.value.virtual_router, "vsys1")
+  virtual_router = try(each.value.virtual_router, "default")
   interface      = each.value.interface
 
   depends_on = [
