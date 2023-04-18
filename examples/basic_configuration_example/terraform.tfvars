@@ -463,6 +463,12 @@ zones = {
   "internal" = {
     mode = "layer3"
   }
+  "Trust-L3" = {
+    mode = "layer3"
+  }
+  "Untrust-L3" = {
+    mode = "layer3"
+  }
 }
 
 ### Network - IPSec

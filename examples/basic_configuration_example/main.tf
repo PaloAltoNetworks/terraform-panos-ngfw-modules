@@ -129,5 +129,5 @@ module "policy_as_code_security_policies" {
   device_group = var.device_group
   sec_policy   = var.security_policies_group
 
-  depends_on = [module.policy_as_code_address_groups, module.policy_as_code_service_groups]
+  depends_on = [module.policy_as_code_address_groups, module.policy_as_code_service_groups, module.policy_as_code_zones]
 }
