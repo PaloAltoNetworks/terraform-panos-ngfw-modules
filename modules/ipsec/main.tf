@@ -11,6 +11,10 @@ resource "panos_ike_crypto_profile" "this" {
   lifetime_type           = each.value.lifetime_type
   lifetime_value          = each.value.lifetime_value
   authentication_multiple = each.value.authentication_multiple
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "panos_panorama_ipsec_crypto_profile" "this" {
@@ -28,6 +32,10 @@ resource "panos_panorama_ipsec_crypto_profile" "this" {
   lifetime_value  = each.value.lifetime_value
   lifesize_type   = each.value.lifesize_type
   lifesize_value  = each.value.lifesize_value
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "panos_ipsec_crypto_profile" "this" {
@@ -42,6 +50,10 @@ resource "panos_ipsec_crypto_profile" "this" {
   lifetime_value  = each.value.lifetime_value
   lifesize_type   = each.value.lifesize_type
   lifesize_value  = each.value.lifesize_value
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "panos_panorama_ike_gateway" "this" {
@@ -91,6 +103,10 @@ resource "panos_panorama_ike_gateway" "this" {
   depends_on = [
     panos_ike_crypto_profile.this,
   ]
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "panos_ike_gateway" "this" {
@@ -137,6 +153,10 @@ resource "panos_ike_gateway" "this" {
   depends_on = [
     panos_ike_crypto_profile.this
   ]
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "panos_panorama_ipsec_tunnel" "this" {
@@ -184,6 +204,10 @@ resource "panos_panorama_ipsec_tunnel" "this" {
   depends_on = [
     panos_panorama_ike_gateway.this,
   ]
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "panos_ipsec_tunnel" "this" {
@@ -228,6 +252,10 @@ resource "panos_ipsec_tunnel" "this" {
   depends_on = [
     panos_ike_gateway.this,
   ]
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "panos_panorama_ipsec_tunnel_proxy_id_ipv4" "this" {
@@ -246,6 +274,10 @@ resource "panos_panorama_ipsec_tunnel_proxy_id_ipv4" "this" {
   protocol_tcp_remote = each.value.protocol_tcp_remote
   protocol_udp_local  = each.value.protocol_udp_local
   protocol_udp_remote = each.value.protocol_udp_remote
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "panos_ipsec_tunnel_proxy_id_ipv4" "this" {
@@ -261,4 +293,8 @@ resource "panos_ipsec_tunnel_proxy_id_ipv4" "this" {
   protocol_tcp_remote = each.value.protocol_tcp_remote
   protocol_udp_local  = each.value.protocol_udp_local
   protocol_udp_remote = each.value.protocol_udp_remote
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }

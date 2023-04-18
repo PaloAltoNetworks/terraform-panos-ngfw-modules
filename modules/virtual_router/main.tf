@@ -24,4 +24,8 @@ resource "panos_virtual_router" "this" {
   ecmp_hash_use_port                   = each.value.ecmp_hash_use_port
   ecmp_hash_seed                       = each.value.ecmp_hash_seed
   ecmp_weighted_round_robin_interfaces = each.value.ecmp_weighted_round_robin_interfaces
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }

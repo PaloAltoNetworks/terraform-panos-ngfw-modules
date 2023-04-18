@@ -54,4 +54,8 @@ resource "panos_security_rule_group" "this" {
       negate_target = try(each.value.negate_target, false)
     }
   }
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }

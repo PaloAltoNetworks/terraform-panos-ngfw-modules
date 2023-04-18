@@ -11,4 +11,8 @@ resource "panos_zone" "this" {
   enable_user_id = each.value.enable_user_id
   include_acls   = each.value.include_acls
   exclude_acls   = each.value.exclude_acls
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }

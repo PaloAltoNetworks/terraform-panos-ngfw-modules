@@ -33,6 +33,10 @@ resource "panos_panorama_ethernet_interface" "this" {
   dhcp_send_hostname_enable       = each.value.dhcp_send_hostname_enable
   dhcp_send_hostname_value        = each.value.dhcp_send_hostname_value
   comment                         = each.value.comment
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "panos_ethernet_interface" "this" {
@@ -67,6 +71,10 @@ resource "panos_ethernet_interface" "this" {
   dhcp_send_hostname_enable       = each.value.dhcp_send_hostname_enable
   dhcp_send_hostname_value        = each.value.dhcp_send_hostname_value
   comment                         = each.value.comment
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "panos_panorama_loopback_interface" "this" {
@@ -85,6 +93,10 @@ resource "panos_panorama_loopback_interface" "this" {
   ipv4_mss_adjust    = each.value.ipv4_mss_adjust
   ipv6_mss_adjust    = each.value.ipv6_mss_adjust
   comment            = each.value.comment
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "panos_loopback_interface" "this" {
@@ -100,6 +112,10 @@ resource "panos_loopback_interface" "this" {
   ipv4_mss_adjust    = each.value.ipv4_mss_adjust
   ipv6_mss_adjust    = each.value.ipv6_mss_adjust
   comment            = each.value.comment
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "panos_panorama_tunnel_interface" "this" {
@@ -115,6 +131,10 @@ resource "panos_panorama_tunnel_interface" "this" {
   netflow_profile    = each.value.netflow_profile
   static_ips         = each.value.static_ips
   comment            = each.value.comment
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "panos_tunnel_interface" "this" {
@@ -127,6 +147,10 @@ resource "panos_tunnel_interface" "this" {
   netflow_profile    = each.value.netflow_profile
   static_ips         = each.value.static_ips
   comment            = each.value.comment
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "panos_virtual_router_entry" "this" {
@@ -146,6 +170,10 @@ resource "panos_virtual_router_entry" "this" {
     panos_loopback_interface.this,
     panos_tunnel_interface.this,
   ]
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "panos_zone_entry" "this" {
@@ -166,4 +194,8 @@ resource "panos_zone_entry" "this" {
     panos_loopback_interface.this,
     panos_tunnel_interface.this,
   ]
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }

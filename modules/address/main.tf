@@ -18,6 +18,9 @@ resource "panos_address_object" "this" {
   description = try(each.value.description, null)
   tags        = try(each.value.tags, null)
 
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "panos_panorama_address_group" "this" {
@@ -33,6 +36,10 @@ resource "panos_panorama_address_group" "this" {
   depends_on = [
     panos_address_object.this
   ]
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "panos_address_group" "this" {
@@ -48,4 +55,8 @@ resource "panos_address_group" "this" {
   depends_on = [
     panos_address_object.this
   ]
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }

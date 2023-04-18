@@ -16,6 +16,10 @@ resource "panos_panorama_management_profile" "this" {
   userid_syslog_listener_ssl = each.value.userid_syslog_listener_ssl
   userid_syslog_listener_udp = each.value.userid_syslog_listener_udp
   permitted_ips              = each.value.permitted_ips
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "panos_management_profile" "this" {
@@ -33,4 +37,8 @@ resource "panos_management_profile" "this" {
   userid_syslog_listener_ssl = each.value.userid_syslog_listener_ssl
   userid_syslog_listener_udp = each.value.userid_syslog_listener_udp
   permitted_ips              = each.value.permitted_ips
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }

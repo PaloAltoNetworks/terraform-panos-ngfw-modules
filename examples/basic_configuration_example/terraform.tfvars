@@ -1,8 +1,5 @@
-pan_creds = "./creds/credentials_panorama.json"
+pan_creds = "./creds/credentials.json"
 mode      = "panorama"
-
-# pan_creds = "./creds/credentials_vmseries.json"
-# mode      = "ngfw"
 
 device_group   = "AWSTestDG"
 vsys           = "vsys1"

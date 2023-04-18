@@ -14,6 +14,10 @@ resource "panos_panorama_static_route_ipv4" "this" {
   admin_distance = each.value.admin_distance
   metric         = each.value.metric
   bfd_profile    = each.value.bfd_profile
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "panos_static_route_ipv4" "this" {
@@ -29,4 +33,8 @@ resource "panos_static_route_ipv4" "this" {
   admin_distance = each.value.admin_distance
   metric         = each.value.metric
   bfd_profile    = each.value.bfd_profile
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }

@@ -33,6 +33,9 @@ resource "panos_panorama_service_object" "this" {
   override_half_closed_timeout = try(each.value.override_half_closed_timeout, null)
   override_time_wait_timeout   = try(each.value.override_time_wait_timeout, null)
 
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "panos_service_object" "this" {
@@ -52,6 +55,9 @@ resource "panos_service_object" "this" {
   override_half_closed_timeout = try(each.value.override_half_closed_timeout, null)
   override_time_wait_timeout   = try(each.value.override_time_wait_timeout, null)
 
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "panos_panorama_service_group" "this" {
@@ -67,6 +73,10 @@ resource "panos_panorama_service_group" "this" {
   depends_on = [
     panos_panorama_service_object.this
   ]
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 
@@ -83,4 +93,8 @@ resource "panos_service_group" "this" {
   depends_on = [
     panos_service_object.this
   ]
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
