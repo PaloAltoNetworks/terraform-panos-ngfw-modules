@@ -1,10 +1,10 @@
 device_group,vsys,name,color,comment
-AWSGlobalProtectFirewalls,,DNS-SRV,color3,Tag for DNS servers
+AWSGlobalProtectFirewalls,,DNS-SRV,Blue,Tag for DNS servers
 AWSGlobalProtectFirewalls,,DNS-SRV-2,,Tag for DNS servers-2
 AWSGlobalProtectFirewalls,,Managed by Terraform,,Managed by Terraform
-AWSGlobalProtectFirewalls,,Outbound,color10,Outbound
-AWSGlobalProtectFirewalls,,Inbound,color9,Inbound
-AWSGlobalProtectFirewalls,,AWS-Route53-Health-Probe,color15,
-AWSGlobalProtectFirewalls,,PSN,color16,PSN
-AWSGlobalProtectFirewalls,,dns-proxy,color17,dns-proxy
-AWSGlobalProtectFirewalls,,sop-oci,color4,Used for dynamic group assignment
+AWSGlobalProtectFirewalls,,Outbound,Cyan,Outbound
+AWSGlobalProtectFirewalls,,Inbound,Light Green,Inbound
+AWSGlobalProtectFirewalls,,AWS-Route53-Health-Probe,Gold,
+AWSGlobalProtectFirewalls,,PSN,Brown,PSN
+AWSGlobalProtectFirewalls,,dns-proxy,Olive,dns-proxy
+AWSGlobalProtectFirewalls,,sop-oci,Yellow,Used for dynamic group assignment

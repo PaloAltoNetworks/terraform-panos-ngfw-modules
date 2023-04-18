@@ -1,4 +1,4 @@
-template,vsys,name,mode
-default,vsys1,internal,layer3
-default,vsys1,external,layer3
-default,vsys1,default,layer3
+template,template_stack,vsys,name,mode
+default,,vsys1,internal,layer3
+default,,vsys1,external,layer3
+default,,vsys1,default,layer3

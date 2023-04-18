@@ -159,7 +159,8 @@ locals {
   # Network
   zones = [
     for x in csvdecode(file(var.network_zones_file)) : {
-      template = x.template != "" ? x.template : "default"
+      template       = x.template != "" ? x.template : "default"
+      template_stack = x.template_stack
 
       name           = x.name
       vsys           = x.vsys
@@ -170,10 +171,11 @@ locals {
       exclude_acls   = length(x.exclude_acls) != 0 ? split(",", x.exclude_acls) : []
   }]
 
-  zone_entres = [
+  zone_entries = [
     for x in csvdecode(file(var.network_interfaces_file)) : {
+      template       = x.template != "" ? x.template : "default"
+      template_stack = x.template_stack
 
-      template  = x.template != "" ? x.template : "default"
       vsys      = x.vsys
       zone      = x.zone
       interface = x.name
@@ -182,7 +184,8 @@ locals {
 
   interfaces = [
     for x in csvdecode(file(var.network_interfaces_file)) : {
-      template = x.template != "" ? x.template : "default"
+      template       = x.template != "" ? x.template : "default"
+      template_stack = x.template_stack
 
       type                      = x.type
       name                      = x.name
@@ -200,24 +203,30 @@ locals {
 
   virtual_routers = [
     for x in csvdecode(file(var.network_virtual_routers_file)) : {
-      template = x.template != "" ? x.template : "default"
-      vsys     = x.vsys
-      name     = x.name
-      mode     = x.mode
+      template       = x.template != "" ? x.template : "default"
+      template_stack = x.template_stack
+
+      vsys = x.vsys
+      name = x.name
+      mode = x.mode
     }
   ]
   # mapping interfaces to virtual_routers
   virtual_router_entries = [
     for x in csvdecode(file(var.network_interfaces_file)) : {
+      template       = x.template != "" ? x.template : "default"
+      template_stack = x.template_stack
+
       virtual_router = x.virtual_router
       interface      = x.name
-      template       = x.template
     }
   ]
   # static routes
   virtual_router_static_routes_defined = [
     for x in csvdecode(file(var.network_static_routes_file)) : {
       template       = x.template != "" ? x.template : "default"
+      template_stack = x.template_stack
+
       virtual_router = x.virtual_router
       route_table    = x.route_table != "" ? x.route_table : "unicast"
       name           = x.name
@@ -233,6 +242,8 @@ locals {
   management_profiles = [
     for x in csvdecode(file(var.network_management_profiles_file)) : {
       template       = x.template != "" ? x.template : "default"
+      template_stack = x.template_stack
+
       name           = x.name
       ping           = x.ping != "" ? x.ping : false
       telnet         = x.telnet != "" ? x.telnet : false
@@ -248,7 +259,9 @@ locals {
   # IPSec
   ike_crypto_profiles = [
     for x in csvdecode(file(var.network_ike_crypto_profiles_file)) : {
-      template                = x.template != "" ? x.template : "default"
+      template       = x.template != "" ? x.template : "default"
+      template_stack = x.template_stack
+
       name                    = x.name
       dh_groups               = x.dh_groups != "" ? split(",", x.dh_groups) : []
       authentications         = x.authentications != "" ? split(",", x.authentications) : []
@@ -260,7 +273,8 @@ locals {
 
   ipsec_crypto_profiles = [
     for x in csvdecode(file(var.network_ipsec_crypto_profiles_file)) : {
-      template = x.template != "" ? x.template : "default"
+      template       = x.template != "" ? x.template : "default"
+      template_stack = x.template_stack
 
       name            = x.name
       protocol        = x.protocol != "" ? x.protocol : "esp"
@@ -277,8 +291,8 @@ locals {
 
   ike_gateways = [
     for x in csvdecode(file(var.network_ike_gateways_file)) : {
-
-      template = x.template != "" ? x.template : "default"
+      template       = x.template != "" ? x.template : "default"
+      template_stack = x.template_stack
 
       name    = x.name
       version = x.version
@@ -334,8 +348,9 @@ locals {
     for x in csvdecode(file(var.network_ipsec_tunnels_file)) : [
       for x1 in split(";", x.proxy_subnets) : {
 
-        template     = x.template != "" ? x.template : "default"
-        ipsec_tunnel = x.name
+        template       = x.template != "" ? x.template : "default"
+        template_stack = x.template_stack
+        ipsec_tunnel   = x.name
 
         name = join("_", ["IPsec", x.name, split(",", x1)[0]])
 
@@ -358,65 +373,68 @@ locals {
 
   virtual_router_static_routes = concat(local.virtual_router_static_routes_defined, local.ipsec_routers)
 
-  # If we add new resources in future, then below list needs to be updated.
-  # Every change of IDs for configured resources is going to trigger commit and push.
-  configured_resource_ids = concat(
-    [for item in module.policy_as_code_network.panos_ike_crypto_profile : item.id],
-    [for item in module.policy_as_code_network.panos_panorama_ethernet_interface : item.id],
-    [for item in module.policy_as_code_network.panos_panorama_ike_gateway : item.id],
-    [for item in module.policy_as_code_network.panos_panorama_ipsec_crypto_profile : item.id],
-    [for item in module.policy_as_code_network.panos_panorama_ipsec_tunnel : item.id],
-    [for item in module.policy_as_code_network.panos_panorama_loopback_interface : item.id],
-    [for item in module.policy_as_code_network.panos_panorama_static_route_ipv4 : item.id],
-    [for item in module.policy_as_code_network.panos_panorama_tunnel_interface : item.id],
-    [for item in module.policy_as_code_network.panos_virtual_router : item.id],
-    [for item in module.policy_as_code_network.panos_virtual_router_entry : item.id],
-    [for item in module.policy_as_code_network.panos_zones : item.id],
-    [for item in module.policy_as_code_network.panos_zone_entry : item.id],
-    [for item in module.policy_as_code_objects.panos_address_object : item.id],
-    [for item in module.policy_as_code_objects.panos_panorama_address_group : item.id],
-    [for item in module.policy_as_code_objects.panos_panorama_administrative_tag : item.id],
-    [for item in module.policy_as_code_objects.panos_panorama_service_group : item.id],
-    [for item in module.policy_as_code_objects.panos_panorama_service_object : item.id],
-    [for item in module.policy_as_code_policy.panos_panorama_nat_rule_group : item.id],
-    [for item in module.policy_as_code_policy.panos_security_rule_group : item.id],
-  )
 }
 
-module "policy_as_code_objects" {
-  source = "../../../modules/objects"
+module "policy_as_code_objects_tags" {
+  source   = "../../../modules/old_model/objects_tags"
+  panorama = var.panorama
 
-  panorama_mode = var.panorama_mode
+  tags = try(local.tags, {})
+}
 
-  tags           = try(local.tags, {})
+module "policy_as_code_objects_addresses" {
+  source   = "../../../modules/old_model/objects_addresses"
+  panorama = var.panorama
+
+  addr_obj   = try(local.addr_object, {})
+  addr_group = try(local.addr_groups, {})
+
+  depends_on = [module.policy_as_code_objects_tags]
+}
+
+module "policy_as_code_objects_services" {
+  source   = "../../../modules/old_model/objects_services"
+  panorama = var.panorama
+
   services       = try(local.services, {})
   service_groups = try(local.service_groups, {})
-  addr_obj       = try(local.addr_object, {})
-  addr_group     = try(local.addr_groups, {})
+
+  depends_on = [module.policy_as_code_objects_tags]
 }
 
-module "policy_as_code_policy" {
-  source = "../../../modules/policy"
-
-  panorama_mode = var.panorama_mode
+module "policy_as_code_sec_policy" {
+  source   = "../../../modules/old_model/security_policies"
+  panorama = var.panorama
 
   sec_policy = try(local.sec_rules, {})
+
+  depends_on = [
+    module.policy_as_code_objects_addresses,
+    module.policy_as_code_objects_services,
+    module.policy_as_code_network,
+  ]
+}
+
+module "policy_as_code_sec_nat" {
+  source   = "../../../modules/old_model/nat_policies"
+  panorama = var.panorama
+
   nat_policy = try(local.nat_rules, {})
 
   depends_on = [
-    module.policy_as_code_objects,
+    module.policy_as_code_objects_addresses,
+    module.policy_as_code_objects_services,
     module.policy_as_code_network,
   ]
 }
 
 module "policy_as_code_network" {
-  source = "../../../modules/network"
-
-  panorama_mode = var.panorama_mode
+  source   = "../../../modules/old_model/network"
+  panorama = var.panorama
 
   interfaces                   = try(local.interfaces, {})
   zones                        = try(local.zones, {})
-  zone_entres                  = try(local.zone_entres, {})
+  zone_entries                 = try(local.zone_entries, {})
   virtual_routers              = try(local.virtual_routers, {})
   virtual_router_entries       = try(local.virtual_router_entries, {})
   virtual_router_static_routes = try(local.virtual_router_static_routes, {})
@@ -427,45 +445,9 @@ module "policy_as_code_network" {
   ike_gateways          = try(local.ike_gateways, {})
   ipsec_tunnels         = try(local.ipsec_tunnels, {})
   ipsec_tunnels_proxy   = try(local.ipsec_tunnels_proxy, {})
-}
-
-# Until we don't have possiblity to configure device groups and templates stack from CSV/YAML/JSON files,
-# then we are commiting and pushing changes by providing as variable name of the device group and template stack.
-# It needs to improved into for_each when device groups and template stacke will be added.
-module "panoroma_commit" {
-  count = var.panorama_mode ? 1 : 0
-
-  source = "../../../modules/commit-push"
-
-  configured_resource_ids     = local.configured_resource_ids
-  panorama_commit_push_binary = var.panorama_commit_push_binary
-  pan_creds                   = var.pan_creds
-  mode                        = "commit"
 
   depends_on = [
-    module.policy_as_code_objects,
-    module.policy_as_code_network,
-    module.policy_as_code_network
-  ]
-}
-
-module "panoroma_push" {
-  count = var.panorama_mode ? 1 : 0
-
-  source = "../../../modules/commit-push"
-
-  configured_resource_ids     = local.configured_resource_ids
-  panorama_commit_push_binary = var.panorama_commit_push_binary
-  pan_creds                   = var.pan_creds
-  mode                        = "push"
-  device_group                = var.device_group
-  devices                     = var.devices
-  template_stack              = var.template_stack
-
-  depends_on = [
-    module.policy_as_code_objects,
-    module.policy_as_code_network,
-    module.policy_as_code_network,
-    module.panoroma_commit
+    module.policy_as_code_objects_addresses,
+    module.policy_as_code_objects_services,
   ]
 }
