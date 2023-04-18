@@ -120,23 +120,23 @@ variable "interfaces" {
     dhcp_send_hostname_value        = optional(string)
   }))
   validation {
-    condition     = (length(var.interfaces) > 0 && alltrue([for interface in var.interfaces : contains(["layer3", "layer2", "virtual-wire", "tap", "ha", "decrypt-mirror", "aggregate-group"], interface.mode)]))
+    condition     = alltrue([for interface in var.interfaces : contains(["layer3", "layer2", "virtual-wire", "tap", "ha", "decrypt-mirror", "aggregate-group"], interface.mode)])
     error_message = "Valid types of mode are `layer3`, `layer2`, `virtual-wire`, `tap`, `ha`, `decrypt-mirror`, or `aggregate-group`"
   }
   validation {
-    condition     = (length(var.interfaces) > 0 && alltrue([for interface in var.interfaces : contains(["ethernet", "loopback", "tunnel"], interface.type)]))
+    condition     = alltrue([for interface in var.interfaces : contains(["ethernet", "loopback", "tunnel"], interface.type)])
     error_message = "Valid types of interfaces are `ethernet`,`loopback`,`tunnel`"
   }
   validation {
-    condition     = (length(var.interfaces) > 0 && alltrue([for interface in var.interfaces : contains(["up", "down", "auto"], interface.link_state)]))
+    condition     = alltrue([for interface in var.interfaces : contains(["up", "down", "auto"], interface.link_state)])
     error_message = "Valid types of link state are `up`, `down`, `auto`"
   }
   validation {
-    condition     = (length(var.interfaces) > 0 && alltrue([for interface in var.interfaces : contains(["10", "100", "1000", "auto"], coalesce(interface.link_speed, "auto"))]))
+    condition     = alltrue([for interface in var.interfaces : contains(["10", "100", "1000", "auto"], coalesce(interface.link_speed, "auto"))])
     error_message = "Valid types of link speed are `10`, `100`, `1000`, or `auto`"
   }
   validation {
-    condition     = (length(var.interfaces) > 0 && alltrue([for interface in var.interfaces : contains(["full", "half", "auto"], coalesce(interface.link_duplex, "auto"))]))
+    condition     = alltrue([for interface in var.interfaces : contains(["full", "half", "auto"], coalesce(interface.link_duplex, "auto"))])
     error_message = "Valid types of link duplex are `full`, `half`, or `auto`"
   }
 }

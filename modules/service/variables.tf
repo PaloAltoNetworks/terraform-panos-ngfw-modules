@@ -62,7 +62,7 @@ variable "services" {
       protocol         = "tcp"
       destination_port = "4457-4458"
       description      = "Custom port range"
-    }    
+    }
   }
   ```
   EOF
@@ -78,6 +78,10 @@ variable "services" {
     override_half_closed_timeout = optional(number)
     override_time_wait_timeout   = optional(number)
   }))
+  validation {
+    condition     = alltrue([for service in var.services : contains(["tcp", "udp", "sctp"], service.protocol)])
+    error_message = "Valid values for the protocol are `tcp`, `udp`, or `sctp`"
+  }
 }
 
 variable "services_group" {
@@ -92,8 +96,8 @@ variable "services_group" {
     "Customer Group" = {
       members = ["WEB-APP", "TCP-4457-4458"]
     }
-  }  
-  ```  
+  }
+  ```
   EOF
   default     = {}
   type = map(object({

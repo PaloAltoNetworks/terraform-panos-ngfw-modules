@@ -74,11 +74,11 @@ variable "static_routes" {
     bfd_profile    = optional(string)
   }))
   validation {
-    condition     = (length(var.static_routes) > 0 && alltrue(flatten([for static_route in var.static_routes : contains(["unicast", "no install", "multicast", "both"], static_route.route_table)])))
+    condition     = alltrue(flatten([for static_route in var.static_routes : contains(["unicast", "no install", "multicast", "both"], static_route.route_table)]))
     error_message = "Valid values of route tables are `unicast` (the default), `no install`, `multicast`, or `both`"
   }
   validation {
-    condition     = (length(var.static_routes) > 0 && alltrue(flatten([for static_route in var.static_routes : contains(["ip-address", "discard", "next-vr", ""], static_route.type)])))
+    condition     = alltrue(flatten([for static_route in var.static_routes : contains(["ip-address", "discard", "next-vr", ""], static_route.type)]))
     error_message = "Valid values type in route are `ip-address` (the default), `discard`, `next-vr`, or an empty string for None"
   }
 }

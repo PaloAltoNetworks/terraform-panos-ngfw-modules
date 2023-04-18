@@ -63,7 +63,7 @@ variable "zones" {
     exclude_acls   = optional(list(string))
   }))
   validation {
-    condition     = (length(var.zones) > 0 && alltrue([for zone in var.zones : contains(["layer3", "layer2", "virtual-wire", "tap", "tunnel"], zone.mode)]))
+    condition     = alltrue([for zone in var.zones : contains(["layer3", "layer2", "virtual-wire", "tap", "tunnel"], zone.mode)])
     error_message = "Valid types of zone's mode are `layer3`, `layer2`, `virtual-wire`, `tap`, or `tunnel``"
   }
 }

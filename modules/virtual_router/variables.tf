@@ -85,7 +85,7 @@ variable "virtual_routers" {
     ecmp_weighted_round_robin_interfaces = optional(map(number))
   }))
   validation {
-    condition     = (length(var.virtual_routers) > 0 && alltrue([for virtual_router in var.virtual_routers : contains(["ip-modulo", "ip-hash", "weighted-round-robin", "balanced-round-robin"], coalesce(virtual_router.ecmp_load_balance_method, "ip-modulo"))]))
+    condition     = alltrue([for virtual_router in var.virtual_routers : contains(["ip-modulo", "ip-hash", "weighted-round-robin", "balanced-round-robin"], coalesce(virtual_router.ecmp_load_balance_method, "ip-modulo"))])
     error_message = "Valid types of ECMP load balance method are `ip-modulo`, `ip-hash`, `weighted-round-robin`, or `balanced-round-robin`"
   }
 }

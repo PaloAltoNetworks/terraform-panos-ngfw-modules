@@ -69,6 +69,10 @@ variable "address_objects" {
     description = optional(string)
     tags        = optional(list(string))
   }))
+  validation {
+    condition     = alltrue([for address_object in var.address_objects : contains(["ip-netmask", "ip-range", "fqdn", "ip-wildcard"], address_object.type)])
+    error_message = "Valid values of type are `ip-netmask` (default), `ip-range`, `fqdn`, or `ip-wildcard`"
+  }
 }
 
 variable "address_groups" {

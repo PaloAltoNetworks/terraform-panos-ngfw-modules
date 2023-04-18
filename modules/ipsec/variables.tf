@@ -66,11 +66,11 @@ variable "ike_crypto_profiles" {
     authentication_multiple = optional(number)
   }))
   validation {
-    condition     = (length(var.ike_crypto_profiles) > 0 && alltrue([for ike_crypto_profile in var.ike_crypto_profiles : contains(["seconds", "minutes", "hours", "days"], ike_crypto_profile.lifetime_type)]))
+    condition     = alltrue([for ike_crypto_profile in var.ike_crypto_profiles : contains(["seconds", "minutes", "hours", "days"], ike_crypto_profile.lifetime_type)])
     error_message = "Valid values for the lifetime type are `seconds`, `minutes`, `hours` (the default), and `days`"
   }
   validation {
-    condition     = (length(var.ike_crypto_profiles) > 0 && alltrue([for ike_crypto_profile in var.ike_crypto_profiles : length(setsubtract(ike_crypto_profile.encryptions, ["des", "3des", "aes-128-cbc", "aes-192-cbc", "aes-256-cbc", "aes-128-gcm", "aes-256-gcm"])) == 0]))
+    condition     = alltrue([for ike_crypto_profile in var.ike_crypto_profiles : length(setsubtract(ike_crypto_profile.encryptions, ["des", "3des", "aes-128-cbc", "aes-192-cbc", "aes-256-cbc", "aes-128-gcm", "aes-256-gcm"])) == 0])
     error_message = "Valid values for the encryptions are `des`, `3des`, `aes-128-cbc`, `aes-192-cbc`, `aes-256-cbc`, `aes-128-gcm` (PAN-OS 10.0), and `aes-256-gcm`"
   }
 }
@@ -114,19 +114,19 @@ variable "ipsec_crypto_profiles" {
     lifesize_value  = optional(number)
   }))
   validation {
-    condition     = (length(var.ipsec_crypto_profiles) > 0 && alltrue([for ipsec_crypto_profile in var.ipsec_crypto_profiles : contains(["esp", "ah"], ipsec_crypto_profile.protocol)]))
+    condition     = alltrue([for ipsec_crypto_profile in var.ipsec_crypto_profiles : contains(["esp", "ah"], ipsec_crypto_profile.protocol)])
     error_message = "Valid values for the protocol are `esp` and `ah`"
   }
   validation {
-    condition     = (length(var.ipsec_crypto_profiles) > 0 && alltrue([for ipsec_crypto_profile in var.ipsec_crypto_profiles : contains(["seconds", "minutes", "hours", "days"], ipsec_crypto_profile.lifetime_type)]))
+    condition     = alltrue([for ipsec_crypto_profile in var.ipsec_crypto_profiles : contains(["seconds", "minutes", "hours", "days"], ipsec_crypto_profile.lifetime_type)])
     error_message = "Valid values for the lifetime type are `seconds`, `minutes`, `hours` (the default), and `days`"
   }
   validation {
-    condition     = (length(var.ipsec_crypto_profiles) > 0 && alltrue([for ipsec_crypto_profile in var.ipsec_crypto_profiles : contains(["kb", "mb", "gb", "tb"], coalesce(ipsec_crypto_profile.lifesize_type, "kb"))]))
+    condition     = alltrue([for ipsec_crypto_profile in var.ipsec_crypto_profiles : contains(["kb", "mb", "gb", "tb"], coalesce(ipsec_crypto_profile.lifesize_type, "kb"))])
     error_message = "Valid values for the lifesize type are `kb`, `mb`, `gb`, or `tb`"
   }
   validation {
-    condition     = (length(var.ipsec_crypto_profiles) > 0 && alltrue([for ipsec_crypto_profile in var.ipsec_crypto_profiles : length(setsubtract(ipsec_crypto_profile.encryptions, ["des", "3des", "aes-128-cbc", "aes-192-cbc", "aes-256-cbc", "aes-128-gcm", "aes-256-gcm"])) == 0]))
+    condition     = alltrue([for ipsec_crypto_profile in var.ipsec_crypto_profiles : length(setsubtract(ipsec_crypto_profile.encryptions, ["des", "3des", "aes-128-cbc", "aes-192-cbc", "aes-256-cbc", "aes-128-gcm", "aes-256-gcm"])) == 0])
     error_message = "Valid values for the encryptions are `des`, `3des`, `aes-128-cbc`, `aes-192-cbc`, `aes-256-cbc`, `aes-128-gcm` and `aes-256-gcm`"
   }
 }
@@ -229,19 +229,19 @@ variable "ike_gateways" {
     liveness_check_interval           = optional(number)
   }))
   validation {
-    condition     = (length(var.ike_gateways) > 0 && alltrue([for ike_gateway in var.ike_gateways : contains(["ikev1", "ikev2", "ikev2-preferred"], ike_gateway.version)]))
+    condition     = alltrue([for ike_gateway in var.ike_gateways : contains(["ikev1", "ikev2", "ikev2-preferred"], ike_gateway.version)])
     error_message = "Valid values for IKE gateway version are `ikev1`, `ikev2`, `ikev2-preferred`"
   }
   validation {
-    condition     = (length(var.ike_gateways) > 0 && alltrue([for ike_gateway in var.ike_gateways : contains(["ipaddr", "fqdn", "ufqdn", "keyid", "dn"], ike_gateway.peer_id_type)]))
+    condition     = alltrue([for ike_gateway in var.ike_gateways : contains(["ipaddr", "fqdn", "ufqdn", "keyid", "dn"], ike_gateway.peer_id_type)])
     error_message = "Valid values for peer ID type are `ipaddr`, `fqdn`, `ufqdn`, `keyid`, or `dn`"
   }
   validation {
-    condition     = (length(var.ike_gateways) > 0 && alltrue([for ike_gateway in var.ike_gateways : contains(["ipaddr", "fqdn", "ufqdn", "keyid", "dn"], ike_gateway.local_id_type)]))
+    condition     = alltrue([for ike_gateway in var.ike_gateways : contains(["ipaddr", "fqdn", "ufqdn", "keyid", "dn"], ike_gateway.local_id_type)])
     error_message = "Valid values for local ID type are `ipaddr`, `fqdn`, `ufqdn`, `keyid`, or `dn`"
   }
   validation {
-    condition     = (length(var.ike_gateways) > 0 && alltrue([for ike_gateway in var.ike_gateways : contains(["pre-shared-key", "certificate"], ike_gateway.auth_type)]))
+    condition     = alltrue([for ike_gateway in var.ike_gateways : contains(["pre-shared-key", "certificate"], ike_gateway.auth_type)])
     error_message = "Valid values for auth type are `pre-shared-key` (the default), or `certificate`"
   }
 }
@@ -343,19 +343,19 @@ variable "ipsec_tunnels" {
     tunnel_monitor_proxy_id        = optional(string)
   }))
   validation {
-    condition     = (length(var.ipsec_tunnels) > 0 && alltrue([for ipsec_tunnel in var.ipsec_tunnels : contains(["auto-key", "manual-key", "global-protect-satellite"], ipsec_tunnel.type)]))
+    condition     = alltrue([for ipsec_tunnel in var.ipsec_tunnels : contains(["auto-key", "manual-key", "global-protect-satellite"], ipsec_tunnel.type)])
     error_message = "Valid values for type are `auto-key` (the default), `manual-key`, or `global-protect-satellite`"
   }
   validation {
-    condition     = (length(var.ipsec_tunnels) > 0 && alltrue([for ipsec_tunnel in var.ipsec_tunnels : contains(["md5", "sha1", "sha256", "sha384", "sha512", "none"], coalesce(ipsec_tunnel.mk_auth_type, "md5"))]))
+    condition     = alltrue([for ipsec_tunnel in var.ipsec_tunnels : contains(["md5", "sha1", "sha256", "sha384", "sha512", "none"], coalesce(ipsec_tunnel.mk_auth_type, "md5"))])
     error_message = "Valid values for auth type are `md5`, `sha1`, `sha256`, `sha384`, `sha512`, or `none`"
   }
   validation {
-    condition     = (length(var.ipsec_tunnels) > 0 && alltrue([for ipsec_tunnel in var.ipsec_tunnels : contains(["esp", "ah"], coalesce(ipsec_tunnel.mk_protocol, "esp"))]))
+    condition     = alltrue([for ipsec_tunnel in var.ipsec_tunnels : contains(["esp", "ah"], coalesce(ipsec_tunnel.mk_protocol, "esp"))])
     error_message = "Valid values for the protocol are `esp` and `ah`"
   }
   validation {
-    condition     = (length(var.ipsec_tunnels) > 0 && alltrue([for ipsec_tunnel in var.ipsec_tunnels : contains(["des", "3des", "aes-128-cbc", "aes-192-cbc", "aes-256-cbc"], coalesce(ipsec_tunnel.mk_esp_encryption_type, "des"))]))
+    condition     = alltrue([for ipsec_tunnel in var.ipsec_tunnels : contains(["des", "3des", "aes-128-cbc", "aes-192-cbc", "aes-256-cbc"], coalesce(ipsec_tunnel.mk_esp_encryption_type, "des"))])
     error_message = "Valid values for the encryptions are `des`, `3des`, `aes-ipsec_tunnel-cbc`, `aes-192-cbc`, `aes-256-cbc`"
   }
 }
