@@ -1,10 +1,13 @@
-pan_creds = "./creds/credentials.json"
+pan_creds = "./creds/credentials_panorama.json"
 mode      = "panorama"
 
-#device_group = ["AWSTestDG", "AzureTestDG"]
-device_group = "AWSTestDG"
-#vsys         = ["vsys1"]
-vsys         = "vsys1"
+# pan_creds = "./creds/credentials_vmseries.json"
+# mode      = "ngfw"
+
+device_group   = "AWSTestDG"
+vsys           = "vsys1"
+template       = "test-template"
+template_stack = "" ### not every resource can be created in template stack e.g. panos_panorama_ethernet_interface can be only in template
 
 ### Tags
 
@@ -204,13 +207,15 @@ services_group = {
   }
 }
 
+### Security policies
+
 security_policies_group = {
   "allow_rule_group" = {
     rulebase = "pre-rulebase"
     policies_rules = [
       {
         name = "Allow access to DNS Servers"
-        tags     = [
+        tags = [
           "Outbound",
           "Managed by Terraform"
         ]
@@ -235,13 +240,13 @@ security_policies_group = {
         vulnerability                      = "default"
       },
       {
-        name = "Allow access to RFC1918"
-        tags              = ["Managed by Terraform"]
-        source_zones      = ["Trust-L3"]
-        source_addresses  = ["RFC1918_Subnets"]
-        negate_source     = "false"
-        source_users      = ["any"]
-        hip_profiles      = ["any"]
+        name             = "Allow access to RFC1918"
+        tags             = ["Managed by Terraform"]
+        source_zones     = ["Trust-L3"]
+        source_addresses = ["RFC1918_Subnets"]
+        negate_source    = "false"
+        source_users     = ["any"]
+        hip_profiles     = ["any"]
         destination_zones = [
           "Trust-L3",
           "Untrust-L3"
@@ -262,11 +267,11 @@ security_policies_group = {
       },
       {
         name = "Disabled - temporary access to Srv10 and Srv11"
-        tags     = [
+        tags = [
           "Outbound",
           "Managed by Terraform"
         ]
-        source_zones    = ["Trust-L3"]
+        source_zones = ["Trust-L3"]
         source_addresses = [
           "Server10",
           "Server11"
@@ -294,7 +299,7 @@ security_policies_group = {
       },
       {
         name = "Allow access to SSH Servers"
-        tags     = [
+        tags = [
           "Inbound",
           "Managed by Terraform"
         ]
@@ -319,11 +324,11 @@ security_policies_group = {
   }
   "block_rule_group" = {
     position_keyword = "bottom"
-    rulebase = "pre-rulebase"
+    rulebase         = "pre-rulebase"
     policies_rules = [
-       {
-        name ="Block Some Traffic"
-        tags     = [
+      {
+        name = "Block Some Traffic"
+        tags = [
           "Outbound",
           "Managed by Terraform"
         ]
@@ -345,5 +350,189 @@ security_policies_group = {
         disabled                           = "false"
       }
     ]
+  }
+}
+
+### Network - interfaces
+
+interfaces = {
+  "ethernet1/1" = {
+    type                      = "ethernet"
+    mode                      = "layer3"
+    management_profile        = "mgmt_default"
+    link_state                = "up"
+    enable_dhcp               = true
+    create_dhcp_default_route = false
+    comment                   = "mgmt"
+    virtual_router            = "default"
+    zone                      = "mgmt"
+    vsys                      = "vsys1"
+  }
+  "ethernet1/2" = {
+    type               = "ethernet"
+    mode               = "layer3"
+    management_profile = "mgmt_default"
+    link_state         = "up"
+    comment            = "external"
+    virtual_router     = "external"
+    zone               = "external"
+    vsys               = "vsys1"
+  }
+  "ethernet1/3" = {
+    type           = "ethernet"
+    mode           = "layer3"
+    link_state     = "up"
+    comment        = "internal"
+    virtual_router = "internal"
+    zone           = "internal"
+    vsys           = "vsys1"
+  }
+  "loopback.42" = {
+    type           = "loopback"
+    mode           = "layer3"
+    link_state     = "up"
+    comment        = "internal"
+    virtual_router = "internal"
+    zone           = "vpn"
+    vsys           = "vsys1"
+  }
+  "tunnel.42" = {
+    type           = "tunnel"
+    mode           = "layer3"
+    link_state     = "up"
+    comment        = "internal"
+    virtual_router = "internal"
+    zone           = "vpn"
+    vsys           = "vsys1"
+  }
+}
+
+### Network - management profile
+
+management_profiles = {
+  "mgmt_default" = {
+    ping          = true
+    telnet        = false
+    ssh           = true
+    http          = false
+    https         = true
+    snmp          = false
+    permitted_ips = ["1.1.1.1/32", "2.2.2.2/32"]
+  }
+}
+
+### Network - virtual router
+
+virtual_routers = {
+  "default"  = {}
+  "external" = {}
+  "internal" = {}
+}
+
+static_routes = {
+  "vr_default_unicast_0.0.0.0" = {
+    virtual_router = "default"
+    route_table    = "unicast"
+    destination    = "0.0.0.0/0"
+    interface      = "ethernet1/1"
+    type           = "ip-address"
+    next_hop       = "10.1.1.1"
+    metric         = 10
+  }
+  "vr_internal_unicast_10.10.10.0" = {
+    virtual_router = "internal"
+    route_table    = "unicast"
+    destination    = "10.10.10.0/24"
+    interface      = "tunnel.42"
+    type           = ""
+  }
+  "vr_external_unicast_0.0.0.0" = {
+    virtual_router = "external"
+    route_table    = "unicast"
+    destination    = "0.0.0.0/0"
+    interface      = "ethernet1/2"
+    type           = "ip-address"
+    next_hop       = "10.1.2.1"
+    metric         = 10
+  }
+}
+
+### Network - zone
+
+zones = {
+  "internal" = {
+    mode = "layer3"
+  }
+}
+
+### Network - IPSec
+
+ike_gateways = {
+  "IKE-GW-1" = {
+    version              = "ikev1"
+    disabled             = false
+    peer_ip_type         = "ip"
+    peer_ip_value        = "5.5.5.5"
+    interface            = "ethernet1/1"
+    pre_shared_key       = "test12345"
+    local_id_type        = "ipaddr"
+    local_id_value       = "10.1.1.1"
+    peer_id_type         = "ipaddr"
+    peer_id_value        = "10.5.1.1"
+    ikev1_crypto_profile = "AES128_default"
+  }
+}
+
+ike_crypto_profiles = {
+  "AES128_default" = {
+    dh_groups               = ["group2", "group5"]
+    authentications         = ["md5", "sha1"]
+    encryptions             = ["aes-128-cbc", "aes-192-cbc"]
+    lifetime_type           = "hours"
+    lifetime_value          = 24
+    authentication_multiple = 0
+  }
+  "AES128_DH5" = {
+    dh_groups               = ["group5"]
+    authentications         = ["sha1"]
+    encryptions             = ["aes-128-cbc", "aes-192-cbc"]
+    lifetime_type           = "hours"
+    lifetime_value          = 8
+    authentication_multiple = 3
+  }
+}
+
+ipsec_crypto_profiles = {
+  "AES128_default" = {
+    protocol        = "esp"
+    authentications = ["md5", "sha1"]
+    encryptions     = ["aes-128-cbc", "aes-192-cbc"]
+    dh_group        = "group5"
+    lifetime_type   = "hours"
+    lifetime_value  = 24
+  }
+  "AES128_DH14" = {
+    protocol        = "esp"
+    authentications = ["sha1"]
+    encryptions     = ["aes-128-cbc", "aes-192-cbc"]
+    dh_group        = "group14"
+    lifetime_type   = "hours"
+    lifetime_value  = 24
+
+  }
+}
+
+ipsec_tunnels = {
+  "some_tunnel" = {
+    virtual_router          = "internal"
+    tunnel_interface        = "tunnel.42"
+    type                    = "auto-key"
+    disabled                = false
+    ak_ike_gateway          = "IKE-GW-1"
+    ak_ipsec_crypto_profile = "AES128_DH14"
+    anti_replay             = false
+    copy_flow_label         = false
+    enable_tunnel_monitor   = false
+    proxy_subnets           = "example1,10.10.10.0/24,10.10.20.0/24;example2,10.10.10.0/24,10.10.30.0/24"
   }
 }

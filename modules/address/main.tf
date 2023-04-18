@@ -7,8 +7,8 @@
 resource "panos_address_object" "this" {
   for_each = var.address_objects
 
-#  device_group = var.mode_map[var.mode] == 0 ? try(each.value.device_group, "shared") : null
-#  vsys         = var.mode_map[var.mode] == 1 ? try(each.value.vsys, "vsys1") : null
+  #  device_group = var.mode_map[var.mode] == 0 ? try(each.value.device_group, "shared") : null
+  #  vsys         = var.mode_map[var.mode] == 1 ? try(each.value.vsys, "vsys1") : null
   device_group = var.mode_map[var.mode] == 0 ? var.device_group : null
   vsys         = var.mode_map[var.mode] == 1 ? var.vsys : null
 

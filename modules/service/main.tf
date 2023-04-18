@@ -16,10 +16,10 @@
 
 
 resource "panos_panorama_service_object" "this" {
-#  for_each = var.panorama == true && length(var.services) != 0 ? local.dg_service_obj_normalized : {}
+  #  for_each = var.panorama == true && length(var.services) != 0 ? local.dg_service_obj_normalized : {}
   for_each = var.mode_map[var.mode] == 0 ? var.services : {}
 
-  device_group     = var.device_group
+  device_group = var.device_group
 
   destination_port = each.value.destination_port
   name             = each.key
@@ -38,7 +38,7 @@ resource "panos_panorama_service_object" "this" {
 resource "panos_service_object" "this" {
   for_each = var.mode_map[var.mode] == 1 ? var.services : {}
 
-  vsys             = var.vsys
+  vsys = var.vsys
 
   destination_port = each.value.destination_port
   name             = each.key
@@ -55,10 +55,10 @@ resource "panos_service_object" "this" {
 }
 
 resource "panos_panorama_service_group" "this" {
-#  for_each = var.panorama == true && length(var.services_group) != 0 ? local.dg_service_group_obj_normalized : {}
+  #  for_each = var.panorama == true && length(var.services_group) != 0 ? local.dg_service_group_obj_normalized : {}
   for_each = var.mode_map[var.mode] == 0 ? var.services_group : {}
 
-  device_group     = var.device_group
+  device_group = var.device_group
 
   name     = each.key
   services = try(each.value.members, [])
@@ -71,10 +71,10 @@ resource "panos_panorama_service_group" "this" {
 
 
 resource "panos_service_group" "this" {
-#  for_each = var.panorama == false && length(var.services_group) != 0 ? local.vsys_service_group_obj_normalized : {}
+  #  for_each = var.panorama == false && length(var.services_group) != 0 ? local.vsys_service_group_obj_normalized : {}
   for_each = var.mode_map[var.mode] == 1 ? var.services_group : {}
 
-  vsys             = var.vsys
+  vsys = var.vsys
 
   name     = each.key
   services = try(each.value.members, [])

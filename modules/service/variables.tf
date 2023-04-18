@@ -16,7 +16,7 @@ variable "mode_map" {
   }
   type = object({
     panorama = number
-    ngfw = number
+    ngfw     = number
   })
 }
 

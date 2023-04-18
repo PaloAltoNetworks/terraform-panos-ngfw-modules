@@ -7,7 +7,7 @@ resource "panos_security_rule_group" "this" {
 
   position_keyword   = try(each.value.position_keyword, "")
   position_reference = try(each.value.position_reference, null)
-  
+
   dynamic "rule" {
     for_each = each.value.policies_rules
     content {

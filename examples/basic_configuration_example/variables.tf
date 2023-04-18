@@ -10,6 +10,18 @@ variable "vsys" {
   type        = string
 }
 
+variable "template" {
+  description = "Template name"
+  default     = "default"
+  type        = string
+}
+
+variable "template_stack" {
+  description = "Template stack name"
+  default     = ""
+  type        = string
+}
+
 variable "pan_creds" {
   description = "Path to file with credentials to Panorama"
   type        = string
@@ -53,6 +65,16 @@ variable "services_group" {
 
 variable "security_policies_group" {
   description = "Security policies"
-  default = {}
-  type = any
+  default     = {}
+  type        = any
 }
+
+variable "interfaces" {}
+variable "management_profiles" {}
+variable "virtual_routers" {}
+variable "static_routes" {}
+variable "zones" {}
+variable "ike_gateways" {}
+variable "ike_crypto_profiles" {}
+variable "ipsec_crypto_profiles" {}
+variable "ipsec_tunnels" {}
