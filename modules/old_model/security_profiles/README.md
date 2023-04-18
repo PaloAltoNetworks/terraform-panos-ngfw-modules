@@ -59,7 +59,7 @@ provider "panos" {
 }
 
 module "policy-as-code_security-profiles" {
-  source  = "sarah-blazic/policy-as-code/panos//modules/security_profiles"
+  source  = "PaloAltoNetworks/terraform-panos-ngfw-modules//modules/security_profiles"
   version = "0.1.0"
 
   #for JSON files: try(jsondecode(file("<*.json>")), {})

@@ -55,12 +55,12 @@ No providers.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_policy_as_code_network"></a> [policy\_as\_code\_network](#module\_policy\_as\_code\_network) | ../../../modules/network | n/a |
-| <a name="module_policy_as_code_objects_addresses"></a> [policy\_as\_code\_objects\_addresses](#module\_policy\_as\_code\_objects\_addresses) | ../../../modules/objects_addresses | n/a |
-| <a name="module_policy_as_code_objects_services"></a> [policy\_as\_code\_objects\_services](#module\_policy\_as\_code\_objects\_services) | ../../../modules/objects_services | n/a |
-| <a name="module_policy_as_code_objects_tags"></a> [policy\_as\_code\_objects\_tags](#module\_policy\_as\_code\_objects\_tags) | ../../../modules/objects_tags | n/a |
-| <a name="module_policy_as_code_sec_nat"></a> [policy\_as\_code\_sec\_nat](#module\_policy\_as\_code\_sec\_nat) | ../../../modules/nat_policies | n/a |
-| <a name="module_policy_as_code_sec_policy"></a> [policy\_as\_code\_sec\_policy](#module\_policy\_as\_code\_sec\_policy) | ../../../modules/security_policies | n/a |
+| <a name="module_policy_as_code_network"></a> [policy\_as\_code\_network](#module\_policy\_as\_code\_network) | ../../../modules/old_model/network | n/a |
+| <a name="module_policy_as_code_objects_addresses"></a> [policy\_as\_code\_objects\_addresses](#module\_policy\_as\_code\_objects\_addresses) | ../../../modules/old_model/objects_addresses | n/a |
+| <a name="module_policy_as_code_objects_services"></a> [policy\_as\_code\_objects\_services](#module\_policy\_as\_code\_objects\_services) | ../../../modules/old_model/objects_services | n/a |
+| <a name="module_policy_as_code_objects_tags"></a> [policy\_as\_code\_objects\_tags](#module\_policy\_as\_code\_objects\_tags) | ../../../modules/old_model/objects_tags | n/a |
+| <a name="module_policy_as_code_sec_nat"></a> [policy\_as\_code\_sec\_nat](#module\_policy\_as\_code\_sec\_nat) | ../../../modules/old_model/nat_policies | n/a |
+| <a name="module_policy_as_code_sec_policy"></a> [policy\_as\_code\_sec\_policy](#module\_policy\_as\_code\_sec\_policy) | ../../../modules/old_model/security_policies | n/a |
 
 ## Resources
 

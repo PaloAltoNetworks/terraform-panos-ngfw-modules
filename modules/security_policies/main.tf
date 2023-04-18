@@ -1,61 +1,61 @@
 resource "panos_security_rule_group" "this" {
-  for_each = length(var.sec_policy) != 0 ? {
-    for item in var.sec_policy :
-    "${try(item.device_group, "shared")}_${replace(try(item.rulebase, "pre-rulebase"), "-", "_")}_${replace(try(item.position_keyword, ""), " ", "_")}"
-    => item
-  } : {}
+  for_each = var.sec_policy
 
-  device_group = var.panorama == true ? try(each.value.device_group, "shared") : null
-  rulebase     = var.panorama == true ? try(each.value.rulebase, "pre-rulebase") : null
-  vsys         = var.panorama == false ? try(each.value.vsys, "vsys1") : null
+  device_group = var.mode_map[var.mode] == 0 ? var.device_group : null
+  rulebase     = var.mode_map[var.mode] == 0 ? each.value.rulebase : null
+  vsys         = var.mode_map[var.mode] == 1 ? var.vsys : null
 
-  position_keyword   = try(each.value.position_keyword, "")
-  position_reference = try(each.value.position_reference, null)
+  position_keyword   = each.value.position_keyword
+  position_reference = each.value.position_reference
 
   dynamic "rule" {
-    for_each = [for policy in each.value.rules : policy]
+    for_each = each.value.policies_rules
     content {
-      applications                       = try(rule.value.applications, ["any"])
-      categories                         = try(rule.value.categories, ["any"])
-      destination_addresses              = try(rule.value.destination_addresses, ["any"])
-      destination_zones                  = try(rule.value.destination_zones, ["any"])
+      applications                       = rule.value.applications
+      categories                         = rule.value.categories
+      destination_addresses              = rule.value.destination_addresses
+      destination_zones                  = rule.value.destination_zones
       name                               = rule.value.name
-      services                           = try(rule.value.services, ["application-default"])
-      source_addresses                   = try(rule.value.source_addresses, ["any"])
-      source_users                       = try(rule.value.source_users, ["any"])
-      source_zones                       = try(rule.value.source_zones, ["any"])
-      description                        = try(rule.value.description, null)
-      tags                               = try(rule.value.tags, null)
-      type                               = try(rule.value.type, "universal")
-      negate_source                      = try(rule.value.negate_source, false)
-      negate_destination                 = try(rule.value.negate_destination, false)
-      action                             = try(rule.value.action, "allow")
-      log_setting                        = try(rule.value.log_setting, null)
-      log_start                          = try(rule.value.log_start, false)
-      log_end                            = try(rule.value.log_end, true)
-      disabled                           = try(rule.value.disabled, false)
-      schedule                           = try(rule.value.schedule, null)
-      icmp_unreachable                   = try(rule.value.icmp_unreachable, null)
-      disable_server_response_inspection = try(rule.value.disable_server_response_inspection, false)
-      group                              = try(rule.value.group, null)
-      virus                              = try(rule.value.virus, null)
-      spyware                            = try(rule.value.spyware, null)
-      vulnerability                      = try(rule.value.vulnerability, null)
-      url_filtering                      = try(rule.value.url_filtering, null)
-      file_blocking                      = try(rule.value.file_blocking, null)
-      wildfire_analysis                  = try(rule.value.wildfire_analysis, null)
-      data_filtering                     = try(rule.value.data_filtering, null)
-      destination_devices                = try(rule.value.destination_devices, ["any"])
+      services                           = rule.value.services
+      source_addresses                   = rule.value.source_addresses
+      source_users                       = rule.value.source_users
+      source_zones                       = rule.value.source_zones
+      hip_profiles                       = rule.value.hip_profiles
+      description                        = rule.value.description
+      tags                               = rule.value.tags
+      type                               = rule.value.type
+      negate_source                      = rule.value.negate_source
+      negate_destination                 = rule.value.negate_destination
+      action                             = rule.value.action
+      log_setting                        = rule.value.log_setting
+      log_start                          = rule.value.log_start
+      log_end                            = rule.value.log_end
+      disabled                           = rule.value.disabled
+      schedule                           = rule.value.schedule
+      icmp_unreachable                   = rule.value.icmp_unreachable
+      disable_server_response_inspection = rule.value.disable_server_response_inspection
+      group                              = rule.value.group
+      virus                              = rule.value.virus
+      spyware                            = rule.value.spyware
+      vulnerability                      = rule.value.vulnerability
+      url_filtering                      = rule.value.url_filtering
+      file_blocking                      = rule.value.file_blocking
+      wildfire_analysis                  = rule.value.wildfire_analysis
+      data_filtering                     = rule.value.data_filtering
+      negate_target                      = rule.value.negate_target
+      audit_comment                      = rule.value.audit_comment
 
       dynamic "target" {
         for_each = try(rule.value.target, null) != null ? { for t in rule.value.target : t.serial => t } : {}
-
         content {
-          serial    = try(target.value.serial, null)
-          vsys_list = try(target.value.vsys_list, null)
+          serial    = target.value.serial
+          vsys_list = target.value.vsys_list
         }
       }
-      negate_target = try(rule.value.negate_target, false)
     }
+  }
+
+  lifecycle {
+    create_before_destroy = true
   }
 }
