@@ -137,6 +137,7 @@ module "policy_as_code_ipsec" {
     module.policy_as_code_template,
     module.policy_as_code_template_stack,
     module.policy_as_code_virtual_routers,
+    module.policy_as_code_zones,
     module.policy_as_code_interfaces
   ]
 }

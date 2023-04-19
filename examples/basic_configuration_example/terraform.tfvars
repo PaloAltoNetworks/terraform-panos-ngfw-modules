@@ -427,9 +427,6 @@ static_routes = {
 ### Network - zone
 
 zones = {
-  "internal" = {
-    mode = "layer3"
-  }
   "Trust-L3" = {
     mode = "layer3"
   }

@@ -7,6 +7,8 @@ resource "panos_zone" "this" {
   name           = each.key
   vsys           = each.value.vsys
   mode           = each.value.mode
+  zone_profile   = each.value.zone_profile
+  log_setting    = each.value.log_setting
   interfaces     = each.value.interfaces
   enable_user_id = each.value.enable_user_id
   include_acls   = each.value.include_acls
