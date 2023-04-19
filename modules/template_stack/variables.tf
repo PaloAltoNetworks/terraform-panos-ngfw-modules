@@ -31,7 +31,11 @@ variable "template_stacks" {
   Example:
   ```
   {
-
+    "test-template-stack" = {
+      description = "My test template stack with devices"
+      templates   = ["test-template"]
+      devices     = ["123456789"]
+    }
   }
   ```
   EOF

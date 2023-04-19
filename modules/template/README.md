@@ -28,7 +28,7 @@ No modules.
 |------|-------------|------|---------|:--------:|
 | <a name="input_mode"></a> [mode](#input\_mode) | The mode to use for the modules. Valid values are `panorama` and `ngfw`. | `string` | n/a | yes |
 | <a name="input_mode_map"></a> [mode\_map](#input\_mode\_map) | The mode to use for the modules. Valid values are `panorama` and `ngfw`. | <pre>object({<br>    panorama = number<br>    ngfw     = number<br>  })</pre> | <pre>{<br>  "ngfw": 1,<br>  "panorama": 0<br>}</pre> | no |
-| <a name="input_templates"></a> [templates](#input\_templates) | Map of the templates, where key is the template's name:<br>- `description` - (Optional) The template's description.<br><br>Example:<pre>{<br><br>}</pre> | <pre>map(object({<br>    description = optional(string)<br>  }))</pre> | `{}` | no |
+| <a name="input_templates"></a> [templates](#input\_templates) | Map of the templates, where key is the template's name:<br>- `description` - (Optional) The template's description.<br><br>Example:<pre>{<br>  "test-template" = {<br>    description = "My test template"<br>  }<br>}</pre> | <pre>map(object({<br>    description = optional(string)<br>  }))</pre> | `{}` | no |
 
 ## Outputs
 

@@ -28,7 +28,9 @@ variable "templates" {
   Example:
   ```
   {
-
+    "test-template" = {
+      description = "My test template"
+    }
   }
   ```
   EOF
