@@ -53,8 +53,6 @@ No resources.
 | <a name="input_services_group"></a> [services\_group](#input\_services\_group) | Service group object | `any` | `{}` | no |
 | <a name="input_static_routes"></a> [static\_routes](#input\_static\_routes) | n/a | `any` | n/a | yes |
 | <a name="input_tags"></a> [tags](#input\_tags) | Tags object | `any` | `{}` | no |
-| <a name="input_template"></a> [template](#input\_template) | Template name | `string` | `"default"` | no |
-| <a name="input_template_stack"></a> [template\_stack](#input\_template\_stack) | Template stack name | `string` | `""` | no |
 | <a name="input_template_stacks"></a> [template\_stacks](#input\_template\_stacks) | n/a | `any` | n/a | yes |
 | <a name="input_templates"></a> [templates](#input\_templates) | n/a | `any` | n/a | yes |
 | <a name="input_virtual_routers"></a> [virtual\_routers](#input\_virtual\_routers) | n/a | `any` | n/a | yes |

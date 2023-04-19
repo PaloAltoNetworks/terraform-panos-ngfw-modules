@@ -47,11 +47,10 @@ module "policy_as_code_service_groups" {
 }
 
 module "policy_as_code_interfaces" {
-  source = "../../modules/interface"
-  mode   = var.mode
-
-  template       = var.template
-  template_stack = var.template_stack
+  source   = "../../modules/interface"
+  for_each = var.templates
+  mode     = var.mode
+  template = each.key
 
   interfaces = var.interfaces
 
@@ -65,11 +64,10 @@ module "policy_as_code_interfaces" {
 }
 
 module "policy_as_code_management_profiles" {
-  source = "../../modules/management_profile"
-  mode   = var.mode
-
-  template       = var.template
-  template_stack = var.template_stack
+  source   = "../../modules/management_profile"
+  for_each = var.templates
+  mode     = var.mode
+  template = each.key
 
   management_profiles = var.management_profiles
 
@@ -80,11 +78,10 @@ module "policy_as_code_management_profiles" {
 }
 
 module "policy_as_code_virtual_routers" {
-  source = "../../modules/virtual_router"
-  mode   = var.mode
-
-  template       = var.template
-  template_stack = var.template_stack
+  source   = "../../modules/virtual_router"
+  for_each = var.templates
+  mode     = var.mode
+  template = each.key
 
   virtual_routers = var.virtual_routers
 
@@ -95,11 +92,10 @@ module "policy_as_code_virtual_routers" {
 }
 
 module "policy_as_code_static_routes" {
-  source = "../../modules/static_route"
-  mode   = var.mode
-
-  template       = var.template
-  template_stack = var.template_stack
+  source   = "../../modules/static_route"
+  for_each = var.templates
+  mode     = var.mode
+  template = each.key
 
   static_routes = var.static_routes
 
@@ -112,11 +108,10 @@ module "policy_as_code_static_routes" {
 }
 
 module "policy_as_code_zones" {
-  source = "../../modules/zone"
-  mode   = var.mode
-
-  template       = var.template
-  template_stack = var.template_stack
+  source   = "../../modules/zone"
+  for_each = var.templates
+  mode     = var.mode
+  template = each.key
 
   zones = var.zones
 
@@ -127,11 +122,10 @@ module "policy_as_code_zones" {
 }
 
 module "policy_as_code_ipsec" {
-  source = "../../modules/ipsec"
-  mode   = var.mode
-
-  template       = var.template
-  template_stack = var.template_stack
+  source   = "../../modules/ipsec"
+  for_each = var.templates
+  mode     = var.mode
+  template = each.key
 
   ike_crypto_profiles   = var.ike_crypto_profiles
   ipsec_crypto_profiles = var.ipsec_crypto_profiles

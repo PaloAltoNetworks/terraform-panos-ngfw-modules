@@ -1,10 +1,24 @@
 pan_creds = "./creds/credentials.json"
 mode      = "panorama"
 
-device_group   = "AWSTestDG"
-vsys           = "vsys1"
-template       = "test-template"
-template_stack = "" ### not every resource can be created in template stack e.g. panos_panorama_ethernet_interface can be only in template
+device_group = "AWSTestDG"
+vsys         = "vsys1"
+
+### Templates
+
+templates = {
+  "test-template" = {
+    description = "My test template"
+  }
+}
+
+template_stacks = {
+  "test-template-stack" = {
+    description = "My test template stack with devices"
+    templates   = ["test-template"]
+    # devices     = ["123456789"]
+  }
+}
 
 ### Tags
 
@@ -493,21 +507,5 @@ ipsec_tunnels = {
     copy_flow_label         = false
     enable_tunnel_monitor   = false
     proxy_subnets           = "example1,10.10.10.0/24,10.10.20.0/24;example2,10.10.10.0/24,10.10.30.0/24"
-  }
-}
-
-### Templates
-
-templates = {
-  "test-template" = {
-    description = "My test template"
-  }
-}
-
-template_stacks = {
-  "test-template-stack" = {
-    description = "My test template stack with devices"
-    templates   = ["test-template"]
-    devices     = ["007255000344589"]
   }
 }
