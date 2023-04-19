@@ -24,6 +24,8 @@ No providers.
 | <a name="module_policy_as_code_service_groups"></a> [policy\_as\_code\_service\_groups](#module\_policy\_as\_code\_service\_groups) | ../../modules/service | n/a |
 | <a name="module_policy_as_code_static_routes"></a> [policy\_as\_code\_static\_routes](#module\_policy\_as\_code\_static\_routes) | ../../modules/static_route | n/a |
 | <a name="module_policy_as_code_tag"></a> [policy\_as\_code\_tag](#module\_policy\_as\_code\_tag) | ../../modules/tag | n/a |
+| <a name="module_policy_as_code_template"></a> [policy\_as\_code\_template](#module\_policy\_as\_code\_template) | ../../modules/template | n/a |
+| <a name="module_policy_as_code_template_stack"></a> [policy\_as\_code\_template\_stack](#module\_policy\_as\_code\_template\_stack) | ../../modules/template_stack | n/a |
 | <a name="module_policy_as_code_virtual_routers"></a> [policy\_as\_code\_virtual\_routers](#module\_policy\_as\_code\_virtual\_routers) | ../../modules/virtual_router | n/a |
 | <a name="module_policy_as_code_zones"></a> [policy\_as\_code\_zones](#module\_policy\_as\_code\_zones) | ../../modules/zone | n/a |
 
@@ -53,6 +55,8 @@ No resources.
 | <a name="input_tags"></a> [tags](#input\_tags) | Tags object | `any` | `{}` | no |
 | <a name="input_template"></a> [template](#input\_template) | Template name | `string` | `"default"` | no |
 | <a name="input_template_stack"></a> [template\_stack](#input\_template\_stack) | Template stack name | `string` | `""` | no |
+| <a name="input_template_stacks"></a> [template\_stacks](#input\_template\_stacks) | n/a | `any` | n/a | yes |
+| <a name="input_templates"></a> [templates](#input\_templates) | n/a | `any` | n/a | yes |
 | <a name="input_virtual_routers"></a> [virtual\_routers](#input\_virtual\_routers) | n/a | `any` | n/a | yes |
 | <a name="input_vsys"></a> [vsys](#input\_vsys) | Used if _mode_ is ngfw, this defines the vsys for the deployment | `string` | `"vsys1"` | no |
 | <a name="input_zones"></a> [zones](#input\_zones) | n/a | `any` | n/a | yes |

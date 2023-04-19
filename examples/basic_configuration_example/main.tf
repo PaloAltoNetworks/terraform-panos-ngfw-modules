@@ -55,7 +55,13 @@ module "policy_as_code_interfaces" {
 
   interfaces = var.interfaces
 
-  depends_on = [module.policy_as_code_management_profiles, module.policy_as_code_zones, module.policy_as_code_virtual_routers]
+  depends_on = [
+    module.policy_as_code_template,
+    module.policy_as_code_template_stack,
+    module.policy_as_code_management_profiles,
+    module.policy_as_code_zones,
+    module.policy_as_code_virtual_routers
+  ]
 }
 
 module "policy_as_code_management_profiles" {
@@ -67,7 +73,10 @@ module "policy_as_code_management_profiles" {
 
   management_profiles = var.management_profiles
 
-  depends_on = []
+  depends_on = [
+    module.policy_as_code_template,
+    module.policy_as_code_template_stack,
+  ]
 }
 
 module "policy_as_code_virtual_routers" {
@@ -79,7 +88,10 @@ module "policy_as_code_virtual_routers" {
 
   virtual_routers = var.virtual_routers
 
-  depends_on = []
+  depends_on = [
+    module.policy_as_code_template,
+    module.policy_as_code_template_stack,
+  ]
 }
 
 module "policy_as_code_static_routes" {
@@ -91,7 +103,12 @@ module "policy_as_code_static_routes" {
 
   static_routes = var.static_routes
 
-  depends_on = [module.policy_as_code_virtual_routers, module.policy_as_code_interfaces]
+  depends_on = [
+    module.policy_as_code_template,
+    module.policy_as_code_template_stack,
+    module.policy_as_code_virtual_routers,
+    module.policy_as_code_interfaces
+  ]
 }
 
 module "policy_as_code_zones" {
@@ -103,7 +120,10 @@ module "policy_as_code_zones" {
 
   zones = var.zones
 
-  depends_on = []
+  depends_on = [
+    module.policy_as_code_template,
+    module.policy_as_code_template_stack,
+  ]
 }
 
 module "policy_as_code_ipsec" {
@@ -119,8 +139,32 @@ module "policy_as_code_ipsec" {
   ipsec_tunnels         = var.ipsec_tunnels
   ipsec_tunnels_proxy   = {}
 
-  depends_on = [module.policy_as_code_virtual_routers, module.policy_as_code_interfaces]
+  depends_on = [
+    module.policy_as_code_template,
+    module.policy_as_code_template_stack,
+    module.policy_as_code_virtual_routers,
+    module.policy_as_code_interfaces
+  ]
 }
+
+module "policy_as_code_template" {
+  source = "../../modules/template"
+  mode   = var.mode
+
+  templates = var.templates
+
+  depends_on = []
+}
+
+module "policy_as_code_template_stack" {
+  source = "../../modules/template_stack"
+  mode   = var.mode
+
+  template_stacks = var.template_stacks
+
+  depends_on = [module.policy_as_code_template]
+}
+
 
 module "policy_as_code_security_policies" {
   source = "../../modules/security_policies"

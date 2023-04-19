@@ -317,7 +317,7 @@ interfaces = {
     enable_dhcp               = true
     create_dhcp_default_route = false
     comment                   = "mgmt"
-    virtual_router            = "default"
+    virtual_router            = "vr"
     zone                      = "mgmt"
     vsys                      = "vsys1"
   }
@@ -377,14 +377,14 @@ management_profiles = {
 ### Network - virtual router
 
 virtual_routers = {
-  "default"  = {}
+  "vr"       = {}
   "external" = {}
   "internal" = {}
 }
 
 static_routes = {
   "vr_default_unicast_0.0.0.0" = {
-    virtual_router = "default"
+    virtual_router = "vr"
     route_table    = "unicast"
     destination    = "0.0.0.0/0"
     interface      = "ethernet1/1"
@@ -493,5 +493,21 @@ ipsec_tunnels = {
     copy_flow_label         = false
     enable_tunnel_monitor   = false
     proxy_subnets           = "example1,10.10.10.0/24,10.10.20.0/24;example2,10.10.10.0/24,10.10.30.0/24"
+  }
+}
+
+### Templates
+
+templates = {
+  "test-template" = {
+    description = "My test template"
+  }
+}
+
+template_stacks = {
+  "test-template-stack" = {
+    description = "My test template stack with devices"
+    templates   = ["test-template"]
+    devices     = ["007255000344589"]
   }
 }

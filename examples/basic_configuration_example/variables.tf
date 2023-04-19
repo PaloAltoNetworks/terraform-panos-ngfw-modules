@@ -78,3 +78,5 @@ variable "ike_gateways" {}
 variable "ike_crypto_profiles" {}
 variable "ipsec_crypto_profiles" {}
 variable "ipsec_tunnels" {}
+variable "templates" {}
+variable "template_stacks" {}
