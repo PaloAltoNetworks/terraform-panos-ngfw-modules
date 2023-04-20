@@ -1,10 +1,24 @@
 pan_creds = "./creds/credentials.json"
 mode      = "panorama"
 
-device_group   = "AWSTestDG"
-vsys           = "vsys1"
-template       = "test-template"
-template_stack = "" ### not every resource can be created in template stack e.g. panos_panorama_ethernet_interface can be only in template
+device_group = "AWSTestDG"
+vsys         = "vsys1"
+
+### Templates
+
+templates = {
+  "test-template" = {
+    description = "My test template"
+  }
+}
+
+template_stacks = {
+  "test-template-stack" = {
+    description = "My test template stack with devices"
+    templates   = ["test-template"]
+    # devices     = ["123456789"]
+  }
+}
 
 ### Tags
 
@@ -317,7 +331,7 @@ interfaces = {
     enable_dhcp               = true
     create_dhcp_default_route = false
     comment                   = "mgmt"
-    virtual_router            = "default"
+    virtual_router            = "vr"
     zone                      = "mgmt"
     vsys                      = "vsys1"
   }
@@ -377,14 +391,14 @@ management_profiles = {
 ### Network - virtual router
 
 virtual_routers = {
-  "default"  = {}
+  "vr"       = {}
   "external" = {}
   "internal" = {}
 }
 
 static_routes = {
   "vr_default_unicast_0.0.0.0" = {
-    virtual_router = "default"
+    virtual_router = "vr"
     route_table    = "unicast"
     destination    = "0.0.0.0/0"
     interface      = "ethernet1/1"
@@ -413,9 +427,6 @@ static_routes = {
 ### Network - zone
 
 zones = {
-  "internal" = {
-    mode = "layer3"
-  }
   "Trust-L3" = {
     mode = "layer3"
   }
