@@ -14,6 +14,7 @@ No providers.
 
 | Name | Source | Version |
 |------|--------|---------|
+| <a name="module_device_group"></a> [device\_group](#module\_device\_group) | ../../modules/device_group | n/a |
 | <a name="module_policy_as_code_address"></a> [policy\_as\_code\_address](#module\_policy\_as\_code\_address) | ../../modules/address | n/a |
 | <a name="module_policy_as_code_address_groups"></a> [policy\_as\_code\_address\_groups](#module\_policy\_as\_code\_address\_groups) | ../../modules/address | n/a |
 | <a name="module_policy_as_code_interfaces"></a> [policy\_as\_code\_interfaces](#module\_policy\_as\_code\_interfaces) | ../../modules/interface | n/a |
@@ -39,7 +40,7 @@ No resources.
 |------|-------------|------|---------|:--------:|
 | <a name="input_address_groups"></a> [address\_groups](#input\_address\_groups) | Address groups object | `any` | `{}` | no |
 | <a name="input_addresses"></a> [addresses](#input\_addresses) | Address object | `any` | `{}` | no |
-| <a name="input_device_group"></a> [device\_group](#input\_device\_group) | Used if _mode_ is panorama, this defines the Device Group for the deployment | `string` | `"shared"` | no |
+| <a name="input_device_group"></a> [device\_group](#input\_device\_group) | Used if _mode_ is panorama, this defines the Device Group for the deployment | `any` | `{}` | no |
 | <a name="input_ike_crypto_profiles"></a> [ike\_crypto\_profiles](#input\_ike\_crypto\_profiles) | n/a | `any` | n/a | yes |
 | <a name="input_ike_gateways"></a> [ike\_gateways](#input\_ike\_gateways) | n/a | `any` | n/a | yes |
 | <a name="input_interfaces"></a> [interfaces](#input\_interfaces) | n/a | `any` | n/a | yes |

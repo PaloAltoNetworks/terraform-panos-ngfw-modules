@@ -11,7 +11,7 @@ resource "panos_panorama_template_stack" "this" {
 }
 
 locals {
-  templates_devices = flatten([for tk, tv in var.template_stacks : [for dv in tv.devices : { template_stack = "${tk}", device = "${dv}" }]])
+  templates_devices = flatten([for tk, tv in var.template_stacks : [for dv in tv.devices : { template_stack = tk, device = dv }]])
 }
 
 resource "panos_panorama_template_stack_entry" "this" {

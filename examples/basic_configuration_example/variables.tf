@@ -1,7 +1,7 @@
 variable "device_group" {
   description = "Used if _mode_ is panorama, this defines the Device Group for the deployment"
-  default     = "shared"
-  type        = string
+  default     = {}
+  type        = any
 }
 
 variable "vsys" {

@@ -1,49 +1,61 @@
-module "policy_as_code_tag" {
-  source = "../../modules/tag"
+module "device_group" {
+  source = "../../modules/device_group"
   mode   = var.mode
 
   device_group = var.device_group
+}
+
+module "policy_as_code_tag" {
+  for_each = var.device_group
+  source   = "../../modules/tag"
+  mode     = var.mode
+
+  device_group = each.key
   tags         = var.tags
 }
 
 module "policy_as_code_address" {
-  source = "../../modules/address"
-  mode   = var.mode
+  for_each = var.device_group
+  source   = "../../modules/address"
+  mode     = var.mode
 
-  device_group    = var.device_group
+  device_group    = each.key
   address_objects = var.addresses
 
-  depends_on = [module.policy_as_code_tag]
+  depends_on = [module.policy_as_code_tag, module.device_group]
 }
 
 module "policy_as_code_address_groups" {
-  source = "../../modules/address"
-  mode   = var.mode
+  for_each = var.device_group
+  source   = "../../modules/address"
+  mode     = var.mode
 
-  device_group   = var.device_group
+  device_group   = each.key
   address_groups = var.address_groups
 
-  depends_on = [module.policy_as_code_tag, module.policy_as_code_address]
+  depends_on = [module.policy_as_code_tag, module.policy_as_code_address, module.device_group]
 }
 
 module "policy_as_code_service" {
-  source = "../../modules/service"
-  mode   = var.mode
+  for_each = var.device_group
+  source   = "../../modules/service"
+  mode     = var.mode
 
-  device_group = var.device_group
+  device_group = each.key
   services     = var.services
 
-  depends_on = [module.policy_as_code_tag]
+  depends_on = [module.policy_as_code_tag, module.device_group]
 }
 
 module "policy_as_code_service_groups" {
-  source = "../../modules/service"
-  mode   = var.mode
+  for_each = var.device_group
+  source   = "../../modules/service"
+  mode     = var.mode
 
-  device_group   = var.device_group
+  device_group   = each.key
   services_group = var.services_group
 
-  depends_on = [module.policy_as_code_tag, module.policy_as_code_service]
+  depends_on = [module.policy_as_code_tag, module.policy_as_code_service, module.device_group]
 }
 
 module "policy_as_code_interfaces" {
@@ -162,11 +174,15 @@ module "policy_as_code_template_stack" {
 
 
 module "policy_as_code_security_policies" {
-  source = "../../modules/security_policies"
-  mode   = var.mode
+  for_each = var.device_group
+  source   = "../../modules/security_policies"
+  mode     = var.mode
 
-  device_group = var.device_group
+  device_group = each.key
   sec_policy   = var.security_policies_group
 
-  depends_on = [module.policy_as_code_address_groups, module.policy_as_code_service_groups, module.policy_as_code_zones]
+  depends_on = [
+    module.policy_as_code_address_groups, module.policy_as_code_service_groups, module.policy_as_code_zones,
+    module.device_group
+  ]
 }
