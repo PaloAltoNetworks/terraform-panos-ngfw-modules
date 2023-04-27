@@ -37,6 +37,6 @@ No modules.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_panos_management_profile"></a> [panos\_management\_profile](#output\_panos\_management\_profile) | n/a |
-| <a name="output_panos_panorama_management_profile"></a> [panos\_panorama\_management\_profile](#output\_panos\_panorama\_management\_profile) | n/a |
+| <a name="output_management_profiles"></a> [management\_profiles](#output\_management\_profiles) | n/a |
+| <a name="output_panorama_management_profiles"></a> [panorama\_management\_profiles](#output\_panorama\_management\_profiles) | n/a |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

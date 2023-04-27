@@ -1,7 +1,7 @@
-output "panos_panorama_management_profile" {
+output "panorama_management_profiles" {
   value = panos_panorama_management_profile.this
 }
 
-output "panos_management_profile" {
+output "management_profiles" {
   value = panos_management_profile.this
 }
