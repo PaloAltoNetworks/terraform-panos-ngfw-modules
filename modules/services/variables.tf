@@ -84,7 +84,7 @@ variable "services" {
   }
 }
 
-variable "services_group" {
+variable "service_groups" {
   description = <<-EOF
   Map of the service groups, where key is the service group's name:
   - `members`: (required) The service objects to include in this service group.
@@ -92,7 +92,7 @@ variable "services_group" {
 
   Example:
   ```
-  services_group = {
+  service_groups = {
     "Customer Group" = {
       members = ["WEB-APP", "TCP-4457-4458"]
     }

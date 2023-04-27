@@ -1,7 +1,7 @@
-output "panos_panorama_service_group" {
+output "panorama_service_groups" {
   value = panos_panorama_service_group.this
 }
 
-output "panos_panorama_service_object" {
+output "panorama_services" {
   value = panos_panorama_service_object.this
 }

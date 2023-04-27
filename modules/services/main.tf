@@ -43,7 +43,7 @@ resource "panos_service_object" "this" {
 }
 
 resource "panos_panorama_service_group" "this" {
-  for_each = var.mode_map[var.mode] == 0 ? var.services_group : {}
+  for_each = var.mode_map[var.mode] == 0 ? var.service_groups : {}
 
   device_group = var.device_group
 
@@ -62,7 +62,7 @@ resource "panos_panorama_service_group" "this" {
 
 
 resource "panos_service_group" "this" {
-  for_each = var.mode_map[var.mode] == 1 ? var.services_group : {}
+  for_each = var.mode_map[var.mode] == 1 ? var.service_groups : {}
 
   vsys = var.vsys
 
