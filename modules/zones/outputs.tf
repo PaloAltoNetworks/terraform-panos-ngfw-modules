@@ -1,3 +1,3 @@
-output "panos_zones" {
+output "zones" {
   value = panos_zone.this
 }

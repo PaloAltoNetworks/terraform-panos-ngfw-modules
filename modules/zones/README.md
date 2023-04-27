@@ -36,5 +36,5 @@ No modules.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_panos_zones"></a> [panos\_zones](#output\_panos\_zones) | n/a |
+| <a name="output_zones"></a> [zones](#output\_zones) | n/a |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
