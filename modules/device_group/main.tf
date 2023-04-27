@@ -28,10 +28,10 @@ resource "panos_device_group_entry" "this" {
 }
 
 resource "panos_device_group_parent" "this" {
-  for_each = var.mode_map[var.mode] == 0 ? { for k, v in var.device_group : k => v if can(v.is_parent_of) } : {}
+  for_each = var.mode_map[var.mode] == 0 ? { for k, v in var.device_group : k => v if can(v.parent) } : {}
 
   device_group = each.key
-  parent       = each.value.is_parent_of
+  parent       = each.value.parent
 
   lifecycle {
     create_before_destroy = true
