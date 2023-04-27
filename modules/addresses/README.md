@@ -96,5 +96,7 @@ No modules.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_panos_address_object"></a> [panos\_address\_object](#output\_panos\_address\_object) | n/a |
+| <a name="output_address_groups"></a> [address\_groups](#output\_address\_groups) | n/a |
+| <a name="output_addresses"></a> [addresses](#output\_addresses) | n/a |
+| <a name="output_panorama_address_groups"></a> [panorama\_address\_groups](#output\_panorama\_address\_groups) | n/a |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
