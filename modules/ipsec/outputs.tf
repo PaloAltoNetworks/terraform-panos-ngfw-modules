@@ -1,35 +1,35 @@
-output "panos_ike_crypto_profile" {
+output "ike_crypto_profiles" {
   value = panos_ike_crypto_profile.this
 }
 
-output "panos_panorama_ipsec_crypto_profile" {
+output "panorama_ipsec_crypto_profiles" {
   value = panos_panorama_ipsec_crypto_profile.this
 }
 
-output "panos_ipsec_crypto_profile" {
+output "ipsec_crypto_profiles" {
   value = panos_ipsec_crypto_profile.this
 }
 
-output "panos_panorama_ike_gateway" {
+output "panorama_ike_gateways" {
   value = panos_panorama_ike_gateway.this
 }
 
-output "panos_ike_gateway" {
+output "ike_gateways" {
   value = panos_ike_gateway.this
 }
 
-output "panos_panorama_ipsec_tunnel" {
+output "panorama_ipsec_tunnels" {
   value = panos_panorama_ipsec_tunnel.this
 }
 
-output "panos_ipsec_tunnel" {
+output "ipsec_tunnels" {
   value = panos_ipsec_tunnel.this
 }
 
-output "panos_panorama_ipsec_tunnel_proxy_id_ipv4" {
+output "panorama_ipsec_tunnel_proxy_ids_ipv4" {
   value = panos_panorama_ipsec_tunnel_proxy_id_ipv4.this
 }
 
-output "panos_ipsec_tunnel_proxy_id_ipv4" {
+output "ipsec_tunnel_proxy_ids_ipv4" {
   value = panos_ipsec_tunnel_proxy_id_ipv4.this
 }

@@ -48,13 +48,13 @@ No modules.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_panos_ike_crypto_profile"></a> [panos\_ike\_crypto\_profile](#output\_panos\_ike\_crypto\_profile) | n/a |
-| <a name="output_panos_ike_gateway"></a> [panos\_ike\_gateway](#output\_panos\_ike\_gateway) | n/a |
-| <a name="output_panos_ipsec_crypto_profile"></a> [panos\_ipsec\_crypto\_profile](#output\_panos\_ipsec\_crypto\_profile) | n/a |
-| <a name="output_panos_ipsec_tunnel"></a> [panos\_ipsec\_tunnel](#output\_panos\_ipsec\_tunnel) | n/a |
-| <a name="output_panos_ipsec_tunnel_proxy_id_ipv4"></a> [panos\_ipsec\_tunnel\_proxy\_id\_ipv4](#output\_panos\_ipsec\_tunnel\_proxy\_id\_ipv4) | n/a |
-| <a name="output_panos_panorama_ike_gateway"></a> [panos\_panorama\_ike\_gateway](#output\_panos\_panorama\_ike\_gateway) | n/a |
-| <a name="output_panos_panorama_ipsec_crypto_profile"></a> [panos\_panorama\_ipsec\_crypto\_profile](#output\_panos\_panorama\_ipsec\_crypto\_profile) | n/a |
-| <a name="output_panos_panorama_ipsec_tunnel"></a> [panos\_panorama\_ipsec\_tunnel](#output\_panos\_panorama\_ipsec\_tunnel) | n/a |
-| <a name="output_panos_panorama_ipsec_tunnel_proxy_id_ipv4"></a> [panos\_panorama\_ipsec\_tunnel\_proxy\_id\_ipv4](#output\_panos\_panorama\_ipsec\_tunnel\_proxy\_id\_ipv4) | n/a |
+| <a name="output_ike_crypto_profiles"></a> [ike\_crypto\_profiles](#output\_ike\_crypto\_profiles) | n/a |
+| <a name="output_ike_gateways"></a> [ike\_gateways](#output\_ike\_gateways) | n/a |
+| <a name="output_ipsec_crypto_profiles"></a> [ipsec\_crypto\_profiles](#output\_ipsec\_crypto\_profiles) | n/a |
+| <a name="output_ipsec_tunnel_proxy_ids_ipv4"></a> [ipsec\_tunnel\_proxy\_ids\_ipv4](#output\_ipsec\_tunnel\_proxy\_ids\_ipv4) | n/a |
+| <a name="output_ipsec_tunnels"></a> [ipsec\_tunnels](#output\_ipsec\_tunnels) | n/a |
+| <a name="output_panorama_ike_gateways"></a> [panorama\_ike\_gateways](#output\_panorama\_ike\_gateways) | n/a |
+| <a name="output_panorama_ipsec_crypto_profiles"></a> [panorama\_ipsec\_crypto\_profiles](#output\_panorama\_ipsec\_crypto\_profiles) | n/a |
+| <a name="output_panorama_ipsec_tunnel_proxy_ids_ipv4"></a> [panorama\_ipsec\_tunnel\_proxy\_ids\_ipv4](#output\_panorama\_ipsec\_tunnel\_proxy\_ids\_ipv4) | n/a |
+| <a name="output_panorama_ipsec_tunnels"></a> [panorama\_ipsec\_tunnels](#output\_panorama\_ipsec\_tunnels) | n/a |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
