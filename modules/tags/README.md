@@ -142,5 +142,5 @@ No modules.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_panos_panorama_administrative_tag"></a> [panos\_panorama\_administrative\_tag](#output\_panos\_panorama\_administrative\_tag) | n/a |
+| <a name="output_panorama_administrative_tags"></a> [panorama\_administrative\_tags](#output\_panorama\_administrative\_tags) | n/a |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
