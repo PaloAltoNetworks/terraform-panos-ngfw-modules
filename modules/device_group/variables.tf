@@ -25,7 +25,7 @@ variable "device_group" {
   Map of device group where the key is name of the device group.
   - `device_group` - (Required) The device group's name.
   - `serial` - (Required) The serial number of the firewall.
-  - `is_parent_of` - (Optional) The parent device group name. Leaving this empty / unspecified means to move this device group under the "shared" device group.
+  - `parent` - (Optional) The parent device group name. Leaving this empty / unspecified means to move this device group under the "shared" device group.
   - `vsys_list` - (Optional) A subset of all available vsys on the firewall that should be in this device group. If the firewall is a virtual firewall, then this parameter should just be omitted.
 
 ```
@@ -34,7 +34,7 @@ variable "device_group" {
     description = "Device group used for AWS cloud"
     device_group_entries = {
     serial = "1111222233334444"
-    is_parent_of = "clouds"
+    parent = "clouds"
   }
 }
 ```
@@ -43,9 +43,9 @@ EOF
 
   default = {}
   type = map(object({
-    description  = string
-    is_parent_of = optional(string)
-    serial       = optional(list(string), [])
-    vsys_list    = optional(list(string), [])
+    description = string
+    parent      = optional(string)
+    serial      = optional(list(string), [])
+    vsys_list   = optional(list(string), [])
   }))
 }
