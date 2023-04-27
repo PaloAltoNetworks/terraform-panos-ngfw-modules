@@ -1,3 +1,3 @@
-output "panos_panorama_template" {
+output "panorama_templates" {
   value = panos_panorama_template.this
 }
