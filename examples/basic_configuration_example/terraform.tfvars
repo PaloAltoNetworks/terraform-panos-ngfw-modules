@@ -3,7 +3,7 @@ mode      = "panorama"
 
 ### Device group
 
-device_group = {
+device_groups = {
   "aws-test-dg" = {
     description = "Device group used for AWS cloud"
     #    serial = ["1111222233334444"]
@@ -215,7 +215,7 @@ services = {
   }
 }
 
-services_group = {
+service_groups = {
   "Customer Group" = {
     members = ["SomeWeb", "SomeSSH", "SomeFTP"]
   }
@@ -229,10 +229,10 @@ services_group = {
 
 ### Security policies
 
-security_policies_group = {
+security_policies = {
   "allow_rule_group" = {
     rulebase = "pre-rulebase"
-    policies_rules = [
+    rules = [
       {
         name = "Allow access to DNS Servers"
         tags = [
@@ -313,7 +313,7 @@ security_policies_group = {
   "block_rule_group" = {
     position_keyword = "bottom"
     rulebase         = "pre-rulebase"
-    policies_rules = [
+    rules = [
       {
         name = "Block Some Traffic"
         tags = [

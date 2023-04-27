@@ -1,11 +1,11 @@
-variable "device_group" {
-  description = "Used if _mode_ is panorama, this defines the Device Group for the deployment"
+variable "device_groups" {
+  description = "Used if `var.mode` is panorama, this defines the Device Group for the deployment"
   default     = {}
   type        = any
 }
 
 variable "vsys" {
-  description = "Used if _mode_ is ngfw, this defines the vsys for the deployment"
+  description = "Used if `var.mode` is ngfw, this defines the vsys for the deployment"
   default     = "vsys1"
   type        = string
 }
@@ -40,18 +40,18 @@ variable "address_groups" {
 }
 
 variable "services" {
-  description = "Service object"
+  description = "Services object"
   default     = {}
   type        = any
 }
 
-variable "services_group" {
-  description = "Service group object"
+variable "service_groups" {
+  description = "Service groups object"
   default     = {}
   type        = any
 }
 
-variable "security_policies_group" {
+variable "security_policies" {
   description = "Security policies"
   default     = {}
   type        = any
