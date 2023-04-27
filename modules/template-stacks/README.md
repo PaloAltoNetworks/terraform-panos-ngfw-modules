@@ -35,5 +35,5 @@ No modules.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_panos_panorama_template_stack"></a> [panos\_panorama\_template\_stack](#output\_panos\_panorama\_template\_stack) | n/a |
+| <a name="output_panorama_template_stacks"></a> [panorama\_template\_stacks](#output\_panorama\_template\_stacks) | n/a |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
