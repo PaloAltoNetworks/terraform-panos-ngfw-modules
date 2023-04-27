@@ -1,3 +1,3 @@
-output "panos_virtual_router" {
+output "virtual_routers" {
   value = panos_virtual_router.this
 }

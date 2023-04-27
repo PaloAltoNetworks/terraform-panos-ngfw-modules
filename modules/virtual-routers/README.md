@@ -36,5 +36,5 @@ No modules.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_panos_virtual_router"></a> [panos\_virtual\_router](#output\_panos\_virtual\_router) | n/a |
+| <a name="output_virtual_routers"></a> [virtual\_routers](#output\_virtual\_routers) | n/a |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
