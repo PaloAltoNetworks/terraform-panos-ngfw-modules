@@ -1,7 +1,7 @@
-output "panos_panorama_static_route_ipv4" {
+output "panorama_static_routes_ipv4" {
   value = panos_panorama_static_route_ipv4.this
 }
 
-output "panos_static_route_ipv4" {
+output "static_routes_ipv4" {
   value = panos_static_route_ipv4.this
 }

@@ -34,7 +34,7 @@ variable "template_stack" {
 
 variable "static_routes" {
   description = <<-EOF
-  Map of the static route, where key is the unique name e.g. build in format "{virtual_router}_{route_table}":
+  Map of the static routes, where key is the unique name e.g. build in format "{virtual_router}_{route_table}":
   - `virtual_router` - (Required) The virtual router to add the static route to.
   - `route_table` - (Optional) Target routing table to install the route. Valid values are unicast (the default), no install, multicast, or both.
   - `destination` - (Required) Destination IP address / prefix.
