@@ -20,10 +20,9 @@ variable "mode_map" {
   })
 }
 
-variable "device_group" {
+variable "device_groups" {
   description = <<-EOF
   Map of device group where the key is name of the device group.
-  - `device_group` - (Required) The device group's name.
   - `serial` - (Required) The serial number of the firewall.
   - `parent` - (Optional) The parent device group name. Leaving this empty / unspecified means to move this device group under the "shared" device group.
   - `vsys_list` - (Optional) A subset of all available vsys on the firewall that should be in this device group. If the firewall is a virtual firewall, then this parameter should just be omitted.

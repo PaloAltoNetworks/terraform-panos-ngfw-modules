@@ -1,5 +1,5 @@
 resource "panos_device_group" "this" {
-  for_each = var.mode_map[var.mode] == 0 ? var.device_group : {}
+  for_each = var.mode_map[var.mode] == 0 ? var.device_groups : {}
 
   name        = each.key
   description = each.value.description
@@ -10,7 +10,7 @@ resource "panos_device_group" "this" {
 }
 
 locals {
-  dg_entries = flatten([for dk, dv in var.device_group : [for ds in dv.serial : { dg = dk, serial = ds, vsys_list = dv.vsys_list }]])
+  dg_entries = flatten([for dk, dv in var.device_groups : [for ds in dv.serial : { dg = dk, serial = ds, vsys_list = dv.vsys_list }]])
 }
 
 resource "panos_device_group_entry" "this" {
@@ -28,7 +28,7 @@ resource "panos_device_group_entry" "this" {
 }
 
 resource "panos_device_group_parent" "this" {
-  for_each = var.mode_map[var.mode] == 0 ? { for k, v in var.device_group : k => v if can(v.parent) } : {}
+  for_each = var.mode_map[var.mode] == 0 ? { for k, v in var.device_groups : k => v if can(v.parent) } : {}
 
   device_group = each.key
   parent       = each.value.parent
