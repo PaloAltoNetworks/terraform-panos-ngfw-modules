@@ -43,12 +43,12 @@ No modules.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_panos_ethernet_interface"></a> [panos\_ethernet\_interface](#output\_panos\_ethernet\_interface) | n/a |
-| <a name="output_panos_loopback_interface"></a> [panos\_loopback\_interface](#output\_panos\_loopback\_interface) | n/a |
-| <a name="output_panos_panorama_ethernet_interface"></a> [panos\_panorama\_ethernet\_interface](#output\_panos\_panorama\_ethernet\_interface) | n/a |
-| <a name="output_panos_panorama_loopback_interface"></a> [panos\_panorama\_loopback\_interface](#output\_panos\_panorama\_loopback\_interface) | n/a |
-| <a name="output_panos_panorama_tunnel_interface"></a> [panos\_panorama\_tunnel\_interface](#output\_panos\_panorama\_tunnel\_interface) | n/a |
-| <a name="output_panos_tunnel_interface"></a> [panos\_tunnel\_interface](#output\_panos\_tunnel\_interface) | n/a |
-| <a name="output_panos_virtual_router_entry"></a> [panos\_virtual\_router\_entry](#output\_panos\_virtual\_router\_entry) | n/a |
-| <a name="output_panos_zone_entry"></a> [panos\_zone\_entry](#output\_panos\_zone\_entry) | n/a |
+| <a name="output_ethernet_interfaces"></a> [ethernet\_interfaces](#output\_ethernet\_interfaces) | n/a |
+| <a name="output_loopback_interfaces"></a> [loopback\_interfaces](#output\_loopback\_interfaces) | n/a |
+| <a name="output_panorama_ethernet_interfaces"></a> [panorama\_ethernet\_interfaces](#output\_panorama\_ethernet\_interfaces) | n/a |
+| <a name="output_panorama_loopback_interfaces"></a> [panorama\_loopback\_interfaces](#output\_panorama\_loopback\_interfaces) | n/a |
+| <a name="output_panorama_tunnel_interfaces"></a> [panorama\_tunnel\_interfaces](#output\_panorama\_tunnel\_interfaces) | n/a |
+| <a name="output_tunnel_interfaces"></a> [tunnel\_interfaces](#output\_tunnel\_interfaces) | n/a |
+| <a name="output_virtual_router_entries"></a> [virtual\_router\_entries](#output\_virtual\_router\_entries) | n/a |
+| <a name="output_zone_entries"></a> [zone\_entries](#output\_zone\_entries) | n/a |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

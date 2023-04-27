@@ -1,31 +1,31 @@
-output "panos_panorama_ethernet_interface" {
+output "panorama_ethernet_interfaces" {
   value = panos_panorama_ethernet_interface.this
 }
 
-output "panos_ethernet_interface" {
+output "ethernet_interfaces" {
   value = panos_ethernet_interface.this
 }
 
-output "panos_panorama_loopback_interface" {
+output "panorama_loopback_interfaces" {
   value = panos_panorama_loopback_interface.this
 }
 
-output "panos_loopback_interface" {
+output "loopback_interfaces" {
   value = panos_loopback_interface.this
 }
 
-output "panos_panorama_tunnel_interface" {
+output "panorama_tunnel_interfaces" {
   value = panos_panorama_tunnel_interface.this
 }
 
-output "panos_tunnel_interface" {
+output "tunnel_interfaces" {
   value = panos_tunnel_interface.this
 }
 
-output "panos_virtual_router_entry" {
+output "virtual_router_entries" {
   value = panos_virtual_router_entry.this
 }
 
-output "panos_zone_entry" {
+output "zone_entries" {
   value = panos_zone_entry.this
 }
