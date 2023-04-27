@@ -1,65 +1,65 @@
-module "device_group" {
-  source = "../../modules/device_group"
+module "device_groups" {
+  source = "../../modules/device-groups"
   mode   = var.mode
 
-  device_group = var.device_group
+  device_groups = var.device_groups
 }
 
-module "policy_as_code_tag" {
-  for_each = var.device_group
-  source   = "../../modules/tag"
+module "tags" {
+  for_each = var.device_groups
+  source   = "../../modules/tags"
   mode     = var.mode
 
   device_group = each.key
   tags         = var.tags
 }
 
-module "policy_as_code_address" {
-  for_each = var.device_group
-  source   = "../../modules/address"
+module "addresses" {
+  for_each = var.device_groups
+  source   = "../../modules/addresses"
   mode     = var.mode
 
   device_group    = each.key
   address_objects = var.addresses
 
-  depends_on = [module.policy_as_code_tag, module.device_group]
+  depends_on = [module.tags, module.device_groups]
 }
 
-module "policy_as_code_address_groups" {
-  for_each = var.device_group
-  source   = "../../modules/address"
+module "address_groups" {
+  for_each = var.device_groups
+  source   = "../../modules/addresses"
   mode     = var.mode
 
   device_group   = each.key
   address_groups = var.address_groups
 
-  depends_on = [module.policy_as_code_tag, module.policy_as_code_address, module.device_group]
+  depends_on = [module.tags, module.addresses, module.device_groups]
 }
 
-module "policy_as_code_service" {
-  for_each = var.device_group
-  source   = "../../modules/service"
+module "services" {
+  for_each = var.device_groups
+  source   = "../../modules/services"
   mode     = var.mode
 
   device_group = each.key
   services     = var.services
 
-  depends_on = [module.policy_as_code_tag, module.device_group]
+  depends_on = [module.tags, module.device_groups]
 }
 
-module "policy_as_code_service_groups" {
-  for_each = var.device_group
-  source   = "../../modules/service"
+module "service_groups" {
+  for_each = var.device_groups
+  source   = "../../modules/services"
   mode     = var.mode
 
   device_group   = each.key
-  services_group = var.services_group
+  service_groups = var.service_groups
 
-  depends_on = [module.policy_as_code_tag, module.policy_as_code_service, module.device_group]
+  depends_on = [module.tags, module.services, module.device_groups]
 }
 
-module "policy_as_code_interfaces" {
-  source   = "../../modules/interface"
+module "interfaces" {
+  source   = "../../modules/interfaces"
   for_each = var.templates
   mode     = var.mode
   template = each.key
@@ -67,16 +67,16 @@ module "policy_as_code_interfaces" {
   interfaces = var.interfaces
 
   depends_on = [
-    module.policy_as_code_template,
-    module.policy_as_code_template_stack,
-    module.policy_as_code_management_profiles,
-    module.policy_as_code_zones,
-    module.policy_as_code_virtual_routers
+    module.templates,
+    module.template_stacks,
+    module.management_profiles,
+    module.zones,
+    module.virtual_routers
   ]
 }
 
-module "policy_as_code_management_profiles" {
-  source   = "../../modules/management_profile"
+module "management_profiles" {
+  source   = "../../modules/management-profiles"
   for_each = var.templates
   mode     = var.mode
   template = each.key
@@ -84,13 +84,13 @@ module "policy_as_code_management_profiles" {
   management_profiles = var.management_profiles
 
   depends_on = [
-    module.policy_as_code_template,
-    module.policy_as_code_template_stack,
+    module.templates,
+    module.template_stacks,
   ]
 }
 
-module "policy_as_code_virtual_routers" {
-  source   = "../../modules/virtual_router"
+module "virtual_routers" {
+  source   = "../../modules/virtual-routers"
   for_each = var.templates
   mode     = var.mode
   template = each.key
@@ -98,13 +98,13 @@ module "policy_as_code_virtual_routers" {
   virtual_routers = var.virtual_routers
 
   depends_on = [
-    module.policy_as_code_template,
-    module.policy_as_code_template_stack,
+    module.templates,
+    module.template_stacks,
   ]
 }
 
-module "policy_as_code_static_routes" {
-  source   = "../../modules/static_route"
+module "static_routes" {
+  source   = "../../modules/static-routes"
   for_each = var.templates
   mode     = var.mode
   template = each.key
@@ -112,15 +112,15 @@ module "policy_as_code_static_routes" {
   static_routes = var.static_routes
 
   depends_on = [
-    module.policy_as_code_template,
-    module.policy_as_code_template_stack,
-    module.policy_as_code_virtual_routers,
-    module.policy_as_code_interfaces
+    module.templates,
+    module.template_stacks,
+    module.virtual_routers,
+    module.interfaces
   ]
 }
 
-module "policy_as_code_zones" {
-  source   = "../../modules/zone"
+module "zones" {
+  source   = "../../modules/zones"
   for_each = var.templates
   mode     = var.mode
   template = each.key
@@ -128,12 +128,12 @@ module "policy_as_code_zones" {
   zones = var.zones
 
   depends_on = [
-    module.policy_as_code_template,
-    module.policy_as_code_template_stack,
+    module.templates,
+    module.template_stacks,
   ]
 }
 
-module "policy_as_code_ipsec" {
+module "ipsec" {
   source   = "../../modules/ipsec"
   for_each = var.templates
   mode     = var.mode
@@ -146,16 +146,16 @@ module "policy_as_code_ipsec" {
   ipsec_tunnels_proxy   = {}
 
   depends_on = [
-    module.policy_as_code_template,
-    module.policy_as_code_template_stack,
-    module.policy_as_code_virtual_routers,
-    module.policy_as_code_zones,
-    module.policy_as_code_interfaces
+    module.templates,
+    module.template_stacks,
+    module.virtual_routers,
+    module.zones,
+    module.interfaces
   ]
 }
 
-module "policy_as_code_template" {
-  source = "../../modules/template"
+module "templates" {
+  source = "../../modules/templates"
   mode   = var.mode
 
   templates = var.templates
@@ -163,26 +163,26 @@ module "policy_as_code_template" {
   depends_on = []
 }
 
-module "policy_as_code_template_stack" {
-  source = "../../modules/template_stack"
+module "template_stacks" {
+  source = "../../modules/template-stacks"
   mode   = var.mode
 
   template_stacks = var.template_stacks
 
-  depends_on = [module.policy_as_code_template]
+  depends_on = [module.templates]
 }
 
 
-module "policy_as_code_security_policies" {
-  for_each = var.device_group
-  source   = "../../modules/security_policies"
+module "security_policies" {
+  for_each = var.device_groups
+  source   = "../../modules/security-policies"
   mode     = var.mode
 
-  device_group = each.key
-  sec_policy   = var.security_policies_group
+  device_group      = each.key
+  security_policies = var.security_policies
 
   depends_on = [
-    module.policy_as_code_address_groups, module.policy_as_code_service_groups, module.policy_as_code_zones,
-    module.device_group
+    module.address_groups, module.service_groups, module.zones,
+    module.device_groups
   ]
 }
