@@ -1,5 +1,5 @@
 resource "panos_security_rule_group" "this" {
-  for_each = var.sec_policy
+  for_each = var.security_policies
 
   device_group = var.mode_map[var.mode] == 0 ? var.device_group : null
   rulebase     = var.mode_map[var.mode] == 0 ? each.value.rulebase : null
@@ -9,7 +9,7 @@ resource "panos_security_rule_group" "this" {
   position_reference = each.value.position_reference
 
   dynamic "rule" {
-    for_each = each.value.policies_rules
+    for_each = each.value.rules
     content {
       applications                       = rule.value.applications
       categories                         = rule.value.categories

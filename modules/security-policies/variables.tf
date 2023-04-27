@@ -21,25 +21,25 @@ variable "mode_map" {
 }
 
 variable "device_group" {
-  description = "Used if _mode_ is panorama, this defines the Device Group for the deployment"
+  description = "Used if `mode` is panorama, this defines the Device Group for the deployment"
   default     = "shared"
   type        = string
 }
 
 variable "vsys" {
-  description = "Used if _mode_ is ngfw, this defines the vsys for the deployment"
+  description = "Used if `mode` is ngfw, this defines the vsys for the deployment"
   default     = "vsys1"
   type        = string
 }
 
 #policy
-variable "sec_policy" {
+variable "security_policies" {
   description = <<-EOF
-  List of the Security policy rule objects.
+  Map with groups of security policies to apply. Each item supports following parameters:
   - `rulebase`: (optional) The rulebase for the Security Policy. Valid values are `pre-rulebase` and `post-rulebase` (default: `pre-rulebase`).
   - `position_keyword`: (optional) A positioning keyword for this group. Valid values are `before`, `directly before`, `after`, `directly after`, `top`, `bottom`, or left empty to have no particular placement (default: empty). This parameter works in combination with the `position_reference` parameter.
   - `position_reference`: (optional) Required if `position_keyword` is one of the "above" or "below" variants, this is the name of a non-group rule to use as a reference to place this group.
-  - `rules`: (optional) The security rule definition. The security rule ordering will match how they appear in the terraform plan file.
+  - `rules`: (optional) List of security rule definitions. The order of the rules will match how they appear in the terraform plan file.
     - `name`: (required) The security rule's name.
     - `description`: (optional) The description of the security rule.
     - `type`: (optional) Rule type. Valid values are `universal`, `interzone`, or `intrazone` (default: `universal`).
@@ -79,7 +79,7 @@ variable "sec_policy" {
   {
     "allow_rule_group" = {
       rulebase = "pre-rulebase"
-      policies_rules = [
+      rules = [
         {
           name = "Allow access to DNS Servers"
           tags = [
@@ -117,7 +117,7 @@ variable "sec_policy" {
     "block_rule_group" = {
       position_keyword = "bottom"
       rulebase         = "pre-rulebase"
-      policies_rules = [
+      rules = [
         {
           name = "Block Some Traffic"
           tags = [
@@ -139,7 +139,7 @@ variable "sec_policy" {
     rulebase           = optional(string, "pre-rulebase")
     position_keyword   = optional(string)
     position_reference = optional(string)
-    policies_rules = list(object({
+    rules = list(object({
       name                               = string
       type                               = optional(string, "universal")
       description                        = optional(string)
@@ -182,8 +182,8 @@ variable "sec_policy" {
   }))
   validation {
     condition = alltrue([
-      for rule_group in var.sec_policy : alltrue([
-        for rule in rule_group.policies_rules :
+      for rule_group in var.security_policies : alltrue([
+        for rule in rule_group.rules :
         contains(["universal", "interzone", "intrazone"], coalesce(rule.type, "universal"))
       ])
     ])
@@ -191,8 +191,8 @@ variable "sec_policy" {
   }
   validation {
     condition = alltrue([
-      for rule_group in var.sec_policy : alltrue([
-        for rule in rule_group.policies_rules :
+      for rule_group in var.security_policies : alltrue([
+        for rule in rule_group.rules :
         contains([
           "allow", "deny", "drop", "reset-client", "reset-server", "reset-both"
         ], coalesce(rule.action, "allow"))
