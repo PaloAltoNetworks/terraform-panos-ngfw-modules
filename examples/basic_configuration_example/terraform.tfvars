@@ -7,7 +7,7 @@ device_groups = {
   "aws-test-dg" = {
     description = "Device group used for AWS cloud"
     # serial = ["1111222233334444"]
-    # parent = "paren-dg-name"
+    # parent = "parent-dg-name"
   }
 }
 
