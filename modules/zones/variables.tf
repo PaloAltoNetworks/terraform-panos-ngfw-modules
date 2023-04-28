@@ -58,7 +58,7 @@ variable "zones" {
     zone_profile   = optional(string)
     log_setting    = optional(string)
     enable_user_id = optional(bool)
-    interfaces     = optional(list(string), [])
+    interfaces     = optional(list(string))
     include_acls   = optional(list(string))
     exclude_acls   = optional(list(string))
   }))
