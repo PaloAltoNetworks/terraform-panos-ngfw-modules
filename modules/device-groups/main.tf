@@ -28,7 +28,7 @@ resource "panos_device_group_entry" "this" {
 }
 
 resource "panos_device_group_parent" "this" {
-  for_each = var.mode_map[var.mode] == 0 ? { for k, v in var.device_groups : k => v if can(v.parent) } : {}
+  for_each = var.mode_map[var.mode] == 0 ? { for k, v in var.device_groups : k => v if try(v.parent, null) != null } : {}
 
   device_group = each.key
   parent       = each.value.parent
