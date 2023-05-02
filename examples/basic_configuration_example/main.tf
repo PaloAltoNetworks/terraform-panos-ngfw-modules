@@ -1,5 +1,5 @@
 module "device_groups" {
-  source = "../../modules/device-groups"
+  source = "../../modules/device_groups"
   mode   = var.mode
 
   device_groups = var.device_groups
@@ -76,7 +76,7 @@ module "interfaces" {
 }
 
 module "management_profiles" {
-  source   = "../../modules/management-profiles"
+  source   = "../../modules/management_profiles"
   for_each = var.templates
   mode     = var.mode
   template = each.key
@@ -90,7 +90,7 @@ module "management_profiles" {
 }
 
 module "virtual_routers" {
-  source   = "../../modules/virtual-routers"
+  source   = "../../modules/virtual_routers"
   for_each = var.templates
   mode     = var.mode
   template = each.key
@@ -104,7 +104,7 @@ module "virtual_routers" {
 }
 
 module "static_routes" {
-  source   = "../../modules/static-routes"
+  source   = "../../modules/static_routes"
   for_each = var.templates
   mode     = var.mode
   template = each.key
@@ -164,7 +164,7 @@ module "templates" {
 }
 
 module "template_stacks" {
-  source = "../../modules/template-stacks"
+  source = "../../modules/template_stacks"
   mode   = var.mode
 
   template_stacks = var.template_stacks
@@ -175,7 +175,7 @@ module "template_stacks" {
 
 module "security_policies" {
   for_each = var.device_groups
-  source   = "../../modules/security-policies"
+  source   = "../../modules/security_policies"
   mode     = var.mode
 
   device_group      = each.key
