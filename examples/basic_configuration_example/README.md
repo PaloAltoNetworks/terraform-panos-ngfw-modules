@@ -16,18 +16,18 @@ No providers.
 |------|--------|---------|
 | <a name="module_address_groups"></a> [address\_groups](#module\_address\_groups) | ../../modules/addresses | n/a |
 | <a name="module_addresses"></a> [addresses](#module\_addresses) | ../../modules/addresses | n/a |
-| <a name="module_device_groups"></a> [device\_groups](#module\_device\_groups) | ../../modules/device-groups | n/a |
+| <a name="module_device_groups"></a> [device\_groups](#module\_device\_groups) | ../../modules/device_groups | n/a |
 | <a name="module_interfaces"></a> [interfaces](#module\_interfaces) | ../../modules/interfaces | n/a |
 | <a name="module_ipsec"></a> [ipsec](#module\_ipsec) | ../../modules/ipsec | n/a |
-| <a name="module_management_profiles"></a> [management\_profiles](#module\_management\_profiles) | ../../modules/management-profiles | n/a |
-| <a name="module_security_policies"></a> [security\_policies](#module\_security\_policies) | ../../modules/security-policies | n/a |
+| <a name="module_management_profiles"></a> [management\_profiles](#module\_management\_profiles) | ../../modules/management_profiles | n/a |
+| <a name="module_security_policies"></a> [security\_policies](#module\_security\_policies) | ../../modules/security_policies | n/a |
 | <a name="module_service_groups"></a> [service\_groups](#module\_service\_groups) | ../../modules/services | n/a |
 | <a name="module_services"></a> [services](#module\_services) | ../../modules/services | n/a |
-| <a name="module_static_routes"></a> [static\_routes](#module\_static\_routes) | ../../modules/static-routes | n/a |
+| <a name="module_static_routes"></a> [static\_routes](#module\_static\_routes) | ../../modules/static_routes | n/a |
 | <a name="module_tags"></a> [tags](#module\_tags) | ../../modules/tags | n/a |
-| <a name="module_template_stacks"></a> [template\_stacks](#module\_template\_stacks) | ../../modules/template-stacks | n/a |
+| <a name="module_template_stacks"></a> [template\_stacks](#module\_template\_stacks) | ../../modules/template_stacks | n/a |
 | <a name="module_templates"></a> [templates](#module\_templates) | ../../modules/templates | n/a |
-| <a name="module_virtual_routers"></a> [virtual\_routers](#module\_virtual\_routers) | ../../modules/virtual-routers | n/a |
+| <a name="module_virtual_routers"></a> [virtual\_routers](#module\_virtual\_routers) | ../../modules/virtual_routers | n/a |
 | <a name="module_zones"></a> [zones](#module\_zones) | ../../modules/zones | n/a |
 
 ## Resources
