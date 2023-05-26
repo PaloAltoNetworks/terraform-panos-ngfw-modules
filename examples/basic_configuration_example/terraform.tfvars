@@ -557,3 +557,123 @@ ipsec_tunnels = {
     proxy_subnets           = "example1,10.10.10.0/24,10.10.20.0/24;example2,10.10.10.0/24,10.10.30.0/24"
   }
 }
+
+security_profiles = {
+  antivirus = {
+    test-av-profile = {
+      decoders = [
+        {
+          name = "http"
+        }
+      ]
+      application_exceptions = [
+        { application = "atmail" },
+        { application = "alisoft" }
+      ]
+      machine_learning_models = [
+        {
+          model  = "Windows Executables"
+          action = "disable"
+        }
+      ]
+      machine_learning_exceptions = [
+        {
+          name = "my-exception"
+        },
+        {
+          name        = "sample-virus"
+          filename    = "test-virus-file"
+          description = "Test virus file"
+        }
+      ]
+    }
+  }
+  antispyware = {
+    test-antispyware = {
+      rules = [
+        {
+          name              = "test-policy"
+          action            = "block-ip"
+          block_ip_duration = 60
+        }
+      ]
+    }
+  }
+  file_blocking = {
+    outbound-test = {
+      rules = [
+        {
+          name         = "Alert-All"
+          applications = ["any"]
+          file_types   = ["any"]
+          direction    = "both"
+          action       = "alert"
+        },
+        {
+          name         = "Block"
+          applications = ["any"]
+          file_types = [
+            "7z",
+            "bat",
+            "chm",
+            "class",
+            "cpl",
+            "dll",
+            "hlp",
+            "hta",
+            "jar",
+            "ocx",
+            "pif",
+            "scr",
+            "torrent",
+            "vbe",
+            "wsf"
+          ]
+          direction = "both"
+          action    = "block"
+        }
+      ]
+    }
+  }
+  vulnerability = {
+    outbound-test = {
+      rules = [
+        {
+          name           = "Block-Critical-High-Medium"
+          action         = "reset-both"
+          vendor_ids     = ["any"]
+          severities     = ["critical", "high", "medium"]
+          cves           = ["any"]
+          threat_name    = "any"
+          host           = "any"
+          category       = "any"
+          packet_capture = "single-packet"
+        },
+        {
+          name           = "Default-Low-Info"
+          action         = "default"
+          vendor_ids     = ["any"]
+          severities     = ["low", "informational"]
+          cves           = ["any"]
+          threat_name    = "any"
+          host           = "any"
+          category       = "any"
+          packet_capture = "disable"
+        }
+      ]
+    }
+  }
+  wildfire = {
+    outbound-test = {
+      rules = [
+        {
+          name         = "Forward-All"
+          applications = ["any"]
+          file_types   = ["any"]
+          direction    = "both"
+          analysis     = "public-cloud"
+        }
+      ]
+    }
+  }
+}

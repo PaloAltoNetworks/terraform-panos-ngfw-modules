@@ -22,6 +22,7 @@ No providers.
 | <a name="module_management_profiles"></a> [management\_profiles](#module\_management\_profiles) | ../../modules/management_profiles | n/a |
 | <a name="module_nat_policies"></a> [nat\_policies](#module\_nat\_policies) | ../../modules/nat_policies | n/a |
 | <a name="module_security_policies"></a> [security\_policies](#module\_security\_policies) | ../../modules/security_policies | n/a |
+| <a name="module_security_profiles"></a> [security\_profiles](#module\_security\_profiles) | ../../modules/security_profiles | n/a |
 | <a name="module_service_groups"></a> [service\_groups](#module\_service\_groups) | ../../modules/services | n/a |
 | <a name="module_services"></a> [services](#module\_services) | ../../modules/services | n/a |
 | <a name="module_static_routes"></a> [static\_routes](#module\_static\_routes) | ../../modules/static_routes | n/a |
@@ -52,6 +53,7 @@ No resources.
 | <a name="input_nat_policies"></a> [nat\_policies](#input\_nat\_policies) | Security policies | `any` | `{}` | no |
 | <a name="input_pan_creds"></a> [pan\_creds](#input\_pan\_creds) | Path to file with credentials to Panorama | `string` | n/a | yes |
 | <a name="input_security_policies"></a> [security\_policies](#input\_security\_policies) | Security policies | `any` | `{}` | no |
+| <a name="input_security_profiles"></a> [security\_profiles](#input\_security\_profiles) | Map with security profiles. | `any` | `{}` | no |
 | <a name="input_service_groups"></a> [service\_groups](#input\_service\_groups) | Service groups object | `any` | `{}` | no |
 | <a name="input_services"></a> [services](#input\_services) | Services object | `any` | `{}` | no |
 | <a name="input_static_routes"></a> [static\_routes](#input\_static\_routes) | n/a | `any` | n/a | yes |
