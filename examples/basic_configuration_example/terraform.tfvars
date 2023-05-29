@@ -232,7 +232,7 @@ service_groups = {
 security_policies = {
   "allow_rule_group" = {
     rulebase = "pre-rulebase"
-    rules = [
+    rules    = [
       {
         name = "Allow access to DNS Servers"
         tags = [
@@ -252,10 +252,10 @@ security_policies = {
         vulnerability         = "default"
       },
       {
-        name             = "Allow access to RFC1918"
-        tags             = ["Managed by Terraform"]
-        source_zones     = ["Trust-L3"]
-        source_addresses = ["RFC1918_Subnets"]
+        name              = "Allow access to RFC1918"
+        tags              = ["Managed by Terraform"]
+        source_zones      = ["Trust-L3"]
+        source_addresses  = ["RFC1918_Subnets"]
         destination_zones = [
           "Trust-L3",
           "Untrust-L3"
@@ -274,7 +274,7 @@ security_policies = {
           "Outbound",
           "Managed by Terraform"
         ]
-        source_zones = ["Trust-L3"]
+        source_zones     = ["Trust-L3"]
         source_addresses = [
           "Server10",
           "Server11"
@@ -313,7 +313,7 @@ security_policies = {
   "block_rule_group" = {
     position_keyword = "bottom"
     rulebase         = "pre-rulebase"
-    rules = [
+    rules            = [
       {
         name = "Block Some Traffic"
         tags = [
@@ -324,6 +324,48 @@ security_policies = {
         source_addresses = ["10.0.0.100/32"]
         action           = "deny"
         log_end          = "true"
+      }
+    ]
+  }
+}
+
+### Nat policies
+
+nat_policies = {
+  "required_nat" = {
+    rulebase = "pre-rulebase"
+    rules    = [
+      {
+        name = "DNS config rule"
+        tags = [
+          "dns-proxy",
+          "Managed by Terraform"
+        ]
+        original_packet = {
+          destination_addresses = ["any"]
+          destination_zone      = "Trust-L3"
+          source_addresses      = ["any"]
+          source_zones          = ["Untrust-L3"]
+          service               = "any"
+        }
+        translated_packet = {
+          source = {
+            dynamic_ip = {
+              translated_addresses = ["DNS-Servers"]
+              fallback = {
+                interface_address = {
+                  interface = "ethernet1/1"
+                }
+              }
+            }
+          }
+          destination = {
+            static_translation = {
+              address = "2.2.2.2"
+              port    = "80"
+            }
+          }
+        }
       }
     ]
   }
