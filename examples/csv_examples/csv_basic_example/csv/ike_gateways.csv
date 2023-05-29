@@ -1,2 +1,0 @@
-template,template_stack,name,version,disabled,peer_ip_type,peer_ip_value,interface,pre_shared_key,local_id_type,local_id_value,peer_id_type,peer_id_value,ikev1_crypto_profile
-default,,IKE-GW-1,ikev1,false,ip,5.5.5.5,ethernet1/1,test12345,ipaddr,10.1.1.1,ipaddr,10.5.1.1,AES128_default

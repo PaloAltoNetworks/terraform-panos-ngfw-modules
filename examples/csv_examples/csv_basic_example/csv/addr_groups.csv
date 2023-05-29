@@ -1,9 +1,0 @@
-device_group,vsys,name,tags,static_addresses,dynamic_match,description
-AWSGlobalProtectFirewalls,,AddressDeviceGroup,,"DNS1,DNS2",,DNS servers
-AWSGlobalProtectFirewalls,,DNS-Servers,,"DNS1,DNS2,DNS3,DNS4",,
-AWSGlobalProtectFirewalls,,WebServers,,"WebServer1,WebServer2",,Web Servers
-AWSGlobalProtectFirewalls,,SSH-Servers,,"Server10,Server11",,SSH Servers
-AWSGlobalProtectFirewalls,,RFC1918_Subnets,,"RFC1918_192.168.0.0_16,RFC1918_172.16.0.0_12,RFC1918_10.0.0.0_8",,Private ranges
-AWSGlobalProtectFirewalls,,panw-known-ip-list,,"NTP1,NTP2",,
-AWSGlobalProtectFirewalls,,sop-oci,,,"sop-oci",
-AWSGlobalProtectFirewalls,,grp-dns-proxy,,,"dns-proxy'",
