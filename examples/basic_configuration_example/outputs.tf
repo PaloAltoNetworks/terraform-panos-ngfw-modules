@@ -6,7 +6,8 @@ output "device_groups" {
 
 output "tags" {
   value = flatten([for k, v in module.tags : concat(
-    [for zk, zv in v.panorama_administrative_tags : { "device_group" : k, "tag" : zk, "id" : zv.id }]
+    [for zk, zv in v.panorama_administrative_tags : { "device_group" : k, "tag" : zk, "id" : zv.id }],
+    [for zk, zv in v.panos_administrative_tag : { "device_group" : k, "tag" : zk, "id" : zv.id }]
   )])
 }
 
@@ -18,19 +19,22 @@ output "addresses" {
 
 output "address_groups" {
   value = flatten([for k, v in module.address_groups : concat(
-    [for zk, zv in v.address_groups : { "device_group" : k, "address_group" : zk, "id" : zv.id }]
+    [for zk, zv in v.address_groups : { "device_group" : k, "address_group" : zk, "id" : zv.id }],
+    [for zk, zv in v.panorama_address_groups : { "device_group" : k, "address_group" : zk, "id" : zv.id }]
   )])
 }
 
 output "services" {
   value = flatten([for k, v in module.services : concat(
     [for zk, zv in v.panorama_services : { "device_group" : k, "service" : zk, "id" : zv.id }],
+    [for zk, zv in v.services : { "device_group" : k, "service" : zk, "id" : zv.id }],
   )])
 }
 
 output "service_groups" {
   value = flatten([for k, v in module.service_groups : concat(
     [for zk, zv in v.panorama_service_groups : { "device_group" : k, "service_group" : zk, "id" : zv.id }],
+    [for zk, zv in v.service_groups : { "device_group" : k, "service_group" : zk, "id" : zv.id }],
   )])
 }
 
