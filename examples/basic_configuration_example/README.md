@@ -1,3 +1,51 @@
+Palo Alto Networks PAN-OS based platforms - Config as Code - HCL Example
+---
+This folder shows an example of Terraform code and HCL files that deploy configurations on the PAN-OS based platforms.
+
+Usage
+---
+
+1. Create credential file. In `terraform.tfvars` the path with credentials is ``./creds/credentials.json`` and file structure should look like:
+```json
+{
+    "hostname": "IP_ADDRESS",
+    "username": "ACCOUNT_NAME",
+    "password": "PASSWORD"
+}
+```
+
+or usin [API keys, which can be generated as described in PAN-OS API Guide](https://docs.paloaltonetworks.com/pan-os/10-2/pan-os-panorama-api/get-started-with-the-pan-os-xml-api/get-your-api-key):
+
+```json
+{
+    "hostname": "IP_ADDRESS",
+    "api_key": "API_KEY"
+}
+```
+
+where `API_KEY` was generated from:
+
+```
+curl 'https://IP_ADDRESS/api/?type=keygen&user=ACCOUNT_NAME&password=PASSWORD'
+```
+
+
+2. Run Terraform by initalizing Terraform and applying changes:
+
+```
+terraform init
+terraform apply
+```
+
+Cleanup
+---
+
+In order to remove whole configuration provisioned using code, use command:
+
+```
+terraform destroy
+```
+
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
 
