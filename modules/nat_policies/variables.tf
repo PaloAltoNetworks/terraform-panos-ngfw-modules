@@ -188,4 +188,19 @@ variable "nat_policies" {
       })), null)
     }))
   }))
+  validation {
+    condition = alltrue([
+      for rule_group in var.nat_policies : alltrue([
+        for rule in rule_group.rules :
+        contains(["ipv4", "nat64", "natv6"], coalesce(rule.type, "ipv4"))
+      ])
+    ])
+    error_message = "Valid types of type are `ipv4`, `nat64`, `natv6`"
+  }
+  # validation {
+  #   condition = alltrue([
+  #     for rule_group in var.nat_policies : contains(["", "before", "after", "directly before", "directly after", "top", "bottom"], try(rule_group.position_keyword, ""))
+  #   ])
+  #   error_message = "Valid types of type are `before`, `directly before`, `after`, `directly after`, `top`, `bottom`, or left empty"
+  # }
 }
