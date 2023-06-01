@@ -21,16 +21,6 @@ resource "panos_panorama_nat_rule_group" "this" {
       group_tag     = rule.value.group_tag
       uuid          = rule.value.uuid
 
-      dynamic "target" {
-        for_each = try(rule.value.target, null) != null ? { for t in rule.value.target : t.serial => t } : {}
-        content {
-          serial    = target.value.serial
-          vsys_list = target.value.vsys_list
-        }
-      }
-
-      negate_target = rule.value.negate_target
-
       original_packet {
         destination_addresses = rule.value.original_packet.destination_addresses
         destination_zone      = rule.value.original_packet.destination_zone
@@ -114,6 +104,16 @@ resource "panos_panorama_nat_rule_group" "this" {
           }
         }
       }
+
+      dynamic "target" {
+        for_each = try(rule.value.target, null) != null ? { for t in rule.value.target : t.serial => t } : {}
+        content {
+          serial    = target.value.serial
+          vsys_list = target.value.vsys_list
+        }
+      }
+
+      negate_target = rule.value.negate_target
     }
   }
 

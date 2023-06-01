@@ -149,7 +149,7 @@ variable "nat_policies" {
       translated_packet = optional(object({
         destination = optional(object({
           static_translation = optional(object({
-            address = optional(string)
+            address = string
             port    = optional(string)
           }))
           dynamic_translation = optional(object({
