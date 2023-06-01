@@ -105,8 +105,8 @@ resource "panos_panorama_nat_rule_group" "this" {
           dynamic "static_ip" {
             for_each = try(rule.value.translated_packet.source.static_ip, null) != null ? [1] : []
             content {
-              translated_address = try(rule.value.translated_packet.source.static_ip.translated_address, null)
-              bi_directional     = try(rule.value.translated_packet.source.static_ip.bi_directional, false)
+              translated_address = rule.value.translated_packet.source.static_ip.translated_address
+              bi_directional     = rule.value.translated_packet.source.static_ip.bi_directional
             }
           }
         }
