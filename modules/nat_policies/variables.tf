@@ -127,7 +127,7 @@ variable "nat_policies" {
 
   type = map(object({
     rulebase           = optional(string, "pre-rulebase")
-    position_keyword   = optional(string)
+    position_keyword   = optional(string, "")
     position_reference = optional(string)
     rules = list(object({
       name          = string
@@ -203,10 +203,10 @@ variable "nat_policies" {
     ])
     error_message = "Valid types of type are `ipv4`, `nat64`, `natv6`"
   }
-  # validation {
-  #   condition = alltrue([
-  #     for rule_group in var.nat_policies : contains(["", "before", "after", "directly before", "directly after", "top", "bottom"], try(rule_group.position_keyword, ""))
-  #   ])
-  #   error_message = "Valid types of type are `before`, `directly before`, `after`, `directly after`, `top`, `bottom`, or left empty"
-  # }
+  validation {
+    condition = alltrue([
+      for rule_group in var.nat_policies : contains(["", "before", "after", "directly before", "directly after", "top", "bottom"], rule_group.position_keyword)
+    ])
+    error_message = "Valid types of type are `before`, `directly before`, `after`, `directly after`, `top`, `bottom`, or left empty"
+  }
 }
