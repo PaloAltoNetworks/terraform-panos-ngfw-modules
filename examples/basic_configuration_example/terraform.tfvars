@@ -232,7 +232,7 @@ service_groups = {
 security_policies = {
   "allow_rule_group" = {
     rulebase = "pre-rulebase"
-    rules    = [
+    rules = [
       {
         name = "Allow access to DNS Servers"
         tags = [
@@ -252,10 +252,10 @@ security_policies = {
         vulnerability         = "default"
       },
       {
-        name              = "Allow access to RFC1918"
-        tags              = ["Managed by Terraform"]
-        source_zones      = ["Trust-L3"]
-        source_addresses  = ["RFC1918_Subnets"]
+        name             = "Allow access to RFC1918"
+        tags             = ["Managed by Terraform"]
+        source_zones     = ["Trust-L3"]
+        source_addresses = ["RFC1918_Subnets"]
         destination_zones = [
           "Trust-L3",
           "Untrust-L3"
@@ -274,7 +274,7 @@ security_policies = {
           "Outbound",
           "Managed by Terraform"
         ]
-        source_zones     = ["Trust-L3"]
+        source_zones = ["Trust-L3"]
         source_addresses = [
           "Server10",
           "Server11"
@@ -313,7 +313,7 @@ security_policies = {
   "block_rule_group" = {
     position_keyword = "bottom"
     rulebase         = "pre-rulebase"
-    rules            = [
+    rules = [
       {
         name = "Block Some Traffic"
         tags = [
@@ -334,7 +334,7 @@ security_policies = {
 nat_policies = {
   "required_nat" = {
     rulebase = "pre-rulebase"
-    rules    = [
+    rules = [
       {
         name = "DNS config rule"
         tags = [

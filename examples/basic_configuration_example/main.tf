@@ -193,7 +193,7 @@ module "nat_policies" {
   mode     = var.mode
 
   device_group = each.key
-  nat_policies   = var.nat_policies
+  nat_policies = var.nat_policies
 
   depends_on = [
     module.address_groups, module.service_groups, module.zones,

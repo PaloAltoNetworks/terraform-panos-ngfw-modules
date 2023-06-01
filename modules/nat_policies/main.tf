@@ -12,14 +12,17 @@ resource "panos_panorama_nat_rule_group" "this" {
     for_each = each.value.rules
 
     content {
-      name        = rule.value.name
-      description = rule.value.description
-      tags        = rule.value.tags
-      type        = rule.value.type
-      disabled    = rule.value.disabled
+      name          = rule.value.name
+      audit_comment = rule.value.audit_comment
+      description   = rule.value.description
+      tags          = rule.value.tags
+      type          = rule.value.type
+      disabled      = rule.value.disabled
+      group_tag     = rule.value.group_tag
+      uuid          = rule.value.uuid
 
       dynamic "target" {
-        for_each = try(rule.value.target, null) != null ? {for t in rule.value.target : t.serial => t} : {}
+        for_each = try(rule.value.target, null) != null ? { for t in rule.value.target : t.serial => t } : {}
         content {
           serial    = target.value.serial
           vsys_list = target.value.vsys_list
@@ -123,7 +126,7 @@ resource "panos_panorama_nat_rule_group" "this" {
 resource "panos_nat_rule_group" "this" {
   for_each = var.mode_map[var.mode] == 1 ? var.nat_policies : {}
 
-  vsys         = var.mode_map[var.mode] == 1 ? var.vsys : null
+  vsys = var.mode_map[var.mode] == 1 ? var.vsys : null
 
   position_keyword   = each.value.position_keyword
   position_reference = each.value.position_reference
@@ -140,7 +143,7 @@ resource "panos_nat_rule_group" "this" {
       disabled    = rule.value.disabled
 
       dynamic "target" {
-        for_each = try(rule.value.target, null) != null ? {for t in rule.value.target : t.serial => t} : {}
+        for_each = try(rule.value.target, null) != null ? { for t in rule.value.target : t.serial => t } : {}
         content {
           serial    = target.value.serial
           vsys_list = target.value.vsys_list

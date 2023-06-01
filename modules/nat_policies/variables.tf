@@ -9,7 +9,7 @@ variable "mode" {
 
 variable "mode_map" {
   description = "The mode to use for the modules. Valid values are `panorama` and `ngfw`."
-  default     = {
+  default = {
     panorama = 0
     ngfw     = 1
     # cloud_manager = 2 # Not yet supported
@@ -41,9 +41,12 @@ variable "nat_policies" {
   - `rules`: (optional) The NAT rule definition. The NAT rule ordering will match how they appear in the terraform plan file.
     - `name`: (required) The NAT rule's name.
     - `description`: (optional) The description of the NAT rule.
+    - `audit_comment`: (optional) When this rule is created/updated, the audit comment to apply for this rule.
     - `type`: (optional) NAT type. Valid values are `ipv4`, `nat64`, or `nptv6` (default: `ipv4`).
     - `tags`: (optional) List of administrative tags.
     - `disabled`: (optional) Boolean designating if the security policy rule is disabled (default: `false`).
+    - `group_tag`: (optional) The group tag.
+    - `uuid`: (optional) The PAN-OS UUID.
     - `original_packet`: (required) The original packet specification.
       - `source_zones`: (optional) List of source zones (default: `any`).
       - `destination_zone`: (optional) The destination zone (default: `any`).
@@ -126,14 +129,17 @@ variable "nat_policies" {
     rulebase           = optional(string, "pre-rulebase")
     position_keyword   = optional(string)
     position_reference = optional(string)
-    rules              = list(object({
-      name            = string
-      description     = optional(string)
-      tags            = optional(list(string))
-      type            = optional(string, "ipv4")
-      disabled        = optional(bool, false)
+    rules = list(object({
+      name          = string
+      audit_comment = optional(string)
+      description   = optional(string)
+      tags          = optional(list(string))
+      type          = optional(string, "ipv4")
+      disabled      = optional(bool, false)
+      group_tag     = optional(string)
+      uuid          = optional(string)
       original_packet = object({
-        destination_addresses = optional(list(string),["any"])
+        destination_addresses = optional(list(string), ["any"])
         destination_zone      = string
         destination_interface = optional(string, "any")
         source_addresses      = optional(list(string), ["any"])
@@ -164,7 +170,7 @@ variable "nat_policies" {
           }))
           dynamic_ip = optional(object({
             translated_addresses = list(string)
-            fallback             = optional(object({
+            fallback = optional(object({
               translated_address = optional(object({
                 translated_addresses = list(string)
               }))
@@ -182,7 +188,7 @@ variable "nat_policies" {
         }))
       }))
       negate_target = optional(bool, false)
-      target        = optional(list(object({
+      target = optional(list(object({
         serial    = string
         vsys_list = optional(list(string))
       })), null)
