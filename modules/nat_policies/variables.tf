@@ -176,7 +176,7 @@ variable "nat_policies" {
             }))
           }))
           static_ip = optional(object({
-            translated_address = optional(string)
+            translated_address = string
             bi_directional     = optional(bool)
           }))
         }))
