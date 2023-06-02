@@ -186,3 +186,17 @@ module "security_policies" {
     module.device_groups
   ]
 }
+
+module "nat_policies" {
+  for_each = var.device_groups
+  source   = "../../modules/nat_policies"
+  mode     = var.mode
+
+  device_group = each.key
+  nat_policies = var.nat_policies
+
+  depends_on = [
+    module.address_groups, module.service_groups, module.zones,
+    module.device_groups
+  ]
+}
