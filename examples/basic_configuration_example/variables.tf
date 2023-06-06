@@ -51,6 +51,12 @@ variable "service_groups" {
   type        = any
 }
 
+variable "security_profiles" {
+  description = "Map with security profiles."
+  default     = {}
+  type        = any
+}
+
 variable "security_policies" {
   description = "Security policies"
   default     = {}
