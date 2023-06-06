@@ -40,6 +40,8 @@ func TestOutputsForBasicExampleAndForVmSeries(t *testing.T) {
 	templates := terraform.OutputList(t, terraformOptions, "templates")
 	template_stacks := terraform.OutputList(t, terraformOptions, "template_stacks")
 	security_policies := terraform.OutputList(t, terraformOptions, "security_policies")
+	nat_policies := terraform.OutputList(t, terraformOptions, "nat_policies")
+	security_profiles := terraform.OutputList(t, terraformOptions, "security_profiles")
 
 	// then
 	assert.Empty(t, device_groups)
@@ -57,6 +59,8 @@ func TestOutputsForBasicExampleAndForVmSeries(t *testing.T) {
 	assert.Empty(t, templates)
 	assert.Empty(t, template_stacks)
 	assert.NotEmpty(t, security_policies)
+	assert.NotEmpty(t, nat_policies)
+	assert.NotEmpty(t, security_profiles)
 }
 
 func TestOutputsForBasicExampleAndForPanorama(t *testing.T) {
@@ -91,6 +95,8 @@ func TestOutputsForBasicExampleAndForPanorama(t *testing.T) {
 	templates := terraform.OutputList(t, terraformOptions, "templates")
 	template_stacks := terraform.OutputList(t, terraformOptions, "template_stacks")
 	security_policies := terraform.OutputList(t, terraformOptions, "security_policies")
+	nat_policies := terraform.OutputList(t, terraformOptions, "nat_policies")
+	security_profiles := terraform.OutputList(t, terraformOptions, "security_profiles")
 
 	// then
 	assert.NotEmpty(t, device_groups)
@@ -108,4 +114,6 @@ func TestOutputsForBasicExampleAndForPanorama(t *testing.T) {
 	assert.NotEmpty(t, templates)
 	assert.NotEmpty(t, template_stacks)
 	assert.NotEmpty(t, security_policies)
+	assert.NotEmpty(t, nat_policies)
+	assert.NotEmpty(t, security_profiles)
 }

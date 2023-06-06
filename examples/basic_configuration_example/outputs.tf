@@ -100,3 +100,20 @@ output "security_policies" {
     [for zk, zv in v.security_rule_groups : { "device_group" : k, "security_policy" : zk, "id" : zv.id }]
   )])
 }
+
+output "nat_policies" {
+  value = flatten([for k, v in module.nat_policies : concat(
+    [for zk, zv in v.panos_panorama_nat_rule_group : { "device_group" : k, "nat_policy" : zk, "id" : zv.id }],
+    [for zk, zv in v.panos_nat_rule_group : { "device_group" : k, "nat_policy" : zk, "id" : zv.id }]
+  )])
+}
+
+output "security_profiles" {
+  value = flatten([for k, v in module.security_profiles : concat(
+    [for zk, zv in v.panos_antivirus_security_profile : { "device_group" : k, "antivirus_security_profile" : zk, "id" : zv.id }],
+    [for zk, zv in v.panos_anti_spyware_security_profile : { "device_group" : k, "anti_spyware_security_profile" : zk, "id" : zv.id }],
+    [for zk, zv in v.panos_file_blocking_security_profile : { "device_group" : k, "file_blocking_security_profile" : zk, "id" : zv.id }],
+    [for zk, zv in v.panos_vulnerability_security_profile : { "device_group" : k, "vulnerability_security_profile" : zk, "id" : zv.id }],
+    [for zk, zv in v.panos_wildfire_analysis_security_profile : { "device_group" : k, "wildfire_analysis_security_profile" : zk, "id" : zv.id }]
+  )])
+}

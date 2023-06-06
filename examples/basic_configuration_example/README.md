@@ -112,5 +112,23 @@ No resources.
 
 ## Outputs
 
-No outputs.
+| Name | Description |
+|------|-------------|
+| <a name="output_address_groups"></a> [address\_groups](#output\_address\_groups) | n/a |
+| <a name="output_addresses"></a> [addresses](#output\_addresses) | n/a |
+| <a name="output_device_groups"></a> [device\_groups](#output\_device\_groups) | n/a |
+| <a name="output_interfaces"></a> [interfaces](#output\_interfaces) | n/a |
+| <a name="output_ipsec"></a> [ipsec](#output\_ipsec) | n/a |
+| <a name="output_management_profiles"></a> [management\_profiles](#output\_management\_profiles) | n/a |
+| <a name="output_nat_policies"></a> [nat\_policies](#output\_nat\_policies) | n/a |
+| <a name="output_security_policies"></a> [security\_policies](#output\_security\_policies) | n/a |
+| <a name="output_security_profiles"></a> [security\_profiles](#output\_security\_profiles) | n/a |
+| <a name="output_service_groups"></a> [service\_groups](#output\_service\_groups) | n/a |
+| <a name="output_services"></a> [services](#output\_services) | n/a |
+| <a name="output_static_routes"></a> [static\_routes](#output\_static\_routes) | n/a |
+| <a name="output_tags"></a> [tags](#output\_tags) | n/a |
+| <a name="output_template_stacks"></a> [template\_stacks](#output\_template\_stacks) | n/a |
+| <a name="output_templates"></a> [templates](#output\_templates) | n/a |
+| <a name="output_virtual_routers"></a> [virtual\_routers](#output\_virtual\_routers) | n/a |
+| <a name="output_zones"></a> [zones](#output\_zones) | n/a |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
