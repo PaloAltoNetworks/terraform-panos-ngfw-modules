@@ -329,6 +329,48 @@ security_policies = {
   }
 }
 
+### Nat policies
+
+nat_policies = {
+  "required_nat" = {
+    rulebase = "pre-rulebase"
+    rules = [
+      {
+        name = "DNS config rule"
+        tags = [
+          "dns-proxy",
+          "Managed by Terraform"
+        ]
+        original_packet = {
+          destination_addresses = ["any"]
+          destination_zone      = "Trust-L3"
+          source_addresses      = ["any"]
+          source_zones          = ["Untrust-L3"]
+          service               = "any"
+        }
+        translated_packet = {
+          source = {
+            dynamic_ip = {
+              translated_addresses = ["DNS-Servers"]
+              fallback = {
+                interface_address = {
+                  interface = "ethernet1/1"
+                }
+              }
+            }
+          }
+          destination = {
+            static_translation = {
+              address = "2.2.2.2"
+              port    = "80"
+            }
+          }
+        }
+      }
+    ]
+  }
+}
+
 ### Network - interfaces
 
 interfaces = {

@@ -57,6 +57,12 @@ variable "security_policies" {
   type        = any
 }
 
+variable "nat_policies" {
+  description = "Security policies"
+  default     = {}
+  type        = any
+}
+
 variable "interfaces" {}
 variable "management_profiles" {}
 variable "virtual_routers" {}
