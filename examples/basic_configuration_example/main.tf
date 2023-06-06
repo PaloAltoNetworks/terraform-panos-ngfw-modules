@@ -200,3 +200,19 @@ module "nat_policies" {
     module.device_groups
   ]
 }
+
+module "security_profiles" {
+  for_each = var.device_groups
+  source   = "../../modules/security_profiles"
+
+  mode         = var.mode
+  device_group = each.key
+
+  antivirus_profiles                = var.security_profiles.antivirus
+  antispyware_profiles              = var.security_profiles.antispyware
+  file_blocking_profiles            = var.security_profiles.file_blocking
+  vulnerability_protection_profiles = var.security_profiles.vulnerability
+  wildfire_analysis_profiles        = var.security_profiles.wildfire
+
+  depends_on = [module.device_groups]
+}
