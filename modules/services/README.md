@@ -146,4 +146,6 @@ No modules.
 |------|-------------|
 | <a name="output_panorama_service_groups"></a> [panorama\_service\_groups](#output\_panorama\_service\_groups) | n/a |
 | <a name="output_panorama_services"></a> [panorama\_services](#output\_panorama\_services) | n/a |
+| <a name="output_service_groups"></a> [service\_groups](#output\_service\_groups) | n/a |
+| <a name="output_services"></a> [services](#output\_services) | n/a |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

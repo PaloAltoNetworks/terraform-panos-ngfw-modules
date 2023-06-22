@@ -58,5 +58,11 @@ No modules.
 
 ## Outputs
 
-No outputs.
+| Name | Description |
+|------|-------------|
+| <a name="output_panos_anti_spyware_security_profile"></a> [panos\_anti\_spyware\_security\_profile](#output\_panos\_anti\_spyware\_security\_profile) | n/a |
+| <a name="output_panos_antivirus_security_profile"></a> [panos\_antivirus\_security\_profile](#output\_panos\_antivirus\_security\_profile) | n/a |
+| <a name="output_panos_file_blocking_security_profile"></a> [panos\_file\_blocking\_security\_profile](#output\_panos\_file\_blocking\_security\_profile) | n/a |
+| <a name="output_panos_vulnerability_security_profile"></a> [panos\_vulnerability\_security\_profile](#output\_panos\_vulnerability\_security\_profile) | n/a |
+| <a name="output_panos_wildfire_analysis_security_profile"></a> [panos\_wildfire\_analysis\_security\_profile](#output\_panos\_wildfire\_analysis\_security\_profile) | n/a |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

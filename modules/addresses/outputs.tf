@@ -3,7 +3,7 @@ output "addresses" {
 }
 
 output "address_groups" {
-  value = panos_panorama_address_group.this
+  value = panos_address_group.this
 }
 
 output "panorama_address_groups" {

@@ -143,4 +143,5 @@ No modules.
 | Name | Description |
 |------|-------------|
 | <a name="output_panorama_administrative_tags"></a> [panorama\_administrative\_tags](#output\_panorama\_administrative\_tags) | n/a |
+| <a name="output_panos_administrative_tag"></a> [panos\_administrative\_tag](#output\_panos\_administrative\_tag) | n/a |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

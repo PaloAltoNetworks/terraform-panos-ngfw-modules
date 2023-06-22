@@ -352,11 +352,6 @@ nat_policies = {
           source = {
             dynamic_ip = {
               translated_addresses = ["DNS-Servers"]
-              fallback = {
-                interface_address = {
-                  interface = "ethernet1/1"
-                }
-              }
             }
           }
           destination = {
