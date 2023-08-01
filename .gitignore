@@ -32,6 +32,7 @@ temp
 terraform.rc
 tmp
 fw_creds.json*
+panos-config.json
 # Auto variables
 examples/csv_examples/csv_basic_example/terraform.tfvars
 terraform.tfvars.json
