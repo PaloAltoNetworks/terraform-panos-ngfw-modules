@@ -6,6 +6,7 @@ resource "panos_virtual_router" "this" {
 
   name                                 = each.key
   vsys                                 = each.value.vsys
+  interfaces                           = each.value.interfaces
   static_dist                          = each.value.static_dist
   static_ipv6_dist                     = each.value.static_ipv6_dist
   ospf_int_dist                        = each.value.ospf_int_dist
