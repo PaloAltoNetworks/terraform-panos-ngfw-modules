@@ -2,17 +2,15 @@
 
 ## Overview
 
-A set of modules to configure your Palo Alto Networks Next Generation Firewalls with code instead of interacting with 
-the GUI. It configures aspects such as Tags, Address Objects/Groups, Security/NAT policies, Security Profiles, and more.
-You can use multiple config file types like YAML/JSON/CSV to configure modules.
+A set of modules designed to configure your Palo Alto Networks PAN-OS-based platforms using code, eliminating the need for manual GUI interactions. This solution enables you to manage various aspects, including Tags, Address Objects/Groups, Security/NAT policies, Security Profiles, and more. The flexibility extends to multiple config file types like YAML, JSON, and CSV for easy configuration.
 
 * Policy as Code executes Terraform that will create a variety of resources based on the input.
-* Terraform is the underlying automation tool, therefore it utilizes the Terraform provider ecosystem to drive relevant
+* Terraform is the underlying automation tool, therefore, it utilizes the Terraform provider ecosystem to drive relevant
   change to the network infrastructure.
 * All Policy as Code is written as a compatible **Terraform module** using resources for the underlying network
   infrastructure provider.
 
-![PolicyAsCode](https://user-images.githubusercontent.com/2110772/188634641-0f410362-74fe-4414-ac3f-7b9cea9ce9aa.png)
+![ConfigAsCode](https://user-images.githubusercontent.com/2110772/188634641-0f410362-74fe-4414-ac3f-7b9cea9ce9aa.png)
 
 ## Structure
 
@@ -27,55 +25,54 @@ This repository has the following directory structure:
 
 This module is meant for use with PAN-OS >= 10.2.0 and Terraform >= 0.13
 
-## Configuration
+## Setup
 
-The code is configured by config files, you can see how to handle that part in examples.
+The underlying panos provider can be configured using the following methods.
 
-Mechanism needs to authorize calls to PAN-OS based platforms, it can be done in few ways.
-It can be configured by JSON file with structure:
+For all the supported arguments, please refer to [provider documentation](https://registry.terraform.io/providers/PaloAltoNetworks/panos/latest/docs#argument-reference)
 
-```json
-{
-  "hostname": "12.345.678.901",
-  "username": "user",
-  "password": "password"
-}
-```
-And Terraform Provider looks like this:
-```terraform
-provider "panos" {
-  json_config_file = var.pan_creds
-}
-```
-
-Variable ``var.pan_creds`` and contain path to file ie. ``./creds/serviceaccount.json``.
-
-It can be provided directly via variables:
+1. Directly in the provider block
 
 ```terraform
 provider "panos" {
-  
   username = "12.345.678.901"
   password = "user"
   hostname = "password" 
 }
 ```
 
-Or API Key
+2. Environment variable setting (where applicable)
+
+```sh
+export PANOS_HOSTNAME=
+export PANOS_USERNAME=
+export PANOS_API_KEY=
+```
+
+3. From a JSON config file
+
+```sh
+> cat ./creds/serviceaccount.json
+{
+  "hostname": "12.345.678.901",
+  "username": "user",
+  "password": "password"
+}
+```
+
 ```terraform
 provider "panos" {
-  hostname = "12.345.678.901"
-  api_key = "6B7fzuxeZlWZQYUgO5J8nhoB9l9U6s2IqEagBRnEI2yAt=="
+  json_config_file = "./creds/serviceaccount.json"
 }
 ```
 
 ## Testing
 
-In order to executed test, prepare folder ``tests/creds/`` with 2 files:
+To execute tests, create the folder ``tests/creds/`` with below two files:
 * ``panorama.json``
-* ``vmseries.json``
+* ``firewall.json``
 
-which will contain credentials to access each machine e.g.:
+which will contain credentials to access Panorama and firewall instances, e.g.:
 
 ```
 {
@@ -85,7 +82,7 @@ which will contain credentials to access each machine e.g.:
 }
 ```
 
-When credentials files are ready, use below commands to run tests:
+When credentials files are ready, use the below commands to run tests:
 
 ```
 cd tests
@@ -97,7 +94,7 @@ go test -v -timeout 30m -count=1
 ## Versioning
 
 These modules follow the principles of [Semantic Versioning](http://semver.org/). You can find each new release,
-along with the changelog, on the GitHub [Releases](../../releases) page.
+along with the changelog on the GitHub [Releases](../../releases) page.
 
 ## Getting Help
 
