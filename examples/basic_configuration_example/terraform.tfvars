@@ -402,8 +402,6 @@ interfaces = {
   }
   "loopback.42" = {
     type           = "loopback"
-    mode           = "layer3"
-    link_state     = "up"
     comment        = "internal"
     virtual_router = "internal"
     zone           = "vpn"
@@ -411,8 +409,6 @@ interfaces = {
   }
   "tunnel.42" = {
     type           = "tunnel"
-    mode           = "layer3"
-    link_state     = "up"
     comment        = "internal"
     virtual_router = "internal"
     zone           = "vpn"

@@ -34,21 +34,28 @@ variable "template_stack" {
 
 variable "interfaces" {
   description = <<-EOF
-  Map of the interfaces, where key is the interface's name:
+  Map of the interfaces, where key is the interface's name. Following parameters are available for all interface types:
   - `type` - (Required) Type of interface. Valid values are `ethernet`,`loopback`,`tunnel`.
-  - `mode` - (Required) The interface mode. This can be any of the following values: layer3, layer2, virtual-wire, tap, ha, decrypt-mirror, or aggregate-group.
-  - `zone` - (Required) The zone's name
-  - `virtual_router` - (Required) The virtual router's name
+  - `zone` - (Optional) The zone's name
+  - `virtual_router` - (Optional) The virtual router's name
   - `vsys` - (Optional) The vsys that will use this interface (default: vsys1). This should be something like vsys1 or vsys3.
   - `static_ips` - (Optional) List of static IPv4 addresses to set for this data interface.
+  - `management_profile` - (Optional) The management profile.
+  - `netflow_profile - (Optional) The netflow profile.
+  - `mtu` - (Optional) The MTU.
+  - `comment` - (Optional) The interface comment.
+
+  Additional parameters available for `ethernet` and `loopback` interface types:
+  - `adjust_tcp_mss` - (Optional) Adjust TCP MSS (default: false).
+  - `ipv4_mss_adjust` - (Optional, PAN-OS 7.1+) The IPv4 MSS adjust value.
+  - `ipv6_mss_adjust` - (Optional, PAN-OS 7.1+) The IPv6 MSS adjust value.
+  
+  Parameters available only for `ethernet` interfaces:
+  - `mode` - (Optional) The interface mode, required for `ethernet` interfaces. This can be any of the following values: layer3, layer2, virtual-wire, tap, ha, decrypt-mirror, or aggregate-group.
   - `enable_dhcp` - (Optional) Set to true to enable DHCP on this interface.
   - `create_dhcp_default_route` - (Optional) Set to true to create a DHCP default route.
   - `dhcp_default_route_metric` - (Optional) The metric for the DHCP default route.
   - `ipv6_enabled` - (Optional) Set to true to enable IPv6.
-  - `management_profile` - (Optional) The management profile.
-  - `mtu` - (Optional) The MTU.
-  - `adjust_tcp_mss` - (Optional) Adjust TCP MSS (default: false).
-  - `netflow_profile - (Optional) The netflow profile.
   - `lldp_enabled` - (Optional) Enable LLDP (default: false).
   - `lldp_profile` - (Optional) LLDP profile.
   - `lldp_ha_passive_pre_negotiation` - (bool) LLDP HA passive pre-negotiation.
@@ -57,10 +64,7 @@ variable "interfaces" {
   - `link_duplex` - (Optional) Link duplex setting. This can be full, half, or auto.
   - `link_state` - (Optional) The link state. This can be up, down, or auto.
   - `aggregate_group` - (Optional) The aggregate group (applicable for physical firewalls only).
-  - `comment` - (Optional) The interface comment.
   - `lacp_port_priority` - (int) LACP port priority.
-  - `ipv4_mss_adjust` - (Optional, PAN-OS 7.1+) The IPv4 MSS adjust value.
-  - `ipv6_mss_adjust` - (Optional, PAN-OS 7.1+) The IPv6 MSS adjust value.
   - `decrypt_forward` - (Optional, PAN-OS 8.1+) Enable decrypt forwarding.
   - `rx_policing_rate` - (Optional, PAN-OS 8.1+) Receive policing rate in Mbps.
   - `tx_policing_rate` - (Optional, PAN-OS 8.1+) Transmit policing rate in Mbps.
@@ -88,9 +92,9 @@ variable "interfaces" {
   default     = {}
   type = map(object({
     type                            = string
-    mode                            = string
-    zone                            = string
-    virtual_router                  = string
+    mode                            = optional(string)
+    zone                            = optional(string)
+    virtual_router                  = optional(string)
     vsys                            = optional(string, "vsys1")
     static_ips                      = optional(list(string), [])
     enable_dhcp                     = optional(bool, false)
@@ -114,14 +118,14 @@ variable "interfaces" {
     ipv4_mss_adjust                 = optional(string)
     ipv6_mss_adjust                 = optional(string)
     decrypt_forward                 = optional(bool)
-    rx_policing_rate                = optional(string)
-    tx_policing_rate                = optional(string)
+    rx_policing_rate                = optional(number)
+    tx_policing_rate                = optional(number)
     dhcp_send_hostname_enable       = optional(bool)
     dhcp_send_hostname_value        = optional(string)
   }))
   validation {
-    condition     = alltrue([for interface in var.interfaces : contains(["layer3", "layer2", "virtual-wire", "tap", "ha", "decrypt-mirror", "aggregate-group"], interface.mode)])
-    error_message = "Valid types of mode are `layer3`, `layer2`, `virtual-wire`, `tap`, `ha`, `decrypt-mirror`, or `aggregate-group`"
+    condition     = alltrue([for interface in var.interfaces : contains(["layer3", "layer2", "virtual-wire", "tap", "ha", "decrypt-mirror", "aggregate-group"], coalesce(interface.mode, "")) if interface.type == "ethernet"])
+    error_message = "Valid mode values for 'ethernet' interfaces are `layer3`, `layer2`, `virtual-wire`, `tap`, `ha`, `decrypt-mirror`, or `aggregate-group`"
   }
   validation {
     condition     = alltrue([for interface in var.interfaces : contains(["ethernet", "loopback", "tunnel"], interface.type)])
@@ -129,14 +133,14 @@ variable "interfaces" {
   }
   validation {
     condition     = alltrue([for interface in var.interfaces : contains(["up", "down", "auto"], coalesce(interface.link_state, "up"))])
-    error_message = "Valid types of link state are `up`, `down`, `auto`"
+    error_message = "Valid link state values are `up`, `down`, `auto`"
   }
   validation {
     condition     = alltrue([for interface in var.interfaces : contains(["10", "100", "1000", "auto"], coalesce(interface.link_speed, "auto"))])
-    error_message = "Valid types of link speed are `10`, `100`, `1000`, or `auto`"
+    error_message = "Valid link speed values are `10`, `100`, `1000`, or `auto`"
   }
   validation {
     condition     = alltrue([for interface in var.interfaces : contains(["full", "half", "auto"], coalesce(interface.link_duplex, "auto"))])
-    error_message = "Valid types of link duplex are `full`, `half`, or `auto`"
+    error_message = "Valid link duplex values are `full`, `half`, or `auto`"
   }
 }
