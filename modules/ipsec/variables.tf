@@ -359,7 +359,7 @@ variable "ipsec_tunnels" {
     error_message = "Valid values for the encryptions are `des`, `3des`, `aes-ipsec_tunnel-cbc`, `aes-192-cbc`, `aes-256-cbc`"
   }
 }
-variable "ipsec_tunnels_proxy" {
+variable "ipsec_tunnel_proxies" {
   description = <<-EOF
   Map of the IPSec tunnel proxy, where key is the IPSec tunnel proxy's name:
   - `ipsec_tunnel` - (Required) The auto key IPSec tunnel to attach this proxy ID to.

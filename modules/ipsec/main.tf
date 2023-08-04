@@ -259,7 +259,7 @@ resource "panos_ipsec_tunnel" "this" {
 }
 
 resource "panos_panorama_ipsec_tunnel_proxy_id_ipv4" "this" {
-  for_each = var.mode_map[var.mode] == 0 ? var.ipsec_tunnels_proxy : {}
+  for_each = var.mode_map[var.mode] == 0 ? var.ipsec_tunnel_proxies : {}
 
   template = var.template
   ### an argument named "template_stack" is not expected here
@@ -281,7 +281,7 @@ resource "panos_panorama_ipsec_tunnel_proxy_id_ipv4" "this" {
 }
 
 resource "panos_ipsec_tunnel_proxy_id_ipv4" "this" {
-  for_each = var.mode_map[var.mode] == 1 ? var.ipsec_tunnels_proxy : {}
+  for_each = var.mode_map[var.mode] == 1 ? var.ipsec_tunnel_proxies : {}
 
   name                = each.key
   ipsec_tunnel        = each.value.ipsec_tunnel
