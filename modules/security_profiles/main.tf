@@ -118,8 +118,8 @@ resource "panos_anti_spyware_security_profile" "this" {
     content {
       name              = exception.value.name
       action            = exception.value.action
-      block_ip_track_by = rule.value.action == "block-ip" ? rule.value.block_ip_track_by : null
-      block_ip_duration = rule.value.action == "block-ip" ? rule.value.block_ip_duration : null
+      block_ip_track_by = exception.value.action == "block-ip" ? exception.value.block_ip_track_by : null
+      block_ip_duration = exception.value.action == "block-ip" ? exception.value.block_ip_duration : null
       packet_capture    = exception.value.packet_capture
       exempt_ips        = exception.value.exempt_ips
     }
@@ -191,8 +191,8 @@ resource "panos_vulnerability_security_profile" "this" {
     content {
       name              = exception.value.name
       action            = exception.value.action
-      block_ip_track_by = rule.value.action == "block-ip" ? rule.value.block_ip_track_by : null
-      block_ip_duration = rule.value.action == "block-ip" ? rule.value.block_ip_duration : null
+      block_ip_track_by = exception.value.action == "block-ip" ? exception.value.block_ip_track_by : null
+      block_ip_duration = exception.value.action == "block-ip" ? exception.value.block_ip_duration : null
       packet_capture    = exception.value.packet_capture
       time_interval     = exception.value.time_interval
       time_threshold    = exception.value.time_threshold
