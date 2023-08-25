@@ -154,7 +154,7 @@ resource "panos_tunnel_interface" "this" {
 }
 
 resource "panos_virtual_router_entry" "this" {
-  for_each = { for k, v in var.interfaces : "${v.virtual_router}_${k}" => { interface = k, virtual_router = v.virtual_router } }
+  for_each = { for k, v in var.interfaces : "${v.virtual_router}_${k}" => { interface = k, virtual_router = v.virtual_router } if try(v.virtual_router, null) != null }
 
   template       = var.mode_map[var.mode] == 0 ? (var.template_stack == "" ? var.template : null) : null
   template_stack = var.mode_map[var.mode] == 0 ? var.template_stack == "" ? null : var.template_stack : null
@@ -177,7 +177,7 @@ resource "panos_virtual_router_entry" "this" {
 }
 
 resource "panos_zone_entry" "this" {
-  for_each = { for k, v in var.interfaces : "${v.zone}_${k}" => { interface = k, zone = v.zone, vsys = v.vsys } }
+  for_each = { for k, v in var.interfaces : "${v.zone}_${k}" => { interface = k, zone = v.zone, vsys = v.vsys } if try(v.zone, null) != null }
 
   template       = var.mode_map[var.mode] == 0 ? (var.template_stack == "" ? var.template : null) : null
   template_stack = var.mode_map[var.mode] == 0 ? var.template_stack == "" ? null : var.template_stack : null
