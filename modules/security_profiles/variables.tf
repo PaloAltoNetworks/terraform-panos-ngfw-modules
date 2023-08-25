@@ -603,7 +603,7 @@ variable "vulnerability_protection_profiles" {
   validation {
     condition = alltrue([
       for profile in var.vulnerability_protection_profiles : alltrue([
-        for exception in profile.exceptions : contains(["source", "destination", "source-and-destination"], exception.time_track_by)
+        for exception in profile.exceptions : contains(["source", "destination", "source-and-destination"], coalesce(exception.time_track_by, "source"))
       ])
     ])
     error_message = "Valid 'time_track_by' values are: 'source', 'destination', 'source-and-destination'."
