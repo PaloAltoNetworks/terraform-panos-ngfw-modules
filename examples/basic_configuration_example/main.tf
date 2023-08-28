@@ -143,7 +143,7 @@ module "ipsec" {
   ipsec_crypto_profiles = var.ipsec_crypto_profiles
   ike_gateways          = var.ike_gateways
   ipsec_tunnels         = var.ipsec_tunnels
-  ipsec_tunnels_proxy   = {}
+  ipsec_tunnel_proxies  = {}
 
   depends_on = [
     module.templates,
