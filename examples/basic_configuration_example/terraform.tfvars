@@ -433,7 +433,20 @@ management_profiles = {
 ### Network - virtual router
 
 virtual_routers = {
-  "vr"       = {}
+  "vr" = {
+    static_routes = {
+      custom-ip = {
+        destination = "10.10.20.0/24"
+        next_hop    = "10.10.10.1"
+        type        = "ip-address"
+      }
+      internal-vr = {
+        destination = "10.10.0.0/16"
+        next_hop    = "internal"
+        type        = "next-vr"
+      }
+    }
+  }
   "external" = {}
   "internal" = {}
 }
