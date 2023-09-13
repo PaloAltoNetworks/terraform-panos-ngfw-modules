@@ -117,3 +117,10 @@ output "security_profiles" {
     [for zk, zv in v.panos_wildfire_analysis_security_profile : { "device_group" : k, "wildfire_analysis_security_profile" : zk, "id" : zv.id }]
   )])
 }
+
+output "log_forwarding_profiles_shared" {
+  value = flatten([concat(
+    [for k, v in module.log_forwarding_profiles_shared.panos_log_forwarding_profiles : { "profile" : k, "id" : v.id, "vsys" : v.vsys }],
+    [for k, v in module.log_forwarding_profiles_shared.panos_panorama_log_forwarding_profiles : { "profile" : k, "id" : v.id, "device_group" : v.device_group }]
+  )])
+}
