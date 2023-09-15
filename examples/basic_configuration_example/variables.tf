@@ -57,6 +57,12 @@ variable "security_profiles" {
   type        = any
 }
 
+variable "log_forwarding_profiles_shared" {
+  description = "Map with log forwarding profiles."
+  default     = {}
+  type        = any
+}
+
 variable "security_policies" {
   description = "Security policies"
   default     = {}

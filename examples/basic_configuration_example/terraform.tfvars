@@ -681,3 +681,30 @@ security_profiles = {
     }
   }
 }
+
+log_forwarding_profiles_shared = {
+  panorama-shared = {
+    match_lists = [
+      {
+        name             = "threat"
+        log_type         = "threat"
+        send_to_panorama = true
+      },
+      {
+        name             = "wf"
+        log_type         = "wildfire"
+        send_to_panorama = true
+      },
+      {
+        name             = "url"
+        log_type         = "url"
+        send_to_panorama = true
+      },
+      {
+        name             = "auth"
+        log_type         = "auth"
+        send_to_panorama = true
+      },
+    ]
+  }
+}

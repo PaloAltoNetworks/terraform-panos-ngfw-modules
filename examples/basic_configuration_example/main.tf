@@ -216,3 +216,12 @@ module "security_profiles" {
 
   depends_on = [module.device_groups]
 }
+
+module "log_forwarding_profiles_shared" {
+  source = "../../modules/log_forwarding_profiles"
+
+  mode         = var.mode
+  device_group = "shared"
+
+  profiles = var.log_forwarding_profiles_shared
+}
