@@ -41,7 +41,7 @@ variable "interfaces" {
   - `vsys` - (Optional) The vsys that will use this interface (default: vsys1). This should be something like vsys1 or vsys3.
   - `static_ips` - (Optional) List of static IPv4 addresses to set for this data interface.
   - `management_profile` - (Optional) The management profile.
-  - `netflow_profile - (Optional) The netflow profile.
+  - `netflow_profile` - (Optional) The netflow profile.
   - `mtu` - (Optional) The MTU.
   - `comment` - (Optional) The interface comment.
 

@@ -155,7 +155,7 @@ variable "antispyware_profiles" {
   List of the Anti-Spyware profile objects. Each item supports following parameters:
   - `name`: (required) Identifier of the Anti-Spyware security profile.
   - `description`: (optional) The description of the Anti-Spyware profile.
-  - `packet_capture`: (optional) Packet capture setting for PAN-OS 8.X only). Valid values are `disable`, single-packet`, or `extended-capture` (default: `disable`).
+  - `packet_capture`: (optional) Packet capture setting for PAN-OS 8.X only). Valid values are `disable`, `single-packet`, or `extended-capture` (default: `disable`).
   - `sinkhole_ipv4_address`: (optional) IPv4 sinkhole address.
   - `sinkhole_ipv6_address`: (optional) IPv6 sinkhole address.
   - `threat_exceptions`: (optional) A string list of threat exceptions.
