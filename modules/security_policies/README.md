@@ -13,7 +13,106 @@ module "security_policies" {
 
   mode = "panorama" # If you want to use this module with a firewall, change this to "ngfw"
 
-  YYYYYYYYYYYYYYYY
+  device_group      = "test"
+  security_policies = {
+    "allow_rule_group" = {
+      rulebase = "pre-rulebase"
+      rules = [
+        {
+          name = "Allow access to DNS Servers"
+          tags = [
+            "Outbound",
+            "Managed by Terraform"
+          ]
+          source_zones          = ["Trust-L3"]
+          source_addresses      = ["RFC1918_Subnets"]
+          destination_zones     = ["Untrust-L3"]
+          destination_addresses = ["DNS-Servers"]
+          applications          = ["dns"]
+          services              = ["application-default"]
+          action                = "allow"
+          log_end               = "true"
+          virus                 = "default"
+          spyware               = "default"
+          vulnerability         = "default"
+        },
+        {
+          name             = "Allow access to RFC1918"
+          tags             = ["Managed by Terraform"]
+          source_zones     = ["Trust-L3"]
+          source_addresses = ["RFC1918_Subnets"]
+          destination_zones = [
+            "Trust-L3",
+            "Untrust-L3"
+          ]
+          destination_addresses = ["RFC1918_Subnets"]
+          services              = ["application-default"]
+          action                = "allow"
+          log_end               = "true"
+          virus                 = "default"
+          spyware               = "default"
+          vulnerability         = "default"
+        },
+        {
+          name = "Disabled - temporary access to Srv10 and Srv11"
+          tags = [
+            "Outbound",
+            "Managed by Terraform"
+          ]
+          source_zones = ["Trust-L3"]
+          source_addresses = [
+            "Server10",
+            "Server11"
+          ]
+          destination_zones     = ["Untrust-L3"]
+          destination_addresses = ["123.123.123.123/32"]
+          services              = ["SSH-8022"]
+          action                = "allow"
+          log_end               = "true"
+          disabled              = "true"
+          virus                 = "default"
+          spyware               = "default"
+          vulnerability         = "default"
+          url_filtering         = "default"
+          file_blocking         = "basic file blocking"
+          wildfire_analysis     = "default"
+        },
+        {
+          name = "Allow access to SSH Servers"
+          tags = [
+            "Inbound",
+            "Managed by Terraform"
+          ]
+          source_zones          = ["Untrust-L3"]
+          negate_source         = "false"
+          destination_zones     = ["Trust-L3"]
+          destination_addresses = ["SSH-Servers"]
+          negate_destination    = "false"
+          applications          = ["ssh"]
+          services              = ["application-default"]
+          action                = "allow"
+          log_end               = "true"
+        }
+      ]
+    }
+    "block_rule_group" = {
+      position_keyword = "bottom"
+      rulebase         = "pre-rulebase"
+      rules = [
+        {
+          name = "Block Some Traffic"
+          tags = [
+            "Outbound",
+            "Managed by Terraform"
+          ]
+          source_zones     = ["Trust-L3"]
+          source_addresses = ["10.0.0.100/32"]
+          action           = "deny"
+          log_end          = "true"
+        }
+      ]
+    }
+  }
 }
 ```
 
