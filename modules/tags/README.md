@@ -16,7 +16,6 @@ module "tags" {
   device_group = "test"
   tags         = {
     DNS-SRV = {
-      color   = "DNS-SRV"
       comment = "Tag for DNS servers"
     }
     DNS-SRV-2 = {
