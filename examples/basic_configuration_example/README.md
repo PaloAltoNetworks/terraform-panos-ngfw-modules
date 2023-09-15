@@ -65,6 +65,7 @@ No providers.
 | <a name="module_device_groups"></a> [device\_groups](#module\_device\_groups) | ../../modules/device_groups | n/a |
 | <a name="module_interfaces"></a> [interfaces](#module\_interfaces) | ../../modules/interfaces | n/a |
 | <a name="module_ipsec"></a> [ipsec](#module\_ipsec) | ../../modules/ipsec | n/a |
+| <a name="module_log_forwarding_profiles_shared"></a> [log\_forwarding\_profiles\_shared](#module\_log\_forwarding\_profiles\_shared) | ../../modules/log_forwarding_profiles | n/a |
 | <a name="module_management_profiles"></a> [management\_profiles](#module\_management\_profiles) | ../../modules/management_profiles | n/a |
 | <a name="module_nat_policies"></a> [nat\_policies](#module\_nat\_policies) | ../../modules/nat_policies | n/a |
 | <a name="module_security_policies"></a> [security\_policies](#module\_security\_policies) | ../../modules/security_policies | n/a |
@@ -94,6 +95,7 @@ No resources.
 | <a name="input_interfaces"></a> [interfaces](#input\_interfaces) | n/a | `any` | n/a | yes |
 | <a name="input_ipsec_crypto_profiles"></a> [ipsec\_crypto\_profiles](#input\_ipsec\_crypto\_profiles) | n/a | `any` | n/a | yes |
 | <a name="input_ipsec_tunnels"></a> [ipsec\_tunnels](#input\_ipsec\_tunnels) | n/a | `any` | n/a | yes |
+| <a name="input_log_forwarding_profiles_shared"></a> [log\_forwarding\_profiles\_shared](#input\_log\_forwarding\_profiles\_shared) | Map with log forwarding profiles. | `any` | `{}` | no |
 | <a name="input_management_profiles"></a> [management\_profiles](#input\_management\_profiles) | n/a | `any` | n/a | yes |
 | <a name="input_mode"></a> [mode](#input\_mode) | Provide information about target. | `string` | `""` | no |
 | <a name="input_nat_policies"></a> [nat\_policies](#input\_nat\_policies) | Security policies | `any` | `{}` | no |
@@ -119,6 +121,7 @@ No resources.
 | <a name="output_device_groups"></a> [device\_groups](#output\_device\_groups) | n/a |
 | <a name="output_interfaces"></a> [interfaces](#output\_interfaces) | n/a |
 | <a name="output_ipsec"></a> [ipsec](#output\_ipsec) | n/a |
+| <a name="output_log_forwarding_profiles_shared"></a> [log\_forwarding\_profiles\_shared](#output\_log\_forwarding\_profiles\_shared) | n/a |
 | <a name="output_management_profiles"></a> [management\_profiles](#output\_management\_profiles) | n/a |
 | <a name="output_nat_policies"></a> [nat\_policies](#output\_nat\_policies) | n/a |
 | <a name="output_security_policies"></a> [security\_policies](#output\_security\_policies) | n/a |
