@@ -9,7 +9,7 @@ Usage
 
 ```terraform
 module "address" {
-  source  = "PaloAltoNetworks/terraform-panos-ngfw-modules//modules/address"
+  source  = "PaloAltoNetworks/terraform-panos-ngfw-modules//modules/addresses"
 
   mode = "panorama" # If you want to use this module with a firewall, change this to "ngfw"
 
