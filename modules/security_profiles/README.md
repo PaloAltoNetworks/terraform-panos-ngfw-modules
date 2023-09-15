@@ -15,7 +15,7 @@ module "security_profiles" {
 
   device_group = "test"
 
-  antivirus_profiles                = {
+  antivirus_profiles = {
     test-av-profile = {
       decoders = [
         {
@@ -44,7 +44,7 @@ module "security_profiles" {
       ]
     }
   }
-  antispyware_profiles              = {
+  antispyware_profiles = {
     test-antispyware = {
       rules = [
         {
@@ -55,7 +55,7 @@ module "security_profiles" {
       ]
     }
   }
-  file_blocking_profiles            = {
+  file_blocking_profiles = {
     outbound-test = {
       rules = [
         {
@@ -119,7 +119,7 @@ module "security_profiles" {
       ]
     }
   }
-  wildfire_analysis_profiles        = {
+  wildfire_analysis_profiles = {
     outbound-test = {
       rules = [
         {

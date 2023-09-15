@@ -17,26 +17,26 @@ module "interfaces" {
 
   interfaces = {
     "ethernet1/1" = {
-        type                      = "ethernet"
-        mode                      = "layer3"
-        management_profile        = "mgmt_default"
-        link_state                = "up"
-        enable_dhcp               = true
-        create_dhcp_default_route = false
-        comment                   = "mgmt"
-        virtual_router            = "vr"
-        zone                      = "mgmt"
-        vsys                      = "vsys1"
+      type                      = "ethernet"
+      mode                      = "layer3"
+      management_profile        = "mgmt_default"
+      link_state                = "up"
+      enable_dhcp               = true
+      create_dhcp_default_route = false
+      comment                   = "mgmt"
+      virtual_router            = "vr"
+      zone                      = "mgmt"
+      vsys                      = "vsys1"
     }
     "ethernet1/2" = {
-        type               = "ethernet"
-        mode               = "layer3"
-        management_profile = "mgmt_default"
-        link_state         = "up"
-        comment            = "external"
-        virtual_router     = "external"
-        zone               = "external"
-        vsys               = "vsys1"
+      type               = "ethernet"
+      mode               = "layer3"
+      management_profile = "mgmt_default"
+      link_state         = "up"
+      comment            = "external"
+      virtual_router     = "external"
+      zone               = "external"
+      vsys               = "vsys1"
     }
   }
 }

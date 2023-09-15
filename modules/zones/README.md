@@ -16,10 +16,10 @@ module "zones" {
   template = "test"
   zones = {
     "Trust-L3" = {
-        mode = "layer3"
+      mode = "layer3"
     }
     "Untrust-L3" = {
-        mode = "layer3"
+      mode = "layer3"
     }
   }
 }

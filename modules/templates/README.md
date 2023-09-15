@@ -15,7 +15,7 @@ module "templates" {
 
   templates = {
     "test-template" = {
-        description = "My test template"
+      description = "My test template"
     }
   }
 }

@@ -15,8 +15,8 @@ module "template_stacks" {
 
   template_stacks = {
     "test-template-stack" = {
-        description = "My test template stack with devices"
-        templates   = ["test-template"]
+      description = "My test template stack with devices"
+      templates   = ["test-template"]
     }
   }
 }

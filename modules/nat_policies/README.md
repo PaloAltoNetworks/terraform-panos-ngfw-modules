@@ -19,33 +19,33 @@ module "nat_policies" {
         rulebase = "pre-rulebase"
         rules = [
         {
-            name = "DNS config rule"
-            tags = [
+          name = "DNS config rule"
+          tags = [
             "dns-proxy",
             "Managed by Terraform"
-            ]
-            original_packet = {
+          ]
+          original_packet = {
             destination_addresses = ["any"]
             destination_zone      = "Trust-L3"
             source_addresses      = ["any"]
             source_zones          = ["Untrust-L3"]
             service               = "any"
-            }
-            translated_packet = {
+          }
+          translated_packet = {
             source = {
-                dynamic_ip = {
-                translated_addresses = ["DNS-Servers"]
-                }
+              dynamic_ip = {
+              translated_addresses = ["DNS-Servers"]
+              }
             }
             destination = {
-                static_translation = {
-                address = "2.2.2.2"
-                port    = "80"
-                }
+              static_translation = {
+              address = "2.2.2.2"
+              port    = "80"
+              }
             }
-            }
+          }
         }
-        ]
+      ]
     }
   }
 }

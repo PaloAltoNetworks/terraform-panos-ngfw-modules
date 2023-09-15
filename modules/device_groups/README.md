@@ -15,7 +15,7 @@ module "device_groups" {
 
   device_groups = {
     "aws-test-dg" = {
-        description = "Device group used for AWS cloud"
+      description = "Device group used for AWS cloud"
     }
   }
 }

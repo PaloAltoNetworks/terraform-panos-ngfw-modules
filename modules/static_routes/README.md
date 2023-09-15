@@ -17,29 +17,29 @@ module "static_routes" {
 
   static_routes = {
     "vr_default_unicast_0.0.0.0" = {
-        virtual_router = "vr"
-        route_table    = "unicast"
-        destination    = "0.0.0.0/0"
-        interface      = "ethernet1/1"
-        type           = "ip-address"
-        next_hop       = "10.1.1.1"
-        metric         = 10
+      virtual_router = "vr"
+      route_table    = "unicast"
+      destination    = "0.0.0.0/0"
+      interface      = "ethernet1/1"
+      type           = "ip-address"
+      next_hop       = "10.1.1.1"
+      metric         = 10
     }
     "vr_internal_unicast_10.10.10.0" = {
-        virtual_router = "internal"
-        route_table    = "unicast"
-        destination    = "10.10.10.0/24"
-        interface      = "tunnel.42"
-        type           = ""
+      virtual_router = "internal"
+      route_table    = "unicast"
+      destination    = "10.10.10.0/24"
+      interface      = "tunnel.42"
+      type           = ""
     }
     "vr_external_unicast_0.0.0.0" = {
-        virtual_router = "external"
-        route_table    = "unicast"
-        destination    = "0.0.0.0/0"
-        interface      = "ethernet1/2"
-        type           = "ip-address"
-        next_hop       = "10.1.2.1"
-        metric         = 10
+      virtual_router = "external"
+      route_table    = "unicast"
+      destination    = "0.0.0.0/0"
+      interface      = "ethernet1/2"
+      type           = "ip-address"
+      next_hop       = "10.1.2.1"
+      metric         = 10
     }
   }
 }
