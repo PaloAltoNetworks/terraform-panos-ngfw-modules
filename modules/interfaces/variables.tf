@@ -49,7 +49,7 @@ variable "interfaces" {
   - `adjust_tcp_mss` - (Optional) Adjust TCP MSS (default: false).
   - `ipv4_mss_adjust` - (Optional, PAN-OS 7.1+) The IPv4 MSS adjust value.
   - `ipv6_mss_adjust` - (Optional, PAN-OS 7.1+) The IPv6 MSS adjust value.
-  
+
   Parameters available only for `ethernet` interfaces:
   - `mode` - (Optional) The interface mode, required for `ethernet` interfaces. This can be any of the following values: layer3, layer2, virtual-wire, tap, ha, decrypt-mirror, or aggregate-group.
   - `enable_dhcp` - (Optional) Set to true to enable DHCP on this interface.
