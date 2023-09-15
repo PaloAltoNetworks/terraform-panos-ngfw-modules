@@ -1,3 +1,63 @@
+Palo Alto Networks PAN-OS Virtual Routers Module
+---
+This Terraform module allows users to configure virtual routers.
+
+Usage
+---
+
+1. Create a **"main.tf"** file with the following content:
+
+```terraform
+module "virtual_routers" {
+  source  = "PaloAltoNetworks/terraform-panos-ngfw-modules//modules/virtual_routers"
+
+  mode = "panorama" # If you want to use this module with a firewall, change this to "ngfw"
+
+  template = "test"
+
+  virtual_routers = {
+  "vr" = {
+        static_routes = {
+        custom-ip = {
+            destination = "10.10.20.0/24"
+            next_hop    = "10.10.10.1"
+            type        = "ip-address"
+        }
+        internal-vr = {
+            destination = "10.10.0.0/16"
+            next_hop    = "internal"
+            type        = "next-vr"
+        }
+        }
+    }
+    "external" = {}
+    "internal" = {}
+  }
+}
+```
+
+2. Run Terraform
+
+```
+terraform init
+terraform apply
+terraform output
+```
+
+Cleanup
+---
+
+```
+terraform destroy
+```
+
+Compatibility
+---
+This module is meant for use with **PAN-OS >= 10.2** and **Terraform >= 1.4.0**
+
+
+Reference
+---
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ### Requirements
 

@@ -1,3 +1,78 @@
+Palo Alto Networks PAN-OS NAT Policies Module
+---
+This Terraform module allows users to configure NAT policies.
+
+Usage
+---
+
+1. Create a **"main.tf"** file with the following content:
+
+```terraform
+module "nat_policies" {
+  source  = "PaloAltoNetworks/terraform-panos-ngfw-modules//modules/nat_policies"
+
+  mode = "panorama" # If you want to use this module with a firewall, change this to "ngfw"
+
+  device_group = "test"
+  nat_policies = {
+    "required_nat" = {
+        rulebase = "pre-rulebase"
+        rules = [
+        {
+            name = "DNS config rule"
+            tags = [
+            "dns-proxy",
+            "Managed by Terraform"
+            ]
+            original_packet = {
+            destination_addresses = ["any"]
+            destination_zone      = "Trust-L3"
+            source_addresses      = ["any"]
+            source_zones          = ["Untrust-L3"]
+            service               = "any"
+            }
+            translated_packet = {
+            source = {
+                dynamic_ip = {
+                translated_addresses = ["DNS-Servers"]
+                }
+            }
+            destination = {
+                static_translation = {
+                address = "2.2.2.2"
+                port    = "80"
+                }
+            }
+            }
+        }
+        ]
+    }
+  }
+}
+```
+
+2. Run Terraform
+
+```
+terraform init
+terraform apply
+terraform output
+```
+
+Cleanup
+---
+
+```
+terraform destroy
+```
+
+Compatibility
+---
+This module is meant for use with **PAN-OS >= 10.2** and **Terraform >= 1.4.0**
+
+
+Reference
+---
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ### Requirements
 

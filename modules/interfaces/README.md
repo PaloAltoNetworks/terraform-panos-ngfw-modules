@@ -1,3 +1,69 @@
+Palo Alto Networks PAN-OS Interfaces Module
+---
+This Terraform module allows users to configure interfaces.
+
+Usage
+---
+
+1. Create a **"main.tf"** file with the following content:
+
+```terraform
+module "interfaces" {
+  source  = "PaloAltoNetworks/terraform-panos-ngfw-modules//modules/interfaces"
+
+  mode = "panorama" # If you want to use this module with a firewall, change this to "ngfw"
+
+  template = "test"
+
+  interfaces = {
+    "ethernet1/1" = {
+        type                      = "ethernet"
+        mode                      = "layer3"
+        management_profile        = "mgmt_default"
+        link_state                = "up"
+        enable_dhcp               = true
+        create_dhcp_default_route = false
+        comment                   = "mgmt"
+        virtual_router            = "vr"
+        zone                      = "mgmt"
+        vsys                      = "vsys1"
+    }
+    "ethernet1/2" = {
+        type               = "ethernet"
+        mode               = "layer3"
+        management_profile = "mgmt_default"
+        link_state         = "up"
+        comment            = "external"
+        virtual_router     = "external"
+        zone               = "external"
+        vsys               = "vsys1"
+    }
+  }
+}
+```
+
+2. Run Terraform
+
+```
+terraform init
+terraform apply
+terraform output
+```
+
+Cleanup
+---
+
+```
+terraform destroy
+```
+
+Compatibility
+---
+This module is meant for use with **PAN-OS >= 10.2** and **Terraform >= 1.4.0**
+
+
+Reference
+---
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ### Requirements
 

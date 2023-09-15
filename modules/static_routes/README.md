@@ -1,3 +1,72 @@
+Palo Alto Networks PAN-OS Static Routes Module
+---
+This Terraform module allows users to configure static routes.
+
+Usage
+---
+
+1. Create a **"main.tf"** file with the following content:
+
+```terraform
+module "static_routes" {
+  source  = "PaloAltoNetworks/terraform-panos-ngfw-modules//modules/static_routes"
+
+  mode = "panorama" # If you want to use this module with a firewall, change this to "ngfw"
+
+  template = "test"
+
+  static_routes = {
+    "vr_default_unicast_0.0.0.0" = {
+        virtual_router = "vr"
+        route_table    = "unicast"
+        destination    = "0.0.0.0/0"
+        interface      = "ethernet1/1"
+        type           = "ip-address"
+        next_hop       = "10.1.1.1"
+        metric         = 10
+    }
+    "vr_internal_unicast_10.10.10.0" = {
+        virtual_router = "internal"
+        route_table    = "unicast"
+        destination    = "10.10.10.0/24"
+        interface      = "tunnel.42"
+        type           = ""
+    }
+    "vr_external_unicast_0.0.0.0" = {
+        virtual_router = "external"
+        route_table    = "unicast"
+        destination    = "0.0.0.0/0"
+        interface      = "ethernet1/2"
+        type           = "ip-address"
+        next_hop       = "10.1.2.1"
+        metric         = 10
+    }
+  }
+}
+```
+
+2. Run Terraform
+
+```
+terraform init
+terraform apply
+terraform output
+```
+
+Cleanup
+---
+
+```
+terraform destroy
+```
+
+Compatibility
+---
+This module is meant for use with **PAN-OS >= 10.2** and **Terraform >= 1.4.0**
+
+
+Reference
+---
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ### Requirements
 

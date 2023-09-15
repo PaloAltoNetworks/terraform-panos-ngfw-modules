@@ -1,19 +1,162 @@
-Palo Alto Networks PAN-OS based platforms Security Profiles Module for Policy as Code
+Palo Alto Networks PAN-OS Security Profiles Module
 ---
-This Terraform module allows users to configure security profiles (Antivirus, Anti-Spyware, File Blocking,
-Vulnerability, and Wildfire Analysis) with Palo Alto Networks **PAN-OS** based PA-Series devices.
+This Terraform module allows users to configure security profiles.
 
-
-Caveats
+Usage
 ---
 
-* Security profiles can be associated to one or more polices on a PAN-OS device. Once a security profile is associated
-  to a policy, it can only be deleted if there are no policies associated with that security profiles. If the users
-  tries to delete a security profile that is associated with any policy, they will encounter an error. This is a
-  behavior on a PAN-OS device. This module creates, updates and deletes security profiles with Terraform. If a tag
-  associated to a security profile is deleted from the panorama, the module will throw an error when trying to create
-  the profile. This is the correct and expected behavior as the profile is being used in a policy.
+1. Create a **"main.tf"** file with the following content:
 
+```terraform
+module "security_profiles" {
+  source  = "PaloAltoNetworks/terraform-panos-ngfw-modules//modules/security_profiles"
+
+  mode = "panorama" # If you want to use this module with a firewall, change this to "ngfw"
+
+  device_group = "test"
+
+  antivirus_profiles                = {
+    test-av-profile = {
+      decoders = [
+        {
+          name = "http"
+        }
+      ]
+      application_exceptions = [
+        { application = "atmail" },
+        { application = "alisoft" }
+      ]
+      machine_learning_models = [
+        {
+          model  = "Windows Executables"
+          action = "disable"
+        }
+      ]
+      machine_learning_exceptions = [
+        {
+          name = "my-exception"
+        },
+        {
+          name        = "sample-virus"
+          filename    = "test-virus-file"
+          description = "Test virus file"
+        }
+      ]
+    }
+  }
+  antispyware_profiles              = {
+    test-antispyware = {
+      rules = [
+        {
+          name              = "test-policy"
+          action            = "block-ip"
+          block_ip_duration = 60
+        }
+      ]
+    }
+  }
+  file_blocking_profiles            = {
+    outbound-test = {
+      rules = [
+        {
+          name         = "Alert-All"
+          applications = ["any"]
+          file_types   = ["any"]
+          direction    = "both"
+          action       = "alert"
+        },
+        {
+          name         = "Block"
+          applications = ["any"]
+          file_types = [
+            "7z",
+            "bat",
+            "chm",
+            "class",
+            "cpl",
+            "dll",
+            "hlp",
+            "hta",
+            "jar",
+            "ocx",
+            "pif",
+            "scr",
+            "torrent",
+            "vbe",
+            "wsf"
+          ]
+          direction = "both"
+          action    = "block"
+        }
+      ]
+    }
+  }
+  vulnerability_protection_profiles = {
+    outbound-test = {
+      rules = [
+        {
+          name           = "Block-Critical-High-Medium"
+          action         = "reset-both"
+          vendor_ids     = ["any"]
+          severities     = ["critical", "high", "medium"]
+          cves           = ["any"]
+          threat_name    = "any"
+          host           = "any"
+          category       = "any"
+          packet_capture = "single-packet"
+        },
+        {
+          name           = "Default-Low-Info"
+          action         = "default"
+          vendor_ids     = ["any"]
+          severities     = ["low", "informational"]
+          cves           = ["any"]
+          threat_name    = "any"
+          host           = "any"
+          category       = "any"
+          packet_capture = "disable"
+        }
+      ]
+    }
+  }
+  wildfire_analysis_profiles        = {
+    outbound-test = {
+      rules = [
+        {
+          name         = "Forward-All"
+          applications = ["any"]
+          file_types   = ["any"]
+          direction    = "both"
+          analysis     = "public-cloud"
+        }
+      ]
+    }
+  }
+}
+```
+
+2. Run Terraform
+
+```
+terraform init
+terraform apply
+terraform output
+```
+
+Cleanup
+---
+
+```
+terraform destroy
+```
+
+Compatibility
+---
+This module is meant for use with **PAN-OS >= 10.2** and **Terraform >= 1.4.0**
+
+
+Reference
+---
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ### Requirements
 

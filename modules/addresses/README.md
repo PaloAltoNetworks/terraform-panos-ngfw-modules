@@ -8,27 +8,27 @@ Usage
 1. Create a **"main.tf"** file with the following content:
 
 ```terraform
-module "policy-as-code_policy" {
+module "address" {
   source  = "PaloAltoNetworks/terraform-panos-ngfw-modules//modules/address"
 
-  mode = "panorama" # If you want to use this module with a firewall, change this to "firewall"
+  mode = "panorama" # If you want to use this module with a firewall, change this to "ngfw"
 
-  address_objects =   {
-    FOO = {
-      value       = "1.1.1.1/32"
-      type        = "ip-netmask"
+  device_group    = "test"
+  address_objects = {
+    DNS1 = {
+      "value"       = "1.1.1.1/32"
+      "type"        = "ip-netmask"
+      "description" = "DNS-SRV-Public-1"
     },
-    BAR = {
-      type        = "fqdn"
-      value       = "updates.paloaltonetworks.com"
-      description = "Palo Alto updates"
-    }
-  }
-
-  address_group   = {
-    ExampleGroup = {
-      members     = ["FOO", "BAR"]
-      description = "DNS servers"
+    DNS2 = {
+      "value"       = "1.0.0.1/32"
+      "type"        = "ip-netmask"
+      "description" = "DNS-SRV-Public-2"
+    },
+    DNS3 = {
+      "value"       = "8.8.4.4/32"
+      "type"        = "ip-netmask"
+      "description" = "DNS-GOOGLE-1"
     }
   }
 }
@@ -39,7 +39,7 @@ module "policy-as-code_policy" {
 ```
 terraform init
 terraform apply
-terraform output -json
+terraform output
 ```
 
 Cleanup
@@ -54,7 +54,8 @@ Compatibility
 This module is meant for use with **PAN-OS >= 10.2** and **Terraform >= 1.4.0**
 
 
-
+Reference
+---
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ### Requirements
 

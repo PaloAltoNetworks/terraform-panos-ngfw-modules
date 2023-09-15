@@ -1,3 +1,56 @@
+Palo Alto Networks PAN-OS Management Profiles Module
+---
+This Terraform module allows users to configure management profiles.
+
+Usage
+---
+
+1. Create a **"main.tf"** file with the following content:
+
+```terraform
+module "management_profiles" {
+  source  = "PaloAltoNetworks/terraform-panos-ngfw-modules//modules/management_profiles"
+
+  mode = "panorama" # If you want to use this module with a firewall, change this to "ngfw"
+
+  template = "test"
+
+  management_profiles = {
+    "mgmt_default" = {
+        ping          = true
+        telnet        = false
+        ssh           = true
+        http          = false
+        https         = true
+        snmp          = false
+        permitted_ips = ["1.1.1.1/32", "2.2.2.2/32"]
+    }
+  }
+}
+```
+
+2. Run Terraform
+
+```
+terraform init
+terraform apply
+terraform output
+```
+
+Cleanup
+---
+
+```
+terraform destroy
+```
+
+Compatibility
+---
+This module is meant for use with **PAN-OS >= 10.2** and **Terraform >= 1.4.0**
+
+
+Reference
+---
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ### Requirements
 

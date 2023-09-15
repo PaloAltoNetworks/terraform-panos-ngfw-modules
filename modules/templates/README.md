@@ -1,3 +1,48 @@
+Palo Alto Networks PAN-OS Templates Module
+---
+This Terraform module allows users to configure templates.
+
+Usage
+---
+
+1. Create a **"main.tf"** file with the following content:
+
+```terraform
+module "templates" {
+  source  = "PaloAltoNetworks/terraform-panos-ngfw-modules//modules/templates"
+
+  mode = "panorama"
+
+  templates = {
+    "test-template" = {
+        description = "My test template"
+    }
+  }
+}
+```
+
+2. Run Terraform
+
+```
+terraform init
+terraform apply
+terraform output
+```
+
+Cleanup
+---
+
+```
+terraform destroy
+```
+
+Compatibility
+---
+This module is meant for use with **PAN-OS >= 10.2** and **Terraform >= 1.4.0**
+
+
+Reference
+---
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ### Requirements
 

@@ -1,76 +1,28 @@
-Palo Alto Networks PAN-OS based platforms Policy Module for Policy as Code
+Palo Alto Networks PAN-OS Security Policies Module
 ---
-This Terraform module allows users to configure Security Policies with Palo Alto Networks **PAN-OS** based PA-Series devices.
+This Terraform module allows users to configure security policies.
 
 Usage
 ---
 
-1. Create a JSON/YAML file to config one or more of the following: tags, address objects, address groups, services, nat
-   rules, and security policy. Please note that the file(s) must adhere to its respective schema.
-
-Below is an example of a JSON file to create Tags.
-
-```json
-[
-  {
-    "name": "trust"
-  },
-  {
-    "name": "untrust",
-    "comment": "for untrusted zones",
-    "color": "color4"
-  },
-  {
-    "name": "AWS",
-    "device_group": "AWS",
-    "color": "color8"
-  }
-]
-```
-
-Below is an example of a YAML file to create Tags.
-
-```yaml
----
-- name: trust
-- name: untrust
-  comment: for untrusted zones
-  color: color4
-- name: AWS
-  device_group: AWS
-  color: color8
-```
-
-2. Create a **"main.tf"** with the panos provider and policy module blocks.
+1. Create a **"main.tf"** file with the following content:
 
 ```terraform
-provider "panos" {
-  hostname = "<panos_address>"
-  username = "<admin_username>"
-  password = "<admin_password>"
-}
+module "security_policies" {
+  source  = "PaloAltoNetworks/terraform-panos-ngfw-modules//modules/security_policies"
 
-module "policy-as-code_policy" {
-  source  = "PaloAltoNetworks/terraform-panos-ngfw-modules//modules/policy"
-  version = "0.1.0"
+  mode = "panorama" # If you want to use this module with a firewall, change this to "ngfw"
 
-  #for JSON examples: try(jsondecode(file("<*.json>")), {})
-  #for YAML examples: try(yamldecode(file("<*.yaml>")), {})
-  tags       = try(...decode(file("<tags JSON/YAML>")), {}) # eg. "tags.json"
-  services   = try(...decode(file("<services JSON/YAML>")), {})
-  addr_group = try(...decode(file("<address groups JSON/YAML>")), {})
-  addr_obj   = try(...decode(file("<address objects JSON/YAML>")), {})
-  sec        = try(...decode(file("<security policies JSON/YAML>")), {})
-  nat        = try(...decode(file("<NAT policies JSON/YAML>")), {})
+  YYYYYYYYYYYYYYYY
 }
 ```
 
-4. Run Terraform
+2. Run Terraform
 
 ```
 terraform init
 terraform apply
-terraform output -json
+terraform output
 ```
 
 Cleanup
@@ -80,6 +32,13 @@ Cleanup
 terraform destroy
 ```
 
+Compatibility
+---
+This module is meant for use with **PAN-OS >= 10.2** and **Terraform >= 1.4.0**
+
+
+Reference
+---
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ### Requirements
 

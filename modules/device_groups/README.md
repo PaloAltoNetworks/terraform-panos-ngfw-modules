@@ -1,3 +1,48 @@
+Palo Alto Networks PAN-OS Device Groups Module
+---
+This Terraform module allows users to configure device groups.
+
+Usage
+---
+
+1. Create a **"main.tf"** file with the following content:
+
+```terraform
+module "device_groups" {
+  source  = "PaloAltoNetworks/terraform-panos-ngfw-modules//modules/device_groups"
+
+  mode = "panorama"
+
+  device_groups = {
+    "aws-test-dg" = {
+        description = "Device group used for AWS cloud"
+    }
+  }
+}
+```
+
+2. Run Terraform
+
+```
+terraform init
+terraform apply
+terraform output
+```
+
+Cleanup
+---
+
+```
+terraform destroy
+```
+
+Compatibility
+---
+This module is meant for use with **PAN-OS >= 10.2** and **Terraform >= 1.4.0**
+
+
+Reference
+---
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ### Requirements
 
