@@ -79,7 +79,7 @@ variable "address_groups" {
   description = <<-EOF
   Map of the address group objects, where key is the address group's name:
   - `members`: (optional) The address objects to include in this statically defined address group.
-  - `dynamic_match`: (optional) The IP tags to include in this DAG. Inputs are structured as follows `'<tag name>' and ...` or `<tag name>`
+  - `dynamic_match`: (optional) The IP tags to include in this DAG. Inputs are structured as follows `'<tag name>' and ...` or `'<tag name>' or ...` or mix both `and`/`or`.
   - `description`: (optional) The description of the address group.
   - `tags`: (optional) List of administrative tags.
 
