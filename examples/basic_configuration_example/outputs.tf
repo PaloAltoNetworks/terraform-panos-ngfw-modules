@@ -95,9 +95,9 @@ output "template_stacks" {
   ])
 }
 
-output "security_policies" {
-  value = flatten([for k, v in module.security_policies : concat(
-    [for zk, zv in v.security_rule_groups : { "device_group" : k, "security_policy" : zk, "id" : zv.id }]
+output "security_rule_groups" {
+  value = flatten([for k, v in module.security_rule_groups : concat(
+    [for zk, zv in v.security_rule_groups : { "device_group" : k, "security_rule_groups" : zk, "id" : zv.id }]
   )])
 }
 

@@ -173,13 +173,13 @@ module "template_stacks" {
 }
 
 
-module "security_policies" {
+module "security_rule_groups" {
   for_each = var.device_groups
-  source   = "../../modules/security_policies"
+  source   = "../../modules/security_rule_groups"
   mode     = var.mode
 
-  device_group      = each.key
-  security_policies = var.security_policies
+  device_group         = each.key
+  security_rule_groups = var.security_rule_groups
 
   depends_on = [
     module.address_groups, module.service_groups, module.zones,

@@ -63,8 +63,8 @@ variable "log_forwarding_profiles_shared" {
   type        = any
 }
 
-variable "security_policies" {
-  description = "Security policies"
+variable "security_rule_groups" {
+  description = "Security rule groups"
   default     = {}
   type        = any
 }
