@@ -140,7 +140,7 @@ variable "ike_gateways" {
   - `peer_ip_value` - (Optional) The peer IP value.
   - `interface` - (Required) The interface.
   - `local_ip_address_type` - (Optional) The local IP address type. Valid values for this are ip, floating-ip, or an empty string (the default) which is None.
-  - `local_ip_address_value - (Optional) The IP address if local_ip_address_type is set to ip.
+  - `local_ip_address_value` - (Optional) The IP address if local_ip_address_type is set to ip.
   - `auth_type` - (Optional) The auth type. Valid values are pre-shared-key (the default), or certificate.
   - `pre_shared_key` - (Optional) The pre-shared key value.
   - `local_id_type` - (Optional) The local ID type. Valid values are ipaddr, fqdn, ufqdn, keyid, or dn.
