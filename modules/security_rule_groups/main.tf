@@ -1,5 +1,5 @@
 resource "panos_security_rule_group" "this" {
-  for_each = var.security_policies
+  for_each = var.security_rule_groups
 
   device_group = var.mode_map[var.mode] == 0 ? var.device_group : null
   rulebase     = var.mode_map[var.mode] == 0 ? each.value.rulebase : null

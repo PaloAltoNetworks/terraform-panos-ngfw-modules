@@ -74,7 +74,7 @@ No providers.
 | <a name="module_ipsec"></a> [ipsec](#module\_ipsec) | ../../modules/ipsec | n/a |
 | <a name="module_templates"></a> [templates](#module\_templates) | ../../modules/templates | n/a |
 | <a name="module_template_stacks"></a> [template\_stacks](#module\_template\_stacks) | ../../modules/template_stacks | n/a |
-| <a name="module_security_policies"></a> [security\_policies](#module\_security\_policies) | ../../modules/security_policies | n/a |
+| <a name="module_security_rule_groups"></a> [security\_rule\_groups](#module\_security\_rule\_groups) | ../../modules/security_rule_groups | n/a |
 | <a name="module_nat_policies"></a> [nat\_policies](#module\_nat\_policies) | ../../modules/nat_policies | n/a |
 | <a name="module_security_profiles"></a> [security\_profiles](#module\_security\_profiles) | ../../modules/security_profiles | n/a |
 | <a name="module_log_forwarding_profiles_shared"></a> [log\_forwarding\_profiles\_shared](#module\_log\_forwarding\_profiles\_shared) | ../../modules/log_forwarding_profiles | n/a |
@@ -98,7 +98,7 @@ No resources.
 | <a name="input_service_groups"></a> [service\_groups](#input\_service\_groups) | Service groups object | `any` | `{}` | no |
 | <a name="input_security_profiles"></a> [security\_profiles](#input\_security\_profiles) | Map with security profiles. | `any` | `{}` | no |
 | <a name="input_log_forwarding_profiles_shared"></a> [log\_forwarding\_profiles\_shared](#input\_log\_forwarding\_profiles\_shared) | Map with log forwarding profiles. | `any` | `{}` | no |
-| <a name="input_security_policies"></a> [security\_policies](#input\_security\_policies) | Security policies | `any` | `{}` | no |
+| <a name="input_security_rule_groups"></a> [security\_rule\_groups](#input\_security\_rule\_groups) | Security rule groups | `any` | `{}` | no |
 | <a name="input_nat_policies"></a> [nat\_policies](#input\_nat\_policies) | Security policies | `any` | `{}` | no |
 | <a name="input_interfaces"></a> [interfaces](#input\_interfaces) | n/a | `any` | n/a | yes |
 | <a name="input_management_profiles"></a> [management\_profiles](#input\_management\_profiles) | n/a | `any` | n/a | yes |
@@ -130,7 +130,7 @@ No resources.
 | <a name="output_ipsec"></a> [ipsec](#output\_ipsec) | n/a |
 | <a name="output_templates"></a> [templates](#output\_templates) | n/a |
 | <a name="output_template_stacks"></a> [template\_stacks](#output\_template\_stacks) | n/a |
-| <a name="output_security_policies"></a> [security\_policies](#output\_security\_policies) | n/a |
+| <a name="output_security_rule_groups"></a> [security\_rule\_groups](#output\_security\_rule\_groups) | n/a |
 | <a name="output_nat_policies"></a> [nat\_policies](#output\_nat\_policies) | n/a |
 | <a name="output_security_profiles"></a> [security\_profiles](#output\_security\_profiles) | n/a |
 | <a name="output_log_forwarding_profiles_shared"></a> [log\_forwarding\_profiles\_shared](#output\_log\_forwarding\_profiles\_shared) | n/a |

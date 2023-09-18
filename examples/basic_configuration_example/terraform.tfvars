@@ -229,7 +229,7 @@ service_groups = {
 
 ### Security policies
 
-security_policies = {
+security_rule_groups = {
   "allow_rule_group" = {
     rulebase = "pre-rulebase"
     rules = [

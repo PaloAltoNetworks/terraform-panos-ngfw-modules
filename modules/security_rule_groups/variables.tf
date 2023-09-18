@@ -33,9 +33,9 @@ variable "vsys" {
 }
 
 #policy
-variable "security_policies" {
+variable "security_rule_groups" {
   description = <<-EOF
-  Map with groups of security policies to apply. Each item supports following parameters:
+  Map with groups of security rules to apply. Each item supports following parameters:
   - `rulebase`: (optional) The rulebase for the Security Policy. Valid values are `pre-rulebase` and `post-rulebase` (default: `pre-rulebase`).
   - `position_keyword`: (optional) A positioning keyword for this group. Valid values are `before`, `directly before`, `after`, `directly after`, `top`, `bottom`, or left empty to have no particular placement (default: empty). This parameter works in combination with the `position_reference` parameter.
   - `position_reference`: (optional) Required if `position_keyword` is one of the "above" or "below" variants, this is the name of a non-group rule to use as a reference to place this group.
@@ -182,7 +182,7 @@ variable "security_policies" {
   }))
   validation {
     condition = alltrue([
-      for rule_group in var.security_policies : alltrue([
+      for rule_group in var.security_rule_groups : alltrue([
         for rule in rule_group.rules :
         contains(["universal", "interzone", "intrazone"], coalesce(rule.type, "universal"))
       ])
@@ -191,7 +191,7 @@ variable "security_policies" {
   }
   validation {
     condition = alltrue([
-      for rule_group in var.security_policies : alltrue([
+      for rule_group in var.security_rule_groups : alltrue([
         for rule in rule_group.rules :
         contains([
           "allow", "deny", "drop", "reset-client", "reset-server", "reset-both"
