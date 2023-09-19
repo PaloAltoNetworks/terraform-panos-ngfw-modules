@@ -1,9 +1,10 @@
 resource "panos_panorama_template_stack" "this" {
   for_each = var.mode_map[var.mode] == 0 ? var.template_stacks : {}
 
-  name        = each.key
-  description = each.value.description
-  templates   = each.value.templates
+  name         = each.key
+  description  = each.value.description
+  templates    = each.value.templates
+  default_vsys = each.value.default_vsys
 
   lifecycle {
     create_before_destroy = true
