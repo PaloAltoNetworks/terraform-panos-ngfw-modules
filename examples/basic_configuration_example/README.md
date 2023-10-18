@@ -4,37 +4,41 @@ This folder shows an example of Terraform code and HCL files that deploy configu
 
 ## Usage
 
-1. Create credential file. In `terraform.tfvars` the path with credentials is ``./creds/credentials.json`` and file structure should look like:
-```json
-{
-    "hostname": "IP_ADDRESS",
-    "username": "ACCOUNT_NAME",
-    "password": "PASSWORD"
-}
-```
+1. Configure credentials and target system address. In this example they are provided using panos provider JSON configuration file that is provided using `panos_config_file` variable. Relevant arguments are as follows:
 
-or using API keys:
+    - for username/password authentication:
 
-```json
-{
-    "hostname": "IP_ADDRESS",
-    "api_key": "API_KEY"
-}
-```
+    ```json
+    {
+        "hostname": "ADDRESS",
+        "username": "ACCOUNT_NAME",
+        "password": "PASSWORD"
+    }
+    ```
 
-where `API_KEY` was generated from as [described in PAN-OS API Guide](https://docs.paloaltonetworks.com/pan-os/10-2/pan-os-panorama-api/get-started-with-the-pan-os-xml-api/get-your-api-key):
+    - for API key authentication:
 
-```
-curl 'https://IP_ADDRESS/api/?type=keygen&user=ACCOUNT_NAME&password=PASSWORD'
-```
+    ```json
+    {
+        "hostname": "ADDRESS",
+        "api_key": "API_KEY"
+    }
+    ```
 
+    The `API_KEY` can be generated as [described in PAN-OS API Guide](https://docs.paloaltonetworks.com/pan-os/10-2/pan-os-panorama-api/get-started-with-the-pan-os-xml-api/get-your-api-key):
+
+    ```
+    $ curl 'https://ADDRESS/api/?type=keygen&user=ACCOUNT_NAME&password=PASSWORD'
+    ```
+
+    For more details regarding available arguments, please refer to [provider documentation](https://registry.terraform.io/providers/PaloAltoNetworks/panos/latest/docs#argument-reference).
 
 2. Initialize Terraform and apply changes:
 
-```
-terraform init
-terraform apply
-```
+    ```
+    terraform init
+    terraform apply
+    ```
 
 ## Cleanup
 
@@ -63,6 +67,7 @@ No providers.
 | <a name="module_device_groups"></a> [device\_groups](#module\_device\_groups) | ../../modules/device_groups | n/a |
 | <a name="module_tags"></a> [tags](#module\_tags) | ../../modules/tags | n/a |
 | <a name="module_addresses"></a> [addresses](#module\_addresses) | ../../modules/addresses | n/a |
+| <a name="module_addresses_bulk"></a> [addresses\_bulk](#module\_addresses\_bulk) | ../../modules/addresses | n/a |
 | <a name="module_address_groups"></a> [address\_groups](#module\_address\_groups) | ../../modules/addresses | n/a |
 | <a name="module_services"></a> [services](#module\_services) | ../../modules/services | n/a |
 | <a name="module_service_groups"></a> [service\_groups](#module\_service\_groups) | ../../modules/services | n/a |
@@ -87,12 +92,14 @@ No resources.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_panos_config_file"></a> [panos\_config\_file](#input\_panos\_config\_file) | Path to a JSON configuration file for `panos` provider. | `string` | n/a | yes |
+| <a name="input_panos_timeout"></a> [panos\_timeout](#input\_panos\_timeout) | Timeout in seconds for all provider communication with target system, defaults to `10`. Can also be specified within JSON configuration file. | `number` | `null` | no |
+| <a name="input_mode"></a> [mode](#input\_mode) | Provide information about target. | `string` | `""` | no |
 | <a name="input_device_groups"></a> [device\_groups](#input\_device\_groups) | Used if `var.mode` is panorama, this defines the Device Group for the deployment | `any` | `{}` | no |
 | <a name="input_vsys"></a> [vsys](#input\_vsys) | Used if `var.mode` is ngfw, this defines the vsys for the deployment | `string` | `"vsys1"` | no |
-| <a name="input_pan_creds"></a> [pan\_creds](#input\_pan\_creds) | Path to file with credentials to Panorama | `string` | n/a | yes |
-| <a name="input_mode"></a> [mode](#input\_mode) | Provide information about target. | `string` | `""` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | Tags object | `any` | `{}` | no |
-| <a name="input_addresses"></a> [addresses](#input\_addresses) | Address object | `any` | `{}` | no |
+| <a name="input_addresses"></a> [addresses](#input\_addresses) | Address objects to manage using 'addresses' module's individual mode. | `any` | `{}` | no |
+| <a name="input_addresses_bulk"></a> [addresses\_bulk](#input\_addresses\_bulk) | Address objects to manage using 'addresses' module's bulk mode. | `any` | `{}` | no |
 | <a name="input_address_groups"></a> [address\_groups](#input\_address\_groups) | Address groups object | `any` | `{}` | no |
 | <a name="input_services"></a> [services](#input\_services) | Services object | `any` | `{}` | no |
 | <a name="input_service_groups"></a> [service\_groups](#input\_service\_groups) | Service groups object | `any` | `{}` | no |
@@ -119,6 +126,7 @@ No resources.
 | <a name="output_device_groups"></a> [device\_groups](#output\_device\_groups) | n/a |
 | <a name="output_tags"></a> [tags](#output\_tags) | n/a |
 | <a name="output_addresses"></a> [addresses](#output\_addresses) | n/a |
+| <a name="output_addresses_bulk"></a> [addresses\_bulk](#output\_addresses\_bulk) | n/a |
 | <a name="output_address_groups"></a> [address\_groups](#output\_address\_groups) | n/a |
 | <a name="output_services"></a> [services](#output\_services) | n/a |
 | <a name="output_service_groups"></a> [service\_groups](#output\_service\_groups) | n/a |

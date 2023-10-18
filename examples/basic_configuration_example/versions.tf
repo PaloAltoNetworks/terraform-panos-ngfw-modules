@@ -9,5 +9,6 @@ terraform {
 }
 
 provider "panos" {
-  json_config_file = var.pan_creds
+  json_config_file = var.panos_config_file
+  timeout          = var.panos_timeout
 }

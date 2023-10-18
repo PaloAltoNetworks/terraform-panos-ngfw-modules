@@ -1,3 +1,20 @@
+variable "panos_config_file" {
+  description = "Path to a JSON configuration file for `panos` provider."
+  type        = string
+}
+
+variable "panos_timeout" {
+  description = "Timeout in seconds for all provider communication with target system, defaults to `10`. Can also be specified within JSON configuration file."
+  default     = null
+  type        = number
+}
+
+variable "mode" {
+  description = "Provide information about target."
+  default     = ""
+  type        = string
+}
+
 variable "device_groups" {
   description = "Used if `var.mode` is panorama, this defines the Device Group for the deployment"
   default     = {}
@@ -10,17 +27,6 @@ variable "vsys" {
   type        = string
 }
 
-variable "pan_creds" {
-  description = "Path to file with credentials to Panorama"
-  type        = string
-}
-
-variable "mode" {
-  description = "Provide information about target."
-  default     = ""
-  type        = string
-}
-
 variable "tags" {
   description = "Tags object"
   default     = {}
@@ -28,7 +34,13 @@ variable "tags" {
 }
 
 variable "addresses" {
-  description = "Address object"
+  description = "Address objects to manage using 'addresses' module's individual mode."
+  default     = {}
+  type        = any
+}
+
+variable "addresses_bulk" {
+  description = "Address objects to manage using 'addresses' module's bulk mode."
   default     = {}
   type        = any
 }

@@ -1,5 +1,5 @@
 output "addresses" {
-  value = panos_address_object.this
+  value = var.addresses_bulk_mode ? panos_address_objects.this : panos_address_object.this
 }
 
 output "address_groups" {
