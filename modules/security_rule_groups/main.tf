@@ -14,10 +14,12 @@ resource "panos_security_rule_group" "this" {
       applications                       = rule.value.applications
       categories                         = rule.value.categories
       destination_addresses              = rule.value.destination_addresses
+      destination_devices                = rule.value.destination_devices
       destination_zones                  = rule.value.destination_zones
       name                               = rule.value.name
       services                           = rule.value.services
       source_addresses                   = rule.value.source_addresses
+      source_devices                     = rule.value.source_devices
       source_users                       = rule.value.source_users
       source_zones                       = rule.value.source_zones
       hip_profiles                       = rule.value.hip_profiles
@@ -42,8 +44,9 @@ resource "panos_security_rule_group" "this" {
       file_blocking                      = rule.value.file_blocking
       wildfire_analysis                  = rule.value.wildfire_analysis
       data_filtering                     = rule.value.data_filtering
-      negate_target                      = rule.value.negate_target
       audit_comment                      = rule.value.audit_comment
+      group_tag                          = rule.value.group_tag
+      negate_target                      = rule.value.negate_target
 
       dynamic "target" {
         for_each = try(rule.value.target, null) != null ? { for t in rule.value.target : t.serial => t } : {}

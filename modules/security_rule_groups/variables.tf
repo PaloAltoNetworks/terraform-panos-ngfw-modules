@@ -46,11 +46,13 @@ variable "security_rule_groups" {
     - `tags`: (optional) List of administrative tags.
     - `source_addresses`: (optional) List of source addresses (default: `any`).
     - `source_zones`: (optional) List of source zones (default: `any`).
-    - `negate_source`: (optional) Boolean designating if the source should be negated (default: `false`).
     - `source_users`: (optional) List of source users (default: `any`).
+    - `source_device`: (optional) List of source devices (default: `any`).
+    - `negate_source`: (optional) Boolean designating if the source should be negated (default: `false`).
     - `hip_profiles`: (optional) List of HIP profiles (default: `any`).
     - `destination_zones`: (optional) List of destination zones (default: `any`).
     - `destination_addresses`: (optional) List of destination addresses (default: `any`).
+    - `destination_device`: (optional) List of destination devices (default: `any`).
     - `negate_destination`: (optional) Boolean designating if the destination should be negated (default: `false`).
     - `applications`: (optional) List of applications (default: `any`).
     - `services`: (optional) List of services (default: `application-default`).
@@ -71,6 +73,8 @@ variable "security_rule_groups" {
     - `file_blocking`: (optional) Profile setting: `Profiles` - Input the desired File-Blocking profile name.
     - `wildfire_analysis`: (optional) Profile setting: `Profiles` - Input the desired Wildfire Analysis profile name.
     - `data_filtering`: (optional) Profile setting: `Profiles` - Input the desired Data Filtering profile name.
+    - `audit_comment`: (optional) Comment to apply when the rule is created/updated.
+    - `group_tag`: (optional) Group tag.
     - `negate_target`: (optional, Panorama only) Instead of applying the rule for the given serial numbers, apply it to everything except them.
     - `target`: (optional, Panorama only) A target definition,if there are no target sections, then the rule will apply to every vsys of every device in the device group.
 
@@ -146,11 +150,13 @@ variable "security_rule_groups" {
       tags                               = optional(list(string))
       source_zones                       = optional(list(string), ["any"])
       source_addresses                   = optional(list(string), ["any"])
-      negate_source                      = optional(string, false)
       source_users                       = optional(list(string), ["any"])
+      source_devices                     = optional(list(string), ["any"])
+      negate_source                      = optional(string, false)
       hip_profiles                       = optional(list(string), ["any"])
       destination_zones                  = optional(list(string), ["any"])
       destination_addresses              = optional(list(string), ["any"])
+      destination_devices                = optional(list(string), ["any"])
       negate_destination                 = optional(string, false)
       applications                       = optional(list(string), ["any"])
       services                           = optional(list(string), ["application-default"])
@@ -171,9 +177,9 @@ variable "security_rule_groups" {
       file_blocking                      = optional(string)
       wildfire_analysis                  = optional(string)
       data_filtering                     = optional(string)
-      group_tag                          = optional(list(string))
-      negate_target                      = optional(bool, false)
       audit_comment                      = optional(string)
+      group_tag                          = optional(string)
+      negate_target                      = optional(bool, false)
       target = optional(list(object({
         serial    = string
         vsys_list = optional(list(string))
