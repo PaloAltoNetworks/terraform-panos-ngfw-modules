@@ -74,6 +74,7 @@ No providers.
 | <a name="module_ipsec"></a> [ipsec](#module\_ipsec) | ../../modules/ipsec | n/a |
 | <a name="module_templates"></a> [templates](#module\_templates) | ../../modules/templates | n/a |
 | <a name="module_template_stacks"></a> [template\_stacks](#module\_template\_stacks) | ../../modules/template_stacks | n/a |
+| <a name="module_security_policies_post_rules"></a> [security\_policies\_post\_rules](#module\_security\_policies\_post\_rules) | ../../modules/security_policy | n/a |
 | <a name="module_security_rule_groups"></a> [security\_rule\_groups](#module\_security\_rule\_groups) | ../../modules/security_rule_groups | n/a |
 | <a name="module_nat_policies"></a> [nat\_policies](#module\_nat\_policies) | ../../modules/nat_policies | n/a |
 | <a name="module_security_profiles"></a> [security\_profiles](#module\_security\_profiles) | ../../modules/security_profiles | n/a |
@@ -98,6 +99,7 @@ No resources.
 | <a name="input_service_groups"></a> [service\_groups](#input\_service\_groups) | Service groups object | `any` | `{}` | no |
 | <a name="input_security_profiles"></a> [security\_profiles](#input\_security\_profiles) | Map with security profiles. | `any` | `{}` | no |
 | <a name="input_log_forwarding_profiles_shared"></a> [log\_forwarding\_profiles\_shared](#input\_log\_forwarding\_profiles\_shared) | Map with log forwarding profiles. | `any` | `{}` | no |
+| <a name="input_security_post_rules"></a> [security\_post\_rules](#input\_security\_post\_rules) | List with security post rules. | `any` | `[]` | no |
 | <a name="input_security_rule_groups"></a> [security\_rule\_groups](#input\_security\_rule\_groups) | Security rule groups | `any` | `{}` | no |
 | <a name="input_nat_policies"></a> [nat\_policies](#input\_nat\_policies) | Security policies | `any` | `{}` | no |
 | <a name="input_interfaces"></a> [interfaces](#input\_interfaces) | n/a | `any` | n/a | yes |
