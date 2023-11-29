@@ -25,6 +25,18 @@ module "addresses" {
   depends_on = [module.tags, module.device_groups]
 }
 
+module "addresses_bulk" {
+  for_each = var.device_groups
+  source   = "../../modules/addresses"
+  mode     = var.mode
+
+  device_group        = each.key
+  address_objects     = var.addresses_bulk
+  addresses_bulk_mode = true
+
+  depends_on = [module.tags, module.device_groups]
+}
+
 module "address_groups" {
   for_each = var.device_groups
   source   = "../../modules/addresses"

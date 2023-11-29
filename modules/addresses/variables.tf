@@ -21,15 +21,21 @@ variable "mode_map" {
 }
 
 variable "device_group" {
-  description = "Used if _mode_ is panorama, this defines the Device Group for the deployment"
+  description = "Used if `var.mode` is `panorama`, defines the device group for the objects."
   default     = "shared"
   type        = string
 }
 
 variable "vsys" {
-  description = "Used if _mode_ is ngfw, this defines the vsys for the deployment"
+  description = "Used if `var.mode` is `ngfw`, defines the vsys for the objects."
   default     = "vsys1"
   type        = string
+}
+
+variable "addresses_bulk_mode" {
+  description = "Determines whether each address object is managed as a separate `panos_address_object` resource (when set to `false`) or all within a single `panos_address_objects` resource that is dedicated for bulk operations."
+  default     = false
+  type        = bool
 }
 
 variable "address_objects" {
@@ -64,8 +70,8 @@ variable "address_objects" {
   EOF
   default     = {}
   type = map(object({
-    type        = optional(string, "ip-netmask")
     value       = string
+    type        = optional(string, "ip-netmask")
     description = optional(string)
     tags        = optional(list(string))
   }))
@@ -79,7 +85,7 @@ variable "address_groups" {
   description = <<-EOF
   Map of the address group objects, where key is the address group's name:
   - `members`: (optional) The address objects to include in this statically defined address group.
-  - `dynamic_match`: (optional) The IP tags to include in this DAG. Inputs are structured as follows `'<tag name>' and ...` or `'<tag name>' or ...` or mix both `and`/`or`.
+  - `dynamic_match`: (optional) The IP tags to include in this DAG. Inputs are structured as follows `'<tag name>' and ...` or `<tag name>` or ...`.
   - `description`: (optional) The description of the address group.
   - `tags`: (optional) List of administrative tags.
 

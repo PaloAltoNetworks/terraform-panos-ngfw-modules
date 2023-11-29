@@ -17,6 +17,12 @@ output "addresses" {
   )])
 }
 
+output "addresses_bulk" {
+  value = flatten([for k, v in module.addresses_bulk : concat(
+    [for a in v.addresses : { "device_group" : k, "addresses" : a.object[*].name, "id" : a.id }]
+  )])
+}
+
 output "address_groups" {
   value = flatten([for k, v in module.address_groups : concat(
     [for zk, zv in v.address_groups : { "device_group" : k, "address_group" : zk, "id" : zv.id }],

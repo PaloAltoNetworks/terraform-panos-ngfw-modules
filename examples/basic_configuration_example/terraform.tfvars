@@ -1,5 +1,6 @@
-pan_creds = "./creds/credentials.json"
-mode      = "panorama"
+panos_config_file = "panos-config.json"
+panos_timeout     = 30
+mode              = "panorama"
 
 ### Device group
 
@@ -66,26 +67,6 @@ tags = {
 ### Address, Address Groups
 
 addresses = {
-  DNS1 = {
-    "value"       = "1.1.1.1/32"
-    "type"        = "ip-netmask"
-    "description" = "DNS-SRV-Public-1"
-  },
-  DNS2 = {
-    "value"       = "1.0.0.1/32"
-    "type"        = "ip-netmask"
-    "description" = "DNS-SRV-Public-2"
-  },
-  DNS3 = {
-    "value"       = "8.8.4.4/32"
-    "type"        = "ip-netmask"
-    "description" = "DNS-GOOGLE-1"
-  },
-  DNS4 = {
-    "value"       = "8.8.8.8/32"
-    "type"        = "ip-netmask"
-    "description" = "DNS-GOOGLE-2"
-  },
   Server10 = {
     "value"       = "10.0.0.10/32"
     "type"        = "ip-netmask"
@@ -118,14 +99,6 @@ addresses = {
     "value" = "10.0.0.0/8"
     "type"  = "ip-netmask"
   },
-  NTP1 = {
-    "value" = "1.0.0.1/32"
-    "type"  = "ip-netmask"
-  },
-  NTP2 = {
-    "value" = "2.0.0.2/32"
-    "type"  = "ip-netmask"
-  },
   "AWS-15.177.0.0_16" = {
     "value" = "15.177.0.0/16"
     "type"  = "ip-netmask"
@@ -140,6 +113,37 @@ addresses = {
   },
   "GlobalProtect Public-C" = {
     "value" = "10.184.2.0/24"
+    "type"  = "ip-netmask"
+  },
+}
+
+addresses_bulk = {
+  DNS1 = {
+    "value"       = "1.1.1.1/32"
+    "type"        = "ip-netmask"
+    "description" = "DNS-SRV-Public-1"
+  },
+  DNS2 = {
+    "value"       = "1.0.0.1/32"
+    "type"        = "ip-netmask"
+    "description" = "DNS-SRV-Public-2"
+  },
+  DNS3 = {
+    "value"       = "8.8.4.4/32"
+    "type"        = "ip-netmask"
+    "description" = "DNS-GOOGLE-1"
+  },
+  DNS4 = {
+    "value"       = "8.8.8.8/32"
+    "type"        = "ip-netmask"
+    "description" = "DNS-GOOGLE-2"
+  },
+  NTP1 = {
+    "value" = "1.0.0.1/32"
+    "type"  = "ip-netmask"
+  },
+  NTP2 = {
+    "value" = "2.0.0.2/32"
     "type"  = "ip-netmask"
   },
 }
