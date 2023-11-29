@@ -41,6 +41,7 @@ tags = {
     comment = "Tag for DNS servers-2"
   }
   "Managed by Terraform" = {
+    color   = "Blue Violet"
     comment = "Managed by Terraform"
   }
   Outbound = {
@@ -232,6 +233,17 @@ service_groups = {
 }
 
 ### Security policies
+security_post_rules = [
+  {
+    name         = "default-deny-telnet"
+    action       = "deny"
+    applications = ["telnet"]
+    tags = [
+      "Outbound",
+      "Managed by Terraform"
+    ]
+  }
+]
 
 security_rule_groups = {
   "allow_rule_group" = {

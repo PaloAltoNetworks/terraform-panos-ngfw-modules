@@ -184,6 +184,15 @@ module "template_stacks" {
   depends_on = [module.templates]
 }
 
+module "security_policies_post_rules" {
+  for_each = var.device_groups
+  source   = "../../modules/security_policy"
+  mode     = var.mode
+
+  device_group = each.key
+  rulebase     = "post-rulebase"
+  rules        = var.security_post_rules
+}
 
 module "security_rule_groups" {
   for_each = var.device_groups

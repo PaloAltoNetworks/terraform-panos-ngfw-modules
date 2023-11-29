@@ -75,6 +75,12 @@ variable "log_forwarding_profiles_shared" {
   type        = any
 }
 
+variable "security_post_rules" {
+  description = "List with security post rules."
+  default     = []
+  type        = any
+}
+
 variable "security_rule_groups" {
   description = "Security rule groups"
   default     = {}
