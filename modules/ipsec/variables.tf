@@ -233,12 +233,12 @@ variable "ike_gateways" {
     error_message = "Valid values for IKE gateway version are `ikev1`, `ikev2`, `ikev2-preferred`"
   }
   validation {
-    condition     = alltrue([for ike_gateway in var.ike_gateways : contains(["ipaddr", "fqdn", "ufqdn", "keyid", "dn"], ike_gateway.peer_id_type)])
-    error_message = "Valid values for peer ID type are `ipaddr`, `fqdn`, `ufqdn`, `keyid`, or `dn`"
+    condition     = alltrue([for ike_gateway in var.ike_gateways : contains(["ipaddr", "fqdn", "ufqdn", "keyid", "dn"], coalesce(ike_gateway.peer_id_type, "ipaddr"))])
+    error_message = "If set, valid values for peer ID type are `ipaddr`, `fqdn`, `ufqdn`, `keyid`, or `dn`."
   }
   validation {
-    condition     = alltrue([for ike_gateway in var.ike_gateways : contains(["ipaddr", "fqdn", "ufqdn", "keyid", "dn"], ike_gateway.local_id_type)])
-    error_message = "Valid values for local ID type are `ipaddr`, `fqdn`, `ufqdn`, `keyid`, or `dn`"
+    condition     = alltrue([for ike_gateway in var.ike_gateways : contains(["ipaddr", "fqdn", "ufqdn", "keyid", "dn"], coalesce(ike_gateway.local_id_type, "ipaddr"))])
+    error_message = "If set, valid values for local ID type are `ipaddr`, `fqdn`, `ufqdn`, `keyid`, or `dn`"
   }
   validation {
     condition     = alltrue([for ike_gateway in var.ike_gateways : contains(["pre-shared-key", "certificate"], ike_gateway.auth_type)])
