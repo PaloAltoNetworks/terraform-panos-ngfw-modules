@@ -1,7 +1,7 @@
 # COMMENT TO TRIGGER CI
 
 module "device_groups" {
-  source = "../../modules/device_groups"
+  source  = "../../modules/device_groups"
   mode   = var.mode
 
   device_groups = var.device_groups
