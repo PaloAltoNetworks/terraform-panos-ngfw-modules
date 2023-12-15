@@ -1,4 +1,4 @@
-package subnet_set
+package static_routes
 
 import (
 	"testing"

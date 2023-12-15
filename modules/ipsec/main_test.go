@@ -1,4 +1,4 @@
-package subnet_set
+package ipsec
 
 import (
 	"testing"

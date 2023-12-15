@@ -1,4 +1,4 @@
-package subnet_set
+package log_forwarding_profiles
 
 import (
 	"testing"

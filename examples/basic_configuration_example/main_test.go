@@ -1,4 +1,4 @@
-package subnet_set
+package basic_configuration_example
 
 import (
 	"testing"

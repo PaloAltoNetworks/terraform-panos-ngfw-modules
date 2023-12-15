@@ -1,4 +1,4 @@
-package subnet_set
+package template_stacks
 
 import (
 	"testing"

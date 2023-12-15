@@ -1,4 +1,4 @@
-package subnet_set
+package virtual_routers
 
 import (
 	"testing"

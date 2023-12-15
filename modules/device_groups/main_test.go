@@ -1,4 +1,4 @@
-package subnet_set
+package device_groups
 
 import (
 	"testing"

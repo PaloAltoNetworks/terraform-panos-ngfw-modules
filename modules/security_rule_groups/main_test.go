@@ -1,4 +1,4 @@
-package subnet_set
+package security_rule_groups
 
 import (
 	"testing"

@@ -1,4 +1,4 @@
-package subnet_set
+package security_profiles
 
 import (
 	"testing"

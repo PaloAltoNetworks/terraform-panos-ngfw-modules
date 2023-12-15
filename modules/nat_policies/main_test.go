@@ -1,4 +1,4 @@
-package subnet_set
+package nat_policies
 
 import (
 	"testing"

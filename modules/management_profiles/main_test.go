@@ -1,4 +1,4 @@
-package subnet_set
+package management_profiles
 
 import (
 	"testing"
