@@ -1,4 +1,4 @@
-module github.com/PaloAltoNetworks/terraform-aws-vmseries-modules
+module github.com/PaloAltoNetworks/terraform-panos-ngfw-modules
 
 go 1.20
 
