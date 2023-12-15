@@ -63,3 +63,4 @@ utils/commit_fw
 utils/commit_pano
 utils/push_pano
 utils/panorama_commit_push
+go.sum
