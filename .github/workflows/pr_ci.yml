@@ -26,7 +26,7 @@ jobs:
     if: github.actor != 'dependabot[bot]'
     secrets: inherit
     with:
-      cloud: undefined
+      cloud: aws
       tf_version: 1.4 1.5
       validate_max_parallel: 20
       test_max_parallel: 10
