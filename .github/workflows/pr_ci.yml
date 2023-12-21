@@ -1,0 +1,35 @@
+name: PR CI
+run-name: "CI pipeline for PR - (#${{ github.event.number }}) ${{ github.event.pull_request.title }}"
+
+permissions:
+  contents: read
+  actions: read
+  id-token: write
+
+concurrency:
+  group: pr-${{ github.event.number }}
+  cancel-in-progress: true
+
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - ready_for_review
+    branches: ['main']
+
+jobs:
+  pr_ci_wrkflw:
+    name: Run CI
+    uses: PaloAltoNetworks/terraform-modules-vmseries-ci-workflows/.github/workflows/pr_ci.yml@v2.3
+    if: github.actor != 'dependabot[bot]'
+    secrets: inherit
+    with:
+      cloud: aws
+      tf_version: 1.4 1.5
+      validate_max_parallel: 20
+      test_max_parallel: 10
+      terratest_action: Plan # keep in mind that this has to start with capital letter
+      fail_fast: false
+      apply_timeout: 120
