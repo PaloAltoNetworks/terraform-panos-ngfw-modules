@@ -7,19 +7,6 @@ variable "mode" {
   }
 }
 
-variable "mode_map" {
-  description = "The mode to use for the module. Valid values are `panorama` and `ngfw`."
-  default = {
-    panorama = 0
-    ngfw     = 1
-    # cloud_manager = 2 # Not yet supported
-  }
-  type = object({
-    panorama = number
-    ngfw     = number
-  })
-}
-
 variable "device_group" {
   description = "Defines the Device Group for the deployment, used if `var.mode` is `panorama`."
   default     = "shared"

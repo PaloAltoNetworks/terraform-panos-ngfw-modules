@@ -1,5 +1,13 @@
+locals {
+  mode_map = {
+    panorama = 0
+    ngfw     = 1
+    # cloud_manager = 2 # Not yet supported
+  }
+}
+
 resource "panos_log_forwarding_profile" "this" {
-  for_each = var.mode_map[var.mode] == 1 ? var.profiles : {}
+  for_each = local.mode_map[var.mode] == 1 ? var.profiles : {}
 
   name = each.key
   vsys = var.vsys
@@ -80,7 +88,7 @@ resource "panos_log_forwarding_profile" "this" {
 }
 
 resource "panos_panorama_log_forwarding_profile" "this" {
-  for_each = var.mode_map[var.mode] == 0 ? var.profiles : {}
+  for_each = local.mode_map[var.mode] == 0 ? var.profiles : {}
 
   name         = each.key
   device_group = var.device_group

@@ -1,5 +1,13 @@
+locals {
+  mode_map = {
+    panorama = 0
+    ngfw     = 1
+    # cloud_manager = 2 # Not yet supported
+  }
+}
+
 resource "panos_panorama_static_route_ipv4" "this" {
-  for_each = var.mode_map[var.mode] == 0 ? var.static_routes : {}
+  for_each = local.mode_map[var.mode] == 0 ? var.static_routes : {}
 
   template       = var.template_stack == "" ? var.template : null
   template_stack = var.template_stack == "" ? null : var.template_stack
@@ -21,7 +29,7 @@ resource "panos_panorama_static_route_ipv4" "this" {
 }
 
 resource "panos_static_route_ipv4" "this" {
-  for_each = var.mode_map[var.mode] == 1 ? var.static_routes : {}
+  for_each = local.mode_map[var.mode] == 1 ? var.static_routes : {}
 
   name           = each.key
   virtual_router = each.value.virtual_router

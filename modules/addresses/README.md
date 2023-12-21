@@ -95,7 +95,6 @@ No modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_mode"></a> [mode](#input\_mode) | The mode to use for the modules. Valid values are `panorama` and `ngfw`. | `string` | n/a | yes |
-| <a name="input_mode_map"></a> [mode\_map](#input\_mode\_map) | The mode to use for the modules. Valid values are `panorama` and `ngfw`. | <pre>object({<br>    panorama = number<br>    ngfw     = number<br>  })</pre> | <pre>{<br>  "ngfw": 1,<br>  "panorama": 0<br>}</pre> | no |
 | <a name="input_device_group"></a> [device\_group](#input\_device\_group) | Used if `var.mode` is `panorama`, defines the device group for the objects. | `string` | `"shared"` | no |
 | <a name="input_vsys"></a> [vsys](#input\_vsys) | Used if `var.mode` is `ngfw`, defines the vsys for the objects. | `string` | `"vsys1"` | no |
 | <a name="input_addresses_bulk_mode"></a> [addresses\_bulk\_mode](#input\_addresses\_bulk\_mode) | Determines whether each address object is managed as a separate `panos_address_object` resource (when set to `false`) or all within a single `panos_address_objects` resource that is dedicated for bulk operations. | `bool` | `false` | no |

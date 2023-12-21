@@ -1,8 +1,16 @@
+locals {
+  mode_map = {
+    panorama = 0
+    ngfw     = 1
+    # cloud_manager = 2 # Not yet supported
+  }
+}
+
 resource "panos_zone" "this" {
   for_each = var.zones
 
-  template       = var.mode_map[var.mode] == 0 ? (var.template_stack == "" ? try(var.template, "default") : null) : null
-  template_stack = var.mode_map[var.mode] == 0 ? var.template_stack == "" ? null : var.template_stack : null
+  template       = local.mode_map[var.mode] == 0 ? (var.template_stack == "" ? try(var.template, "default") : null) : null
+  template_stack = local.mode_map[var.mode] == 0 ? var.template_stack == "" ? null : var.template_stack : null
 
   name           = each.key
   vsys           = each.value.vsys

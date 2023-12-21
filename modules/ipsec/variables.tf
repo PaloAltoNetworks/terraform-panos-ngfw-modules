@@ -7,19 +7,6 @@ variable "mode" {
   }
 }
 
-variable "mode_map" {
-  description = "The mode to use for the modules. Valid values are `panorama` and `ngfw`."
-  default = {
-    panorama = 0
-    ngfw     = 1
-    # cloud_manager = 2 # Not yet supported
-  }
-  type = object({
-    panorama = number
-    ngfw     = number
-  })
-}
-
 variable "template" {
   description = "The template name."
   default     = "default"

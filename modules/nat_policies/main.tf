@@ -1,8 +1,16 @@
-resource "panos_panorama_nat_rule_group" "this" {
-  for_each = var.mode_map[var.mode] == 0 ? var.nat_policies : {}
+locals {
+  mode_map = {
+    panorama = 0
+    ngfw     = 1
+    # cloud_manager = 2 # Not yet supported
+  }
+}
 
-  device_group = var.mode_map[var.mode] == 0 ? var.device_group : null
-  rulebase     = var.mode_map[var.mode] == 0 ? each.value.rulebase : null
+resource "panos_panorama_nat_rule_group" "this" {
+  for_each = local.mode_map[var.mode] == 0 ? var.nat_policies : {}
+
+  device_group = local.mode_map[var.mode] == 0 ? var.device_group : null
+  rulebase     = local.mode_map[var.mode] == 0 ? each.value.rulebase : null
 
   position_keyword   = each.value.position_keyword
   position_reference = each.value.position_reference
@@ -124,9 +132,9 @@ resource "panos_panorama_nat_rule_group" "this" {
 
 
 resource "panos_nat_rule_group" "this" {
-  for_each = var.mode_map[var.mode] == 1 ? var.nat_policies : {}
+  for_each = local.mode_map[var.mode] == 1 ? var.nat_policies : {}
 
-  vsys = var.mode_map[var.mode] == 1 ? var.vsys : null
+  vsys = local.mode_map[var.mode] == 1 ? var.vsys : null
 
   position_keyword   = each.value.position_keyword
   position_reference = each.value.position_reference
