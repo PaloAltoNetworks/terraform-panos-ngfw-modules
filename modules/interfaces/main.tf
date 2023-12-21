@@ -1,5 +1,13 @@
+locals {
+  mode_map = {
+    panorama = 0
+    ngfw     = 1
+    # cloud_manager = 2 # Not yet supported
+  }
+}
+
 resource "panos_panorama_ethernet_interface" "this" {
-  for_each = var.mode_map[var.mode] == 0 ? { for name, intf in var.interfaces : name => intf if intf.type == "ethernet" } : {}
+  for_each = local.mode_map[var.mode] == 0 ? { for name, intf in var.interfaces : name => intf if intf.type == "ethernet" } : {}
 
   template = var.template
   ### an argument named "template_stack" is not expected here
@@ -40,7 +48,7 @@ resource "panos_panorama_ethernet_interface" "this" {
 }
 
 resource "panos_ethernet_interface" "this" {
-  for_each = var.mode_map[var.mode] == 1 ? { for name, intf in var.interfaces : name => intf if intf.type == "ethernet" } : {}
+  for_each = local.mode_map[var.mode] == 1 ? { for name, intf in var.interfaces : name => intf if intf.type == "ethernet" } : {}
 
   name                            = each.key
   vsys                            = each.value.vsys
@@ -78,7 +86,7 @@ resource "panos_ethernet_interface" "this" {
 }
 
 resource "panos_panorama_loopback_interface" "this" {
-  for_each = var.mode_map[var.mode] == 0 ? { for name, intf in var.interfaces : name => intf if intf.type == "loopback" } : {}
+  for_each = local.mode_map[var.mode] == 0 ? { for name, intf in var.interfaces : name => intf if intf.type == "loopback" } : {}
 
   template = var.template
   ### an argument named "template_stack" is not expected here
@@ -100,7 +108,7 @@ resource "panos_panorama_loopback_interface" "this" {
 }
 
 resource "panos_loopback_interface" "this" {
-  for_each = var.mode_map[var.mode] == 1 ? { for name, intf in var.interfaces : name => intf if intf.type == "loopback" } : {}
+  for_each = local.mode_map[var.mode] == 1 ? { for name, intf in var.interfaces : name => intf if intf.type == "loopback" } : {}
 
   name               = each.key
   vsys               = each.value.vsys
@@ -119,7 +127,7 @@ resource "panos_loopback_interface" "this" {
 }
 
 resource "panos_panorama_tunnel_interface" "this" {
-  for_each = var.mode_map[var.mode] == 0 ? { for name, intf in var.interfaces : name => intf if intf.type == "tunnel" } : {}
+  for_each = local.mode_map[var.mode] == 0 ? { for name, intf in var.interfaces : name => intf if intf.type == "tunnel" } : {}
 
   template = var.template
   ### an argument named "template_stack" is not expected here
@@ -138,7 +146,7 @@ resource "panos_panorama_tunnel_interface" "this" {
 }
 
 resource "panos_tunnel_interface" "this" {
-  for_each = var.mode_map[var.mode] == 1 ? { for name, intf in var.interfaces : name => intf if intf.type == "tunnel" } : {}
+  for_each = local.mode_map[var.mode] == 1 ? { for name, intf in var.interfaces : name => intf if intf.type == "tunnel" } : {}
 
   name               = each.key
   vsys               = each.value.vsys
@@ -156,8 +164,8 @@ resource "panos_tunnel_interface" "this" {
 resource "panos_virtual_router_entry" "this" {
   for_each = { for k, v in var.interfaces : "${v.virtual_router}_${k}" => { interface = k, virtual_router = v.virtual_router } if try(v.virtual_router, null) != null }
 
-  template       = var.mode_map[var.mode] == 0 ? (var.template_stack == "" ? var.template : null) : null
-  template_stack = var.mode_map[var.mode] == 0 ? var.template_stack == "" ? null : var.template_stack : null
+  template       = local.mode_map[var.mode] == 0 ? (var.template_stack == "" ? var.template : null) : null
+  template_stack = local.mode_map[var.mode] == 0 ? var.template_stack == "" ? null : var.template_stack : null
 
   virtual_router = try(each.value.virtual_router, "default")
   interface      = each.value.interface
@@ -179,8 +187,8 @@ resource "panos_virtual_router_entry" "this" {
 resource "panos_zone_entry" "this" {
   for_each = { for k, v in var.interfaces : "${v.zone}_${k}" => { interface = k, zone = v.zone, vsys = v.vsys } if try(v.zone, null) != null }
 
-  template       = var.mode_map[var.mode] == 0 ? (var.template_stack == "" ? var.template : null) : null
-  template_stack = var.mode_map[var.mode] == 0 ? var.template_stack == "" ? null : var.template_stack : null
+  template       = local.mode_map[var.mode] == 0 ? (var.template_stack == "" ? var.template : null) : null
+  template_stack = local.mode_map[var.mode] == 0 ? var.template_stack == "" ? null : var.template_stack : null
 
   vsys      = try(each.value.vsys, "vsys1")
   zone      = each.value.zone

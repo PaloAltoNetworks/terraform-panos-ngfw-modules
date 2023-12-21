@@ -1,5 +1,13 @@
+locals {
+  mode_map = {
+    panorama = 0
+    ngfw     = 1
+    # cloud_manager = 2 # Not yet supported
+  }
+}
+
 resource "panos_panorama_management_profile" "this" {
-  for_each = var.mode_map[var.mode] == 0 ? var.management_profiles : {}
+  for_each = local.mode_map[var.mode] == 0 ? var.management_profiles : {}
 
   template       = var.template_stack == "" ? var.template : null
   template_stack = var.template_stack == "" ? null : var.template_stack
@@ -23,7 +31,7 @@ resource "panos_panorama_management_profile" "this" {
 }
 
 resource "panos_management_profile" "this" {
-  for_each = var.mode_map[var.mode] == 1 ? var.management_profiles : {}
+  for_each = local.mode_map[var.mode] == 1 ? var.management_profiles : {}
 
   name                       = each.key
   ping                       = each.value.ping

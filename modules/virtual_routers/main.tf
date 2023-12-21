@@ -1,4 +1,9 @@
 locals {
+  mode_map = {
+    panorama = 0
+    ngfw     = 1
+    # cloud_manager = 2 # Not yet supported
+  }
   routes = flatten([
     for vrk, vrv in var.virtual_routers : [
       for rk, rv in vrv.static_routes : {
@@ -13,8 +18,8 @@ locals {
 resource "panos_virtual_router" "this" {
   for_each = var.virtual_routers
 
-  template       = var.mode_map[var.mode] == 0 ? (var.template_stack == "" ? var.template : null) : null
-  template_stack = var.mode_map[var.mode] == 0 ? var.template_stack == "" ? null : var.template_stack : null
+  template       = local.mode_map[var.mode] == 0 ? (var.template_stack == "" ? var.template : null) : null
+  template_stack = local.mode_map[var.mode] == 0 ? var.template_stack == "" ? null : var.template_stack : null
 
   name                                 = each.key
   vsys                                 = each.value.vsys
@@ -44,7 +49,7 @@ resource "panos_virtual_router" "this" {
 }
 
 resource "panos_panorama_static_route_ipv4" "this" {
-  for_each = var.mode_map[var.mode] == 0 ? { for v in local.routes : "${v.vr_key}-${v.route_key}" => v } : {}
+  for_each = local.mode_map[var.mode] == 0 ? { for v in local.routes : "${v.vr_key}-${v.route_key}" => v } : {}
 
   template       = var.template_stack == "" ? var.template : null
   template_stack = var.template_stack == "" ? null : var.template_stack
@@ -67,7 +72,7 @@ resource "panos_panorama_static_route_ipv4" "this" {
 }
 
 resource "panos_static_route_ipv4" "this" {
-  for_each = var.mode_map[var.mode] == 1 ? { for v in local.routes : "${v.vr_key}-${v.route_key}" => v } : {}
+  for_each = local.mode_map[var.mode] == 1 ? { for v in local.routes : "${v.vr_key}-${v.route_key}" => v } : {}
 
   name           = each.value.route_key
   virtual_router = panos_virtual_router.this[each.value.vr_key].name

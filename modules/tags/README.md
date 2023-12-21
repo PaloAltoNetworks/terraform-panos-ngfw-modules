@@ -99,7 +99,6 @@ No modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_mode"></a> [mode](#input\_mode) | The mode to use for the modules. Valid values are `panorama` and `ngfw`. | `string` | n/a | yes |
-| <a name="input_mode_map"></a> [mode\_map](#input\_mode\_map) | The mode to use for the modules. Valid values are `panorama` and `ngfw`. | <pre>object({<br>    panorama = number<br>    ngfw     = number<br>  })</pre> | <pre>{<br>  "ngfw": 1,<br>  "panorama": 0<br>}</pre> | no |
 | <a name="input_device_group"></a> [device\_group](#input\_device\_group) | Used if _mode_ is panorama, this defines the Device Group for the deployment | `string` | `"shared"` | no |
 | <a name="input_vsys"></a> [vsys](#input\_vsys) | Used if _mode_ is ngfw, this defines the vsys for the deployment | `string` | `"vsys1"` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | Map of the tag objects, where key is the tag object's name:<br>- `color`: (optional) The tag's color. This should either be an empty string (no color) or a string such as `color1`.<br>- `comment`: (optional) The description of the administrative tag.<br><br>Example:<pre>tags = {<br>  DNS-SRV = {<br>    comment = "Tag for DNS servers"<br>  }<br>  dns-proxy = {<br>    color   = "Olive"<br>    comment = "dns-proxy"<br>  }<br>}</pre> | <pre>map(object({<br>    color   = optional(string)<br>    comment = optional(string)<br>  }))</pre> | `{}` | no |

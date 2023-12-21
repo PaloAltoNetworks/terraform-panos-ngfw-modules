@@ -1,9 +1,17 @@
+locals {
+  mode_map = {
+    panorama = 0
+    ngfw     = 1
+    # cloud_manager = 2 # Not yet supported
+  }
+}
+
 resource "panos_security_rule_group" "this" {
   for_each = var.security_rule_groups
 
-  device_group = var.mode_map[var.mode] == 0 ? var.device_group : null
-  rulebase     = var.mode_map[var.mode] == 0 ? each.value.rulebase : null
-  vsys         = var.mode_map[var.mode] == 1 ? var.vsys : null
+  device_group = local.mode_map[var.mode] == 0 ? var.device_group : null
+  rulebase     = local.mode_map[var.mode] == 0 ? each.value.rulebase : null
+  vsys         = local.mode_map[var.mode] == 1 ? var.vsys : null
 
   position_keyword   = each.value.position_keyword
   position_reference = each.value.position_reference

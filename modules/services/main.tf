@@ -1,5 +1,13 @@
+locals {
+  mode_map = {
+    panorama = 0
+    ngfw     = 1
+    # cloud_manager = 2 # Not yet supported
+  }
+}
+
 resource "panos_panorama_service_object" "this" {
-  for_each = var.mode_map[var.mode] == 0 ? var.services : {}
+  for_each = local.mode_map[var.mode] == 0 ? var.services : {}
 
   device_group = var.device_group
 
@@ -21,7 +29,7 @@ resource "panos_panorama_service_object" "this" {
 }
 
 resource "panos_service_object" "this" {
-  for_each = var.mode_map[var.mode] == 1 ? var.services : {}
+  for_each = local.mode_map[var.mode] == 1 ? var.services : {}
 
   vsys = var.vsys
 
@@ -43,7 +51,7 @@ resource "panos_service_object" "this" {
 }
 
 resource "panos_panorama_service_group" "this" {
-  for_each = var.mode_map[var.mode] == 0 ? var.service_groups : {}
+  for_each = local.mode_map[var.mode] == 0 ? var.service_groups : {}
 
   device_group = var.device_group
 
@@ -62,7 +70,7 @@ resource "panos_panorama_service_group" "this" {
 
 
 resource "panos_service_group" "this" {
-  for_each = var.mode_map[var.mode] == 1 ? var.service_groups : {}
+  for_each = local.mode_map[var.mode] == 1 ? var.service_groups : {}
 
   vsys = var.vsys
 

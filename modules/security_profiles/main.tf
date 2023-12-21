@@ -1,9 +1,17 @@
+locals {
+  mode_map = {
+    panorama = 0
+    ngfw     = 1
+    # cloud_manager = 2 # Not yet supported
+  }
+}
+
 # Antivirus profiles
 resource "panos_antivirus_security_profile" "this" {
   for_each = var.antivirus_profiles
 
-  device_group = var.mode_map[var.mode] == 0 ? var.device_group : null
-  vsys         = var.mode_map[var.mode] == 1 ? var.vsys : null
+  device_group = local.mode_map[var.mode] == 0 ? var.device_group : null
+  vsys         = local.mode_map[var.mode] == 1 ? var.vsys : null
 
   name              = each.key
   description       = each.value.description
@@ -58,8 +66,8 @@ resource "panos_antivirus_security_profile" "this" {
 resource "panos_anti_spyware_security_profile" "this" {
   for_each = var.antispyware_profiles
 
-  device_group = var.mode_map[var.mode] == 0 ? var.device_group : null
-  vsys         = var.mode_map[var.mode] == 1 ? var.vsys : null
+  device_group = local.mode_map[var.mode] == 0 ? var.device_group : null
+  vsys         = local.mode_map[var.mode] == 1 ? var.vsys : null
 
   name                  = each.key
   description           = each.value.description
@@ -134,8 +142,8 @@ resource "panos_anti_spyware_security_profile" "this" {
 resource "panos_file_blocking_security_profile" "this" {
   for_each = var.file_blocking_profiles
 
-  device_group = var.mode_map[var.mode] == 0 ? var.device_group : null
-  vsys         = var.mode_map[var.mode] == 1 ? var.vsys : null
+  device_group = local.mode_map[var.mode] == 0 ? var.device_group : null
+  vsys         = local.mode_map[var.mode] == 1 ? var.vsys : null
 
   name        = each.key
   description = try(each.value.description, null)
@@ -161,8 +169,8 @@ resource "panos_file_blocking_security_profile" "this" {
 resource "panos_vulnerability_security_profile" "this" {
   for_each = var.vulnerability_protection_profiles
 
-  device_group = var.mode_map[var.mode] == 0 ? var.device_group : null
-  vsys         = var.mode_map[var.mode] == 1 ? var.vsys : null
+  device_group = local.mode_map[var.mode] == 0 ? var.device_group : null
+  vsys         = local.mode_map[var.mode] == 1 ? var.vsys : null
 
   name        = each.key
   description = try(each.value.description, null)
@@ -210,8 +218,8 @@ resource "panos_vulnerability_security_profile" "this" {
 resource "panos_wildfire_analysis_security_profile" "this" {
   for_each = var.wildfire_analysis_profiles
 
-  device_group = var.mode_map[var.mode] == 0 ? var.device_group : null
-  vsys         = var.mode_map[var.mode] == 1 ? var.vsys : null
+  device_group = local.mode_map[var.mode] == 0 ? var.device_group : null
+  vsys         = local.mode_map[var.mode] == 1 ? var.vsys : null
 
   name        = each.key
   description = try(each.value.description, null)

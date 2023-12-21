@@ -1,8 +1,16 @@
+locals {
+  mode_map = {
+    panorama = 0
+    ngfw     = 1
+    # cloud_manager = 2 # Not yet supported
+  }
+}
+
 resource "panos_address_object" "this" {
   for_each = var.addresses_bulk_mode ? {} : var.address_objects
 
-  device_group = var.mode_map[var.mode] == 0 ? var.device_group : null
-  vsys         = var.mode_map[var.mode] == 1 ? var.vsys : null
+  device_group = local.mode_map[var.mode] == 0 ? var.device_group : null
+  vsys         = local.mode_map[var.mode] == 1 ? var.vsys : null
 
   name        = each.key
   value       = each.value.value
@@ -16,10 +24,10 @@ resource "panos_address_object" "this" {
 }
 
 resource "panos_address_objects" "this" {
-  for_each = var.addresses_bulk_mode ? toset([for mode in keys(var.mode_map) : mode if mode == var.mode]) : []
+  for_each = var.addresses_bulk_mode ? toset([for mode in keys(local.mode_map) : mode if mode == var.mode]) : []
 
-  device_group = var.mode_map[var.mode] == 0 ? var.device_group : null
-  vsys         = var.mode_map[var.mode] == 1 ? var.vsys : null
+  device_group = local.mode_map[var.mode] == 0 ? var.device_group : null
+  vsys         = local.mode_map[var.mode] == 1 ? var.vsys : null
 
   dynamic "object" {
     for_each = var.address_objects
@@ -39,7 +47,7 @@ resource "panos_address_objects" "this" {
 }
 
 resource "panos_panorama_address_group" "this" {
-  for_each = var.mode_map[var.mode] == 0 ? var.address_groups : {}
+  for_each = local.mode_map[var.mode] == 0 ? var.address_groups : {}
 
   device_group = var.device_group
 
@@ -59,7 +67,7 @@ resource "panos_panorama_address_group" "this" {
 }
 
 resource "panos_address_group" "this" {
-  for_each = var.mode_map[var.mode] == 1 ? var.address_groups : {}
+  for_each = local.mode_map[var.mode] == 1 ? var.address_groups : {}
 
   vsys = var.vsys
 

@@ -158,7 +158,6 @@ No modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_mode"></a> [mode](#input\_mode) | The mode to use for the module. Valid values are `panorama` and `ngfw`. | `string` | n/a | yes |
-| <a name="input_mode_map"></a> [mode\_map](#input\_mode\_map) | The mode to use for the module. Valid values are `panorama` and `ngfw`. | <pre>object({<br>    panorama = number<br>    ngfw     = number<br>  })</pre> | <pre>{<br>  "ngfw": 1,<br>  "panorama": 0<br>}</pre> | no |
 | <a name="input_device_group"></a> [device\_group](#input\_device\_group) | Used if `mode` is panorama, defines the Device Group for the deployment. | `string` | `"shared"` | no |
 | <a name="input_rulebase"></a> [rulebase](#input\_rulebase) | Used if `mode` is panorama, defines the Rulebase for the policy. | `string` | `"pre-rulebase"` | no |
 | <a name="input_vsys"></a> [vsys](#input\_vsys) | Used if `mode` is ngfw, defines the vsys for the deployment. | `string` | `"vsys1"` | no |

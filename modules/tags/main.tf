@@ -1,5 +1,13 @@
+locals {
+  mode_map = {
+    panorama = 0
+    ngfw     = 1
+    # cloud_manager = 2 # Not yet supported
+  }
+}
+
 resource "panos_panorama_administrative_tag" "this" {
-  for_each = var.mode_map[var.mode] == 0 ? var.tags : {}
+  for_each = local.mode_map[var.mode] == 0 ? var.tags : {}
 
   name         = each.key
   color        = try(var.tag_color_map[lower(replace(each.value.color, " ", "_"))], null)
@@ -12,7 +20,7 @@ resource "panos_panorama_administrative_tag" "this" {
 }
 
 resource "panos_administrative_tag" "this" {
-  for_each = var.mode_map[var.mode] == 1 ? var.tags : {}
+  for_each = local.mode_map[var.mode] == 1 ? var.tags : {}
 
   name    = each.key
   color   = try(var.tag_color_map[lower(replace(each.value.color, " ", "_"))], null)

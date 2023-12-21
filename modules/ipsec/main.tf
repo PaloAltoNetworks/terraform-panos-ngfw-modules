@@ -1,8 +1,16 @@
+locals {
+  mode_map = {
+    panorama = 0
+    ngfw     = 1
+    # cloud_manager = 2 # Not yet supported
+  }
+}
+
 resource "panos_ike_crypto_profile" "this" {
   for_each = var.ike_crypto_profiles
 
-  template       = var.mode_map[var.mode] == 0 ? (var.template_stack == "" ? var.template : null) : null
-  template_stack = var.mode_map[var.mode] == 0 ? var.template_stack == "" ? null : var.template_stack : null
+  template       = local.mode_map[var.mode] == 0 ? (var.template_stack == "" ? var.template : null) : null
+  template_stack = local.mode_map[var.mode] == 0 ? var.template_stack == "" ? null : var.template_stack : null
 
   name                    = each.key
   dh_groups               = each.value.dh_groups
@@ -18,7 +26,7 @@ resource "panos_ike_crypto_profile" "this" {
 }
 
 resource "panos_panorama_ipsec_crypto_profile" "this" {
-  for_each = var.mode_map[var.mode] == 0 ? var.ipsec_crypto_profiles : {}
+  for_each = local.mode_map[var.mode] == 0 ? var.ipsec_crypto_profiles : {}
 
   template       = var.template_stack == "" ? var.template : null
   template_stack = var.template_stack == "" ? null : var.template_stack
@@ -39,7 +47,7 @@ resource "panos_panorama_ipsec_crypto_profile" "this" {
 }
 
 resource "panos_ipsec_crypto_profile" "this" {
-  for_each = var.mode_map[var.mode] == 1 ? var.ipsec_crypto_profiles : {}
+  for_each = local.mode_map[var.mode] == 1 ? var.ipsec_crypto_profiles : {}
 
   name            = each.key
   protocol        = each.value.protocol
@@ -57,7 +65,7 @@ resource "panos_ipsec_crypto_profile" "this" {
 }
 
 resource "panos_panorama_ike_gateway" "this" {
-  for_each = var.mode_map[var.mode] == 0 ? var.ike_gateways : {}
+  for_each = local.mode_map[var.mode] == 0 ? var.ike_gateways : {}
 
   template       = var.template_stack == "" ? var.template : null
   template_stack = var.template_stack == "" ? null : var.template_stack
@@ -110,7 +118,7 @@ resource "panos_panorama_ike_gateway" "this" {
 }
 
 resource "panos_ike_gateway" "this" {
-  for_each = var.mode_map[var.mode] == 1 ? var.ike_gateways : {}
+  for_each = local.mode_map[var.mode] == 1 ? var.ike_gateways : {}
 
   name                              = each.key
   version                           = each.value.version
@@ -160,7 +168,7 @@ resource "panos_ike_gateway" "this" {
 }
 
 resource "panos_panorama_ipsec_tunnel" "this" {
-  for_each = var.mode_map[var.mode] == 0 ? var.ipsec_tunnels : {}
+  for_each = local.mode_map[var.mode] == 0 ? var.ipsec_tunnels : {}
 
   template = var.template
   ### an argument named "template_stack" is not expected here
@@ -211,7 +219,7 @@ resource "panos_panorama_ipsec_tunnel" "this" {
 }
 
 resource "panos_ipsec_tunnel" "this" {
-  for_each = var.mode_map[var.mode] == 1 ? var.ipsec_tunnels : {}
+  for_each = local.mode_map[var.mode] == 1 ? var.ipsec_tunnels : {}
 
   name                           = each.key
   tunnel_interface               = each.value.tunnel_interface
@@ -259,7 +267,7 @@ resource "panos_ipsec_tunnel" "this" {
 }
 
 resource "panos_panorama_ipsec_tunnel_proxy_id_ipv4" "this" {
-  for_each = var.mode_map[var.mode] == 0 ? var.ipsec_tunnel_proxies : {}
+  for_each = local.mode_map[var.mode] == 0 ? var.ipsec_tunnel_proxies : {}
 
   template = var.template
   ### an argument named "template_stack" is not expected here
@@ -281,7 +289,7 @@ resource "panos_panorama_ipsec_tunnel_proxy_id_ipv4" "this" {
 }
 
 resource "panos_ipsec_tunnel_proxy_id_ipv4" "this" {
-  for_each = var.mode_map[var.mode] == 1 ? var.ipsec_tunnel_proxies : {}
+  for_each = local.mode_map[var.mode] == 1 ? var.ipsec_tunnel_proxies : {}
 
   name                = each.key
   ipsec_tunnel        = each.value.ipsec_tunnel
