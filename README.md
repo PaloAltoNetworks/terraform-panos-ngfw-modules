@@ -52,7 +52,7 @@ export PANOS_API_KEY=
 3. From a JSON config file
 
 ```sh
-> cat ./creds/serviceaccount.json
+> cat ./panos-config.json
 {
   "hostname": "12.345.678.901",
   "username": "user",
