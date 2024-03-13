@@ -1,16 +1,19 @@
-# Terraform Modules for Palo Alto Networks PAN-OS based platforms Config as Code
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/PaloAltoNetworks/terraform-panos-ngfw-modules?style=flat-square)
+![GitHub](https://img.shields.io/github/license/PaloAltoNetworks/terraform-modules-swfw-ci-workflows?style=flat-square)
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/PaloAltoNetworks/terraform-panos-ngfw-modules/release_ci.yml?style=flat-square)
+![GitHub issues](https://img.shields.io/github/issues/PaloAltoNetworks/terraform-panos-ngfw-modules?style=flat-square)
+![GitHub pull requests](https://img.shields.io/github/issues-pr/PaloAltoNetworks/terraform-panos-ngfw-modules?style=flat-square)
+![Terraform registry downloads total](https://img.shields.io/badge/dynamic/json?color=green&label=downloads%20total&query=data.attributes.total&url=https%3A%2F%2Fregistry.terraform.io%2Fv2%2Fmodules%2FPaloAltoNetworks%2Fngfw-modules%2Fpanos%2Fdownloads%2Fsummary&style=flat-square)
+![Terraform registry download month](https://img.shields.io/badge/dynamic/json?color=green&label=downloads%20this%20month&query=data.attributes.month&url=https%3A%2F%2Fregistry.terraform.io%2Fv2%2Fmodules%2FPaloAltoNetworks%2Fngfw-modules%2Fpanos%2Fdownloads%2Fsummary&style=flat-square)
+
+
+# Terraform Modules for Palo Alto Networks PAN-OS based platforms 
 
 ## Overview
 
-A set of modules designed to configure your Palo Alto Networks PAN-OS-based platforms using code, eliminating the need for manual GUI interactions. This solution enables you to manage various aspects, including Tags, Address Objects/Groups, Security/NAT policies, Security Profiles, and more. The flexibility extends to multiple config file types like YAML, JSON, and CSV for easy configuration.
+A set of Terraform modules that can be leveraged to configure and manage Palo Alto Networks PAN-OS-based platforms (Firewalls and Panorama) using code. 
 
-* Policy as Code executes Terraform that will create a variety of resources based on the input.
-* Terraform is the underlying automation tool, therefore, it utilizes the Terraform provider ecosystem to drive relevant
-  change to the network infrastructure.
-* All Policy as Code is written as a compatible **Terraform module** using resources for the underlying network
-  infrastructure provider.
-
-![ConfigAsCode](https://user-images.githubusercontent.com/2110772/188634641-0f410362-74fe-4414-ac3f-7b9cea9ce9aa.png)
+This solution enables you to manage various configuration aspects, including Tags, Address Objects/Groups, Security/NAT policies, Security Profiles, and more. 
 
 ## Structure
 
@@ -27,6 +30,10 @@ These modules are meant for use with PAN-OS >= 10.2.0 and Terraform >= 0.13
 
 ## Setup
 
+### Modes
+
+The modules are designed to seamlessly integrate with either a PAN-OS firewall or a Panorama instance, providing flexibility in their usage. The user is required to implicitly pass the `mode` variable to these modules, which dictates the operational context of the modules. This variable is mandatory, with accepted values being `panorama` or `ngfw`. 
+
 The underlying panos provider can be configured using the following methods.
 
 For all the supported arguments, please refer to [provider documentation](https://registry.terraform.io/providers/PaloAltoNetworks/panos/latest/docs#argument-reference)
@@ -35,9 +42,9 @@ For all the supported arguments, please refer to [provider documentation](https:
 
 ```terraform
 provider "panos" {
-  username = "12.345.678.901"
-  password = "user"
-  hostname = "password" 
+  hostname = "1.1.1.1"
+  username = "username"
+  password= "password" 
 }
 ```
 
@@ -54,7 +61,7 @@ export PANOS_API_KEY=
 ```sh
 > cat ./panos-config.json
 {
-  "hostname": "12.345.678.901",
+  "hostname": "1.1.1.1",
   "username": "user",
   "password": "password"
 }
@@ -76,7 +83,7 @@ which will contain credentials to access Panorama and firewall instances, e.g.:
 
 ```
 {
-  "hostname": "12.345.678.901",
+  "hostname": "1.1.1.1",
   "username": "user",
   "password": "password"
 }
