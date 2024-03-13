@@ -62,7 +62,7 @@ export PANOS_API_KEY=
 
 ```terraform
 provider "panos" {
-  json_config_file = "./creds/serviceaccount.json"
+  json_config_file = "panos-config.json"
 }
 ```
 
