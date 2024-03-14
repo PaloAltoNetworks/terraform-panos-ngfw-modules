@@ -7,7 +7,7 @@
 ![Terraform registry download month](https://img.shields.io/badge/dynamic/json?color=green&label=downloads%20this%20month&query=data.attributes.month&url=https%3A%2F%2Fregistry.terraform.io%2Fv2%2Fmodules%2FPaloAltoNetworks%2Fngfw-modules%2Fpanos%2Fdownloads%2Fsummary&style=flat-square)
 
 
-# Terraform Modules for Palo Alto Networks Pan-Os Based Platforms 
+# Terraform Modules for Palo Alto Networks PAN-OS Based Platforms 
 
 ## Overview
 
