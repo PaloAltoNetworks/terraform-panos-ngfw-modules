@@ -30,9 +30,10 @@ These modules are meant for use with PAN-OS >= 10.2.0 and Terraform >= 0.13
 
 ## Setup
 
-### Modes
-
-The modules are designed to seamlessly integrate with either a PAN-OS firewall or a Panorama instance, providing flexibility in their usage. The user is required to implicitly pass the `mode` variable to these modules, which dictates the operational context of the modules. This variable is mandatory, with accepted values being `panorama` or `ngfw`. 
+> [!IMPORTANT]
+> ### Modes
+> 
+> The modules are designed to seamlessly integrate with either a PAN-OS firewall or a Panorama instance, providing flexibility in their usage. The user is required to implicitly pass the `mode` variable to these modules, which dictates the operational context of the modules. This variable is mandatory, with accepted values being `panorama` or `ngfw`. 
 
 The underlying panos provider can be configured using the following methods.
 
