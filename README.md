@@ -26,7 +26,7 @@ This repository has the following directory structure:
 
 ## Compatibility
 
-These modules are meant for use with PAN-OS >= 10.2.0 and Terraform >= 0.13
+These modules are meant for use with PAN-OS >= 10.x.x and Terraform >= 1.4
 
 ## Setup
 
