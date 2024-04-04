@@ -6,6 +6,23 @@ locals {
   }
 }
 
+resource "panos_security_profile_group" "this" {
+  for_each = var.security_profile_groups
+
+  device_group = local.mode_map[var.mode] == 0 ? var.device_group : null
+  vsys         = local.mode_map[var.mode] == 1 ? var.vsys : null
+  name              = each.key
+  antivirus_profile = try(each.value.antivirus_profile, null)
+  anti_spyware_profile = try(each.value.anti_spyware_profile, null)
+  vulnerability_profile = try(each.value.vulnerability_profile, null)
+  url_filtering_profile = try(each.value.url_filtering_profile, null)
+  file_blocking_profile = try(each.value.file_blocking_profile, null)
+  data_filtering_profile = try(each.value.data_filtering_profile, null)
+  wildfire_analysis_profile = try(each.value.wildfire_analysis_profile, null)
+  gtp_profile = try(each.value.gtp_profile, null)
+  sctp_profile = try(each.value.sctp_profile, null)
+}
+
 # Antivirus profiles
 resource "panos_antivirus_security_profile" "this" {
   for_each = var.antivirus_profiles
@@ -233,6 +250,145 @@ resource "panos_wildfire_analysis_security_profile" "this" {
       file_types   = rule.value.file_types
       direction    = rule.value.direction
       analysis     = rule.value.analysis
+    }
+  }
+
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+
+resource "panos_url_filtering_security_profile" "this" {
+  for_each = var.url_filtering_profiles
+
+  device_group = local.mode_map[var.mode] == 0 ? var.device_group : null
+  vsys         = local.mode_map[var.mode] == 1 ? var.vsys : null
+
+  name        = each.key
+  description = try(each.value.description, null)
+
+  allow_categories = each.value.allow_categories
+  alert_categories = each.value.alert_categories
+  block_categories = each.value.block_categories
+  continue_categories = each.value.continue_categories
+  override_categories = each.value.override_categories
+  track_container_page = each.value.track_container_page
+  log_container_page_only = each.value.log_container_page_only
+  safe_search_enforcement = each.value.safe_search_enforcement
+  log_http_header_xff = each.value.log_http_header_xff
+  log_http_header_user_agent = each.value.log_http_header_user_agent
+  log_http_header_referer = each.value.log_http_header_referer
+  ucd_mode = each.value.ucd_mode
+  ucd_mode_group_mapping = each.value.ucd_mode_group_mapping
+  ucd_log_severity = each.value.ucd_log_severity
+  ucd_allow_categories = each.value.ucd_allow_categories
+  ucd_alert_categories = each.value.ucd_alert_categories
+  ucd_block_categories = each.value.ucd_block_categories
+  ucd_continue_categories = each.value.ucd_continue_categories
+
+  dynamic "http_header_insertion" {
+    for_each = each.value.http_header_insertion
+
+    content {
+      name       = http_header_insertion.value.name
+      type       = http_header_insertion.value.type
+      domains    = http_header_insertion.value.domains
+
+      dynamic "http_header" {
+        for_each = each.value.http_header_insertion.http_header
+        content {
+          name = http_header.value.name
+          header = http_header.value.header
+          value = http_header.value.value
+          log = http_header.value.log
+        }
+      }
+    }
+  }
+  dynamic "machine_learning_model" {
+    for_each = each.value.machine_learning_model
+
+    content {
+      model              = machine_learning_model.value.model
+      action            = machine_learning_model.value.action
+    }
+  }
+  
+  machine_learning_exceptions = each.value.machine_learning_exceptions
+
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+
+resource "panos_data_filtering_security_profile" "this" {
+  for_each = var.data_filtering_profiles
+
+  device_group = local.mode_map[var.mode] == 0 ? var.device_group : null
+  vsys         = local.mode_map[var.mode] == 1 ? var.vsys : null
+
+  name        = each.key
+  description = try(each.value.description, null)
+
+  data_capture = each.value.data_capture
+
+  dynamic "rule" {
+    for_each = each.value.rule
+
+    content {
+      data_pattern       = rule.value.data_pattern
+      applications    = rule.value.applications
+      file_types = rule.value.file_types
+      direction = rule.value.direction
+      alert_threshold = rule.value.alert_threshold
+      block_threshold = rule.value.block_threshold
+      log_severity = rule.value.log_severity
+    }
+  }
+
+  lifecycle {
+    create_before_destroy = true
+  }
+  depends_on = [ panos_custom_data_pattern_object.this ]
+}
+
+
+resource "panos_custom_data_pattern_object" "this" {
+  for_each = var.data_pattern_objects
+
+  device_group = local.mode_map[var.mode] == 0 ? var.device_group : null
+  vsys         = local.mode_map[var.mode] == 1 ? var.vsys : null
+
+  name        = each.key
+  description = try(each.value.description, null)
+
+  type = each.value.type
+  
+  dynamic "predefined_pattern" {
+    for_each = each.value.predefined_pattern
+
+    content {
+      name           = predefined_pattern.value.name
+      file_types     = predefined_pattern.value.file_types
+    }
+  }
+  dynamic "regex" {
+    for_each = each.value.regex
+
+    content {
+      name           = regex.value.name
+      file_types     = regex.value.file_types
+      regex          = regex.value.regex
+    }
+  }
+  dynamic "file_property" {
+    for_each = each.value.file_property
+
+    content {
+      name           = file_property.value.name
+      file_type      = file_property.value.file_type
+      file_property  = file_property.value.file_property
+      property_value     = file_property.value.property_value
     }
   }
 

@@ -19,6 +19,42 @@ variable "vsys" {
   type        = string
 }
 
+variable "security_profile_groups" {
+  description = <<-EOF
+    Map of security profile groups where the key is name of the security profile group.:
+    - `antivirus_profile`: (optional) The AV profile name.
+    - `anti_spyware_profile`: (optional) Anti Spyware profile name.
+    - `vulnerability_profile`: (optional) Vulnerability profile name.
+    - `url_filtering_profile`: (optional) URL filtering profile name.
+    - `file_blocking_profile`: (optional) File blocking profile name.
+    - `data_filtering_profile`: (optional) Data filtering profile name.
+    - `wildfire_analysis_profile`: (optional) Wildfire analysis profile name.
+    - `gtp_profile`: (optional) GTP profile name.
+    - `sctp_profile`: (optional) SCTP profile name.
+    Example:
+    ```
+    {
+      "myGroup" = {
+        antivirus_profile = "default"
+        anti_spyware_profile = "anti-spyware1"
+      }
+    }
+    ```
+    EOF
+    default = {}
+    type = map(object({
+    antivirus_profile = optional(string)
+    anti_spyware_profile = optional(string)
+    vulnerability_profile = optional(string)
+    url_filtering_profile = optional(string)
+    file_blocking_profile = optional(string)
+    data_filtering_profile = optional(string)
+    wildfire_analysis_profile = optional(string)
+    gtp_profile = optional(string)
+    sctp_profile = optional(string)
+  }))
+}
+
 variable "antivirus_profiles" {
   description = <<-EOF
   List with the Antivirus profile objects. Each item supports following parameters:
@@ -197,7 +233,7 @@ variable "antispyware_profiles" {
           packet_capture = "single-packet"
         }
       ]
-      sinkhole_ipv4_address = "72.5.65.111"
+      sinkhole_ipv4_address = "sinkhole.paloaltonetworks.com"
       sinkhole_ipv6_address = "2600:5200::1"
       rules =
       [
@@ -657,4 +693,122 @@ variable "wildfire_analysis_profiles" {
     ])
     error_message = "Valid 'analysis' values are: 'public-cloud', 'private-cloud'."
   }
+}
+
+variable "url_filtering_profiles" {
+  description = <<-EOF
+  List of the Url Filtering security profile objects. Each item supports following parameters:
+  - `name`: (required) Identifier of the Url Filtering security profile.
+  - `description`: (optional) The description of the Url Filtering profile.
+  
+  Example:
+  ```
+  
+  ```
+  EOF
+
+  default = {}
+  type = map(object({
+    description = optional(string)
+    allow_categories = optional(list(string))
+    alert_categories = optional(list(string))
+    block_categories = optional(list(string))
+    continue_categories = optional(list(string))
+    override_categories = optional(list(string))
+    track_container_page = optional(bool)
+    log_container_page_only = optional(bool)
+    safe_search_enforcement = optional(bool)
+    log_http_header_xff = optional(bool)
+    log_http_header_user_agent = optional(bool)
+    log_http_header_referer = optional(bool)
+    # ucd stuff no idea what this is...  Skipping for now.
+    ucd_mode = optional(string, "disabled")
+    ucd_mode_group_mapping = optional(string)
+    ucd_log_severity = optional(string)
+    ucd_allow_categories = optional(list(string))
+    ucd_alert_categories = optional(list(string))
+    ucd_block_categories = optional(list(string))
+    ucd_continue_categories = optional(list(string))
+    http_header_insertion = optional(list(object({
+      name              = string
+      type              = optional(string) # this is a specific list but do not want to bother validation now
+      domains           = optional(list(string))
+      http_header       = optional(list(object( {
+        name = string
+        header = string
+        value = string
+        log = optional(bool, false)
+      })), [])
+    })), [])
+    machine_learning_model = optional(list(object({
+      model              = string
+      action              = optional(string, "any")
+    })), [])
+    machine_learning_exceptions = optional(list(string))
+  }))
+
+}
+
+variable "data_filtering_profiles" {
+  description = <<-EOF
+  List of the Data Filtering security profile objects. Each item supports following parameters:
+  - `name`: (required) Identifier of the Data Filtering security profile.
+  - `description`: (optional) The description of the Data Filtering profile.
+  
+  Example:
+  ```
+  
+  ```
+  EOF
+
+  default = {}
+  type = map(object({
+    description = optional(string)
+    data_capture = optional(bool)
+    rule = optional(list(object({
+      data_pattern      = string
+      applications      = optional(list(string), ["any"])
+      file_types        = optional(list(string), ["any"])
+      direction         = optional(string, "both")
+      alert_threshold   = optional(number, 0)
+      block_threshold   = optional(number, 0)
+      log_severity      = optional(string, "informational")
+    })), [])
+  }))
+
+}
+
+variable "data_pattern_objects" {
+  description = <<-EOF
+  List of the Data Pattern objects. Each item supports following parameters:
+  - `name`: (required) Identifier of the Data Pattern object.
+  - `description`: (optional) The description of the Data Pattern object.
+  
+  Example:
+  ```
+  
+  ```
+  EOF
+
+  default = {}
+  type = map(object({
+    description = optional(string)
+    type = optional(string, "file-properties")
+    predefined_pattern = optional(list(object({
+      name              = string
+      file_types       = optional(list(string))
+    })), [])
+    regex = optional(list(object({
+      name              = string
+      file_types       = list(string)
+      regex            = string
+    })), [])
+    file_property = optional(list(object({
+      name              = string
+      file_type       = string
+      file_property     = string
+      property_value        = string
+    })), [])
+  }))
+
 }
